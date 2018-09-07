@@ -1,0 +1,78 @@
+﻿<Window x:Class="MEFTCoreApp.MEFTCoreShell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MEFTCoreApp"
+        mc:Ignorable="d"
+        xmlns:prism="http://www.codeplex.com/prism"
+        xmlns:my="clr-namespace:System.Windows.Controls.Ribbon;assembly=System.Windows.Controls.Ribbon"
+        Title="MainWindow" Height="450" Width="800">
+
+    <!--
+        1. why Ribbon: https://msdn.microsoft.com/zh-tw/library/ff799534(v=vs.110).aspx
+        2. Ribbin does not exist
+                xmlns:my="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" 
+           see: https://stackoverflow.com/questions/10707704/the-tag-ribbon-does-not-exist-in-xml-namespace 
+    -->
+    
+    <Window.Resources>
+        <DataTemplate x:Key="crap">
+            <StackPanel Width="100" Height="18"></StackPanel>
+        </DataTemplate>
+        <Style x:Key="TabItemStyleKey" TargetType="{x:Type TabItem}">
+            <Setter Property="Header" Value="{Binding Path=DataContext.ViewTile}"></Setter>
+            <Setter Property="HeaderTemplate" Value="{Binding Source=    {StaticResource crap}}"></Setter>
+        </Style>
+        <Style x:Key="TreeItemStyleKey" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="Height" Value="Auto"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </Window.Resources>    
+    <Grid>
+        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="true" Name="dockPanel1">
+            <!-- RibbinRegion PlaceHolder
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="100" >
+                <ContentControl prism:RegionManager.RegionName="RobbinRegion" />
+            </StackPanel>-->
+            <my:Ribbon prism:RegionManager.RegionName="RibbonRegion" 
+                 DockPanel.Dock="Top" HorizontalAlignment="Stretch" 
+                 VerticalAlignment="Stretch" Name="ribbon1" Height="150"/>
+            
+            <!--Status Region-->
+            <StackPanel Height="100" Orientation="Horizontal" DockPanel.Dock="Bottom">
+                <ContentControl prism:RegionManager.RegionName="StatusRegion" />
+            </StackPanel>
+            
+            <!-- 同樣都是DockPanel.Dock="Left", 先設定的優先佔用-->
+            
+            <ScrollViewer>
+                <StackPanel DockPanel.Dock="Left" Width="200">
+                    <!--- TreeRegion PlaceHolder
+                    <ContentControl prism:RegionManager.RegionName="TreeRegion" />
+                    -->
+                    <TreeView ItemContainerStyle="{StaticResource TreeItemStyleKey}"
+                         prism:RegionManager.RegionName="TreeRegion"
+                         Name="treeView1" HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch" BorderThickness="0"/>
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel Width="100" DockPanel.Dock="Right">
+                <!--- AlertRegion PlaceHolder -->
+                <ContentControl prism:RegionManager.RegionName="AlertRegion"/>
+            </StackPanel>
+            <ScrollViewer>
+                <!--- BlotterRegion PlaceHolder 
+                <ContentControl prism:RegionManager.RegionName="BlotterRegion"/>-->
+                <TabControl ItemContainerStyle="{StaticResource TabItemStyleKey}"
+                        prism:RegionManager.RegionName="BlotterRegion" Name="tabControl1"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" Width="Auto">
+                </TabControl>
+            </ScrollViewer>
+        </DockPanel>
+
+    </Grid>
+</Window>

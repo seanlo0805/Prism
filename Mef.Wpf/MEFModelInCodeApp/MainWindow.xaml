@@ -1,0 +1,25 @@
+﻿<Window x:Class="MEFModelInCodeApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MEFModelInCodeApp"
+        mc:Ignorable="d"
+        xmlns:prism="http://www.codeplex.com/prism"
+        xmlns:my="clr-namespace:System.Windows.Controls.Ribbon;assembly=System.Windows.Controls.Ribbon"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <ContentControl prism:RegionManager.RegionName="MainRegion" />
+
+        <!--<DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="true" Name="dockPanel1">
+            <my:Ribbon prism:RegionManager.RegionName="RibbonRegion" 
+                 DockPanel.Dock="Top" HorizontalAlignment="Stretch" 
+                 VerticalAlignment="Stretch" Name="ribbon1" Height="150"/>
+            
+            <StackPanel Height="100" Orientation="Horizontal" DockPanel.Dock="Bottom">
+                <ContentControl prism:RegionManager.RegionName="MainRegion" />
+            </StackPanel>
+        </DockPanel>-->
+
+    </Grid>
+</Window>

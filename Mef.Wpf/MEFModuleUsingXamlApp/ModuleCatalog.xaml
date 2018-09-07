@@ -1,0 +1,8 @@
+﻿<Modularity:ModuleCatalog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:Modularity="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
+    <Modularity:ModuleInfo Ref="file://MEFTCoreControl.dll"
+                           ModuleName="TCoreControlA"
+                           InitializationMode="WhenAvailable"
+                           ModuleType="MEFTCoreControl.TCoreControlA, MEFTCoreControl" />
+</Modularity:ModuleCatalog>

@@ -1,0 +1,9 @@
+﻿<Application x:Class="MEFModuleDiscoveryLocalDisk.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MEFModuleDiscoveryLocalDisk">
+            <!--StartupUri="MainWindow.xaml">--> <!-- it cause MainWidnows to be created twice-->
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

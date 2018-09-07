@@ -1,0 +1,9 @@
+﻿<Application x:Class="UnityTCoreApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:UnityTCoreApp">
+             <!--StartupUri="UnityTCoreShell.xaml">--> <!-- it will cause duplicated UnityTCoreShell-->
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
