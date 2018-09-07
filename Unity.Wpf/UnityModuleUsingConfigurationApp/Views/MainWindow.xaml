@@ -6,8 +6,15 @@
         Title="{Binding Title}" Height="350" Width="525">
     <Grid>
         <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="true" Name="dockPanel1">
+
+            <ContentControl prism:RegionManager.RegionName="TopRegion" Height="100" DockPanel.Dock="Top"/>
+            
             <StackPanel Height="100" Orientation="Horizontal" DockPanel.Dock="Bottom">
                 <ContentControl prism:RegionManager.RegionName="BottomRegion" />
+            </StackPanel>
+            <StackPanel Width="100" DockPanel.Dock="Left">
+                <!--- AlertRegion PlaceHolder -->
+                <ContentControl prism:RegionManager.RegionName="LeftRegion"/>
             </StackPanel>
             <ContentControl prism:RegionManager.RegionName="MainRegion" />
         </DockPanel>

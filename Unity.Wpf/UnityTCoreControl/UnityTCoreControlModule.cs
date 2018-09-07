@@ -24,7 +24,9 @@ namespace UnityTCoreControl
         //}
         public void Initialize()
         {
-            IRegionManager manager = _regionManager.RegisterViewWithRegion("MainRegion", typeof(TCoreViewA));
+            //IRegionManager manager = _regionManager.RegisterViewWithRegion("LeftRegion", typeof(TCoreViewA));
+            _regionManager.RegisterViewWithRegion("LeftRegion", typeof(TCoreViewA));
+            _regionManager.RegisterViewWithRegion("MainRegion", typeof(TCoreViewAReception));
         }
     }
 }

@@ -24,7 +24,9 @@ namespace UnityAutowireControl
         //}
         public void Initialize()
         {
-            IRegionManager manager = _regionManager.RegisterViewWithRegion("BottomRegion", typeof(ViewA));
+            //IRegionManager manager = _regionManager.RegisterViewWithRegion("BottomRegion", typeof(ViewA));
+            _regionManager.RegisterViewWithRegion("BottomRegion", typeof(ViewA));
+            _regionManager.RegisterViewWithRegion("TopRegion", typeof(ViewAReception));
         }
     }
 }

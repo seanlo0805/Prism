@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5839F270-D8AD-4D42-A917-EC0BC7C0FFC1}</ProjectGuid>
+    <ProjectGuid>{93347F13-7136-4E8D-BF2B-72D762FE965C}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnityTCoreControl</RootNamespace>
-    <AssemblyName>UnityTCoreControl</AssemblyName>
+    <RootNamespace>UnityAutowireReceptControl</RootNamespace>
+    <AssemblyName>UnityAutowireReceptControl</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,7 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnityTCoreControlModule.cs" />
+    <Compile Include="UnityAutowireReceptControlModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -63,13 +63,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewModels\TCoreViewAReceptionViewModel.cs" />
-    <Compile Include="ViewModels\TCoreViewAViewModel.cs" />
-    <Compile Include="Views\TCoreViewA.xaml.cs">
-      <DependentUpon>TCoreViewA.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TCoreViewAReception.xaml.cs">
-      <DependentUpon>TCoreViewAReception.xaml</DependentUpon>
+    <Compile Include="ViewModels\ViewAViewModel.cs" />
+    <Compile Include="Views\ViewA.xaml.cs">
+      <DependentUpon>ViewA.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -83,11 +79,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="Views\TCoreViewA.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TCoreViewAReception.xaml">
+    <Page Include="Views\ViewA.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,10 @@ namespace UnityAutowireControl.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public ViewAViewModel()
+        //you could get IEventAggregator (Dependency Inject) only when you implement ViewModel Autowiring otherwise you should pass ea youself(See UnitTCoreControl and UnityReceptControl)
+        public ViewAViewModel(IEventAggregator ea)
         {
-            Message = "This is UnityAutowireControl";
+            Message = "This is ViewA";
         }
     }
 }
