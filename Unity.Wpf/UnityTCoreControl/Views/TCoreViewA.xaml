@@ -11,10 +11,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <!--  綁定ViewModel中的Title屬性 -->
         <TextBlock Text="{Binding Title}" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="18" FontWeight="Bold"></TextBlock>
         <Button Content="Send" Command="{Binding SendMessageCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="75" Grid.Row="1"/>
+        <Button Content="Send1" Command="{Binding SendMessageCommand1}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="75" Grid.Row="2"/>
 
     </Grid>
 </UserControl>

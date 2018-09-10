@@ -21,11 +21,16 @@ namespace UnityTCoreControl.ViewModels
         #region member data
         IEventAggregator _ea;
         IEventHandler _eh;
+        IEventHandler _eh1;
         private string _title = "TCore ViewA";
         #endregion member data
 
         #region properties
         public DelegateCommand SendMessageCommand
+        {
+            get; private set;
+        }
+        public DelegateCommand SendMessageCommand1
         {
             get; private set;
         }
@@ -38,14 +43,20 @@ namespace UnityTCoreControl.ViewModels
 
         #region member function
         #region using Event Handler
-        public TCoreViewAViewModel(IEventHandler eh)
+        public TCoreViewAViewModel(IEventHandler eh, IEventHandler eh1)
         {
             _eh = eh;
+            _eh1 = eh1;
             SendMessageCommand = new DelegateCommand(SendEvent);
+            SendMessageCommand1 = new DelegateCommand(SendEvent1);
         }
         private void SendEvent()
         {
-            _eh.Publish(DateTime.Now.ToString("HH:mm:ss") + " => [from] " + _title);
+            _eh.Publish(DateTime.Now.ToString("HH:mm:ss") + " => [from #0] " + _title);
+        }
+        private void SendEvent1()
+        {
+            _eh1.Publish(DateTime.Now.ToString("HH:mm:ss") + " => [from #1] " + _title);
         }
         #endregion //using Event Handler
 

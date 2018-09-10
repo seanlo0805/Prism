@@ -14,8 +14,10 @@ namespace UnityTCoreControl.ViewModels
         #region member data
         IEventAggregator _ea;
         IEventHandler _eh;
+        IEventHandler _eh1;
         private string _title = "TCore Reception";
         private string _recvMsg;
+        private string _recvMsg1;
         #endregion member data
 
         #region properties
@@ -23,6 +25,12 @@ namespace UnityTCoreControl.ViewModels
         {
             get { return _recvMsg; }
             set { SetProperty(ref _recvMsg, value); }
+
+        }
+        public string RecvMsg1
+        {
+            get { return _recvMsg1; }
+            set { SetProperty(ref _recvMsg1, value); }
 
         }
         public string Title
@@ -34,16 +42,24 @@ namespace UnityTCoreControl.ViewModels
 
         #region member function
         #region using EventHandler
-        public TCoreViewAReceptionViewModel(IEventHandler eh)
+        public TCoreViewAReceptionViewModel(IEventHandler eh, IEventHandler eh1)
         {
             _eh = eh;
+            _eh1 = eh1;
             RecvMsg = "----";
+            RecvMsg1 = "****";
             _eh.Subscribe(EventReceived);
+            _eh1.Subscribe(EventReceived1);
         }
         private void EventReceived(object message)
         {
             if (message is string)
                 RecvMsg = (string)message;
+        }
+        private void EventReceived1(object message)
+        {
+            if (message is string)
+                RecvMsg1 = (string)message;
         }
         #endregion //using EventHandler
 

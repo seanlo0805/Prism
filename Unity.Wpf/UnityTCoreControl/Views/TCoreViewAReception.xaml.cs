@@ -12,7 +12,8 @@ namespace UnityTCoreControl.Views
         public TCoreViewAReception()
         {
             InitializeComponent();
-            this.DataContext = new TCoreViewAReceptionViewModel(EventHandlerFactory<PrismEventAggregator>.FetchEventHandler("tcore"));
+            this.DataContext = new TCoreViewAReceptionViewModel(EventHandlerFactory<PrismEventAggregator>.FetchEventHandler("tcore"),
+                                                                EventHandlerFactory<PrismEventAggregator>.FetchEventHandler("tcore1"));
         }
     }
 }
