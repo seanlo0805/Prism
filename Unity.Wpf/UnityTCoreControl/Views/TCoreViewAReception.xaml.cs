@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using EventPlatform;
+using System.Windows.Controls;
+using UnityTCoreControl.ViewModels;
 
 namespace UnityTCoreControl.Views
 {
@@ -10,6 +12,7 @@ namespace UnityTCoreControl.Views
         public TCoreViewAReception()
         {
             InitializeComponent();
+            this.DataContext = new TCoreViewAReceptionViewModel(EventHandlerFactory<PrismEventAggregator>.FetchEventHandler("tcore"));
         }
     }
 }

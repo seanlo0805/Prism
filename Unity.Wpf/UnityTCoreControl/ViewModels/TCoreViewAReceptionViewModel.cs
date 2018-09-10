@@ -1,4 +1,6 @@
-﻿using Prism.Commands;
+﻿using EventObjects;
+using EventPlatform;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
@@ -9,17 +11,55 @@ namespace UnityTCoreControl.ViewModels
 {
     public class TCoreViewAReceptionViewModel : BindableBase
     {
+        #region member data
         IEventAggregator _ea;
-        private string _title = "This is TCore Reception";
+        IEventHandler _eh;
+        private string _title = "TCore Reception";
+        private string _recvMsg;
+        #endregion member data
+
+        #region properties
+        public string RecvMsg
+        {
+            get { return _recvMsg; }
+            set { SetProperty(ref _recvMsg, value); }
+
+        }
         public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
+        #endregion properties
 
+        #region member function
+        #region using EventHandler
+        public TCoreViewAReceptionViewModel(IEventHandler eh)
+        {
+            _eh = eh;
+            RecvMsg = "----";
+            _eh.Subscribe(EventReceived);
+        }
+        private void EventReceived(object message)
+        {
+            if (message is string)
+                RecvMsg = (string)message;
+        }
+        #endregion //using EventHandler
+
+        #region using EventAggregator
         public TCoreViewAReceptionViewModel(IEventAggregator ea)
         {
             _ea = ea;
+            RecvMsg = "----";
+            _ea.GetEvent<MessageSentEvent>().Subscribe(MessageReceived);
         }
+        private void MessageReceived(object message)
+        {
+            if (message is string)
+                RecvMsg = (string)message;
+        }
+        #endregion //using EventAggregator
+        #endregion //member function
     }
 }

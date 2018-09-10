@@ -10,5 +10,6 @@
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
         <TextBlock Text="{Binding Message}" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="24" FontWeight="Bold"></TextBlock>
+        <Button Content="Send" Command="{Binding SendMessageCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

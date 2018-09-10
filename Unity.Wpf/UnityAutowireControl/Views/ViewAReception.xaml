@@ -11,6 +11,7 @@
 
     <Grid>
         <TextBlock Text="{Binding Message}" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="24" FontWeight="Bold"></TextBlock>
+        <Label Content="{Binding RecvMsg}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="228" Height="31"/>
     </Grid>
 
 </UserControl>

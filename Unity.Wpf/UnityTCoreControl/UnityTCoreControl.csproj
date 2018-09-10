@@ -81,7 +81,16 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\EventPlatform\EventPlatform.csproj">
+      <Project>{7a09a6da-34ff-4328-be44-61e43cb5aa78}</Project>
+      <Name>EventPlatform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\EventObjects\EventObjects.csproj">
+      <Project>{26e2ad1d-48ba-4940-9c63-e4f51873ffb6}</Project>
+      <Name>EventObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\TCoreViewA.xaml">
       <SubType>Designer</SubType>

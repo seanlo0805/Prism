@@ -81,7 +81,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\EventObjects\EventObjects.csproj">
+      <Project>{26e2ad1d-48ba-4940-9c63-e4f51873ffb6}</Project>
+      <Name>EventObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ViewAReception.xaml">
       <SubType>Designer</SubType>

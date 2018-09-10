@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using EventObjects;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
@@ -29,17 +30,36 @@ namespace UnityAutowireControl.ViewModels
     /// </summary>
     public class ViewAViewModel : BindableBase
     {
+        #region member data
+        IEventAggregator _ea;
         private string _message;
+        #endregion // member data
+
+        #region properties
+        public DelegateCommand SendMessageCommand
+        {
+            get; private set;
+        }
         public string Message
         {
             get { return _message; }
             set { SetProperty(ref _message, value); }
         }
+        #endregion //properties
 
+        #region member function
         //you could get IEventAggregator (Dependency Inject) only when you implement ViewModel Autowiring otherwise you should pass ea youself(See UnitTCoreControl and UnityReceptControl)
         public ViewAViewModel(IEventAggregator ea)
         {
             Message = "This is ViewA";
+            _ea = ea;
+            SendMessageCommand = new DelegateCommand(SendMessage);
         }
+
+        private void SendMessage()
+        {
+            _ea.GetEvent<MessageSentEvent>().Publish(DateTime.Now.ToString("HH:mm:ss")+ " => [from] " + Message);
+        }
+        #endregion //member function
     }
 }

@@ -2,18 +2,19 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:UnityTCoreControl.Views"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True" >
+             xmlns:vm="clr-namespace:UnityTCoreControl.ViewModels"
+             xmlns:prism="http://prismlibrary.com/">
     <!--<UserControl.DataContext>
-        <vm:TCoreViewModelA/>
+        <vm:TCoreViewAViewModel/>
     </UserControl.DataContext>-->
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
         <!--  綁定ViewModel中的Title屬性 -->
         <TextBlock Text="{Binding Title}" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="18" FontWeight="Bold"></TextBlock>
+        <Button Content="Send" Command="{Binding SendMessageCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="75" Grid.Row="1"/>
 
     </Grid>
 </UserControl>
