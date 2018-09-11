@@ -10,5 +10,7 @@ namespace EventObjects
     {
         Text,
 
+        Request,
+        Reply,
     }
 }

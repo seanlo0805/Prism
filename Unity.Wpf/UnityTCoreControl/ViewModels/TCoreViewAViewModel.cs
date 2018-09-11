@@ -1,4 +1,5 @@
 ﻿using EventObjects;
+using EventObjects.EventObjects;
 using EventPlatform;
 using Prism.Commands;
 using Prism.Events;
@@ -53,6 +54,15 @@ namespace UnityTCoreControl.ViewModels
         private void SendEvent()
         {
             _eh.Publish(DateTime.Now.ToString("HH:mm:ss") + " => [from #0] " + _title);
+            _eh.Request(Guid.NewGuid().ToString(), DateTime.Now.ToString("HH:mm:ss") + " => [request #0] " + _title, RecieveReply);
+        }
+        private void RecieveReply(string reqKey, object obj)
+        {
+            if(obj is ReplyEvent)
+            {
+                ReplyEvent reply = (ReplyEvent)obj;
+
+            }
         }
         private void SendEvent1()
         {

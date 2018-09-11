@@ -1,4 +1,5 @@
 ﻿using EventObjects;
+using EventObjects.EventObjects;
 using EventPlatform;
 using Prism.Commands;
 using Prism.Events;
@@ -6,6 +7,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace UnityTCoreControl.ViewModels
 {
@@ -55,6 +57,13 @@ namespace UnityTCoreControl.ViewModels
         {
             if (message is string)
                 RecvMsg = (string)message;
+            else if(message is RequestEvent)
+            {
+                RequestEvent request = (RequestEvent)message;
+                ReplyEvent reply = new ReplyEvent();
+                reply.ReplyObj = "reply:" + DateTime.Now.ToString("HH:mm:ss");
+                request.Reply(reply);
+            }
         }
         private void EventReceived1(object message)
         {
