@@ -25,8 +25,6 @@ namespace EventPlatform
         private string _handlerName;
 
         AkkaEventActorRef _eventHandlerRef = null;
-        Action<object> _replyFunc;
-
 
         public IEventHandlerRef ReplyRef
         {
@@ -58,22 +56,7 @@ namespace EventPlatform
                     _actorPool_[handlerName].Count++;
                 }
             }
-            //for pvivate channel(transactions)
-            _replyFunc += new Action<object>((obj) => {
-                if (obj is TransactionObject)
-                {
-                    TransactionObject transactionMeta = (TransactionObject)obj;
-                    try
-                    {
-                        transactionMeta.ActionFunc(transactionMeta.RequestKey, transactionMeta.Para);
-                    }
-                    finally
-                    {
-                        //ReplyRef.GetEvent<MessageSentEvent>().Unsubscribe(_replyFunc);
-                        //_eventAggregatorReply = null;
-                    }
-                }
-            });
+
         }
         ~AkkaEventHandler()
         {
@@ -102,7 +85,6 @@ namespace EventPlatform
 
         public bool Request(string key, object obj, Action<string, object> actionCallback)
         {
-            //_actorRef?.Tell(new AkkaRequest() { Key = key, ReqObject = obj, ActionCallBack = actionCallback });
             _actorRef?.Tell(new AkkaRequest() { RequestEvent = new RequestEvent(key, this, actionCallback, obj) });
             return true;
         }
