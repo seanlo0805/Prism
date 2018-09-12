@@ -17,6 +17,7 @@ namespace EventPlatform
     /// </summary>
     public class PrismEventAggregator : IEventHandler, IEventHandlerRef
     {
+        #region member data
         IEventAggregator _eventAggregator;
 
         private string _handlerName;
@@ -30,6 +31,9 @@ namespace EventPlatform
         /// </summary>
         Dictionary<string, Action<object>> _replyActions = new Dictionary<string, Action<object>>();
 
+        #endregion //member data
+
+        #region properties
         private IEventAggregator ReplyRef
         {
             get {
@@ -43,7 +47,9 @@ namespace EventPlatform
         {
             get { return _handlerName; }
         }
+        #endregion //properties
 
+        #region member function
         public PrismEventAggregator(string handlerName)
         {
             _handlerName = handlerName;
@@ -127,5 +133,6 @@ namespace EventPlatform
             }
         }
         #endregion // for Transactions
+        #endregion // member function
     }
 }

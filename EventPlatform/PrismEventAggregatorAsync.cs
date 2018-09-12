@@ -15,6 +15,7 @@ namespace EventPlatform
         //https://stackoverflow.com/questions/2834035/eventaggregator-is-it-thread-safe
         //Prsim EventAggregator is not Thread-Safe, lock it
 
+        #region member data
         IEventAggregator _eventAggregator;
 
         private string _handlerName;
@@ -28,7 +29,9 @@ namespace EventPlatform
         /// 最後還是透過它來呼叫replyCallback
         /// </summary>
         Dictionary<string, Action<object>> _replyActions = new Dictionary<string, Action<object>>();
+        #endregion member data
 
+        #region properties
         private IEventAggregator ReplyRef
         {
             get
@@ -43,8 +46,9 @@ namespace EventPlatform
         {
             get { return _handlerName; }
         }
+        #endregion properties
 
-
+        #region member function
         public PrismEventAggregatorAsync(string handlerName)
         {
             _handlerName = handlerName;
@@ -130,5 +134,6 @@ namespace EventPlatform
         }
 
         #endregion // for Transactions
+        #endregion //member function
     }
 }

@@ -35,16 +35,20 @@ namespace EventObjects.EventObjects
             _key = key;
             _replyHandler = replyHandler;
             _replyCallback = replyCallback;
+            _reqObject = reqObj;
         }
 
         /// <summary>
         /// 處理request結束後, 透過reply回應給原要求端
         /// </summary>
         /// <param name="reply"></param>
-        public void Reply(ReplyEvent reply)
+        public void Reply(object reply)
         {
+            ReplyEvent replyEvent = new ReplyEvent();
+            replyEvent.ReplyObj = reply;
+
             //因為request內包含原始委託來源, 要透過這項資訊回送
-            ReplyHandler.Reply(this, reply);
+            ReplyHandler.Reply(this, replyEvent);
         }
     }
 }

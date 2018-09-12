@@ -14,6 +14,7 @@ namespace EventPlatform
 {
     public class AkkaEventHandler : IEventHandler, IEventHandlerRef
     {
+        #region member data
         private static ActorSystem _akkaSystem_ = ActorSystem.Create("PrismEventPlatform");
         /// <summary>
         /// 用來處理reply工作function的sub / unsbu, 必免一直累積
@@ -26,6 +27,9 @@ namespace EventPlatform
 
         AkkaEventActorRef _eventHandlerRef = null;
 
+        #endregion //member data
+
+        #region properties
         public IEventHandlerRef ReplyRef
         {
             get
@@ -39,8 +43,9 @@ namespace EventPlatform
         public string HandlerName {
             get { return _handlerName; }
         }
+        #endregion //properties
 
-
+        #region member function
         public AkkaEventHandler(string handlerName) {
             _handlerName = handlerName;
             lock (_actorPool_)
@@ -95,10 +100,13 @@ namespace EventPlatform
 
 
         #endregion // for Transactions
+        #endregion //member function
 
+        #region akka classes
         public class ActorMeta{
             public int Count { get; set; }
             public IActorRef ActorRef { get; set; }
         }
+        #endregion // akka classes
     }
 }

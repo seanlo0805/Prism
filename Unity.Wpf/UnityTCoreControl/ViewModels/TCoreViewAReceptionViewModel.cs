@@ -60,9 +60,8 @@ namespace UnityTCoreControl.ViewModels
             else if(message is RequestEvent)
             {
                 RequestEvent request = (RequestEvent)message;
-                ReplyEvent reply = new ReplyEvent();
-                reply.ReplyObj = "reply:" + DateTime.Now.ToString("HH:mm:ss");
-                request.Reply(reply);
+                RecvMsg = (string)request.ReqObject;
+                request.Reply("reply:" + DateTime.Now.ToString("HH:mm:ss"));
             }
         }
         private void EventReceived1(object message)

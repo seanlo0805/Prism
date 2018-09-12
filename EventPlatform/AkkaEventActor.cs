@@ -20,6 +20,7 @@ namespace EventPlatform
     /// </summary>
     public class AkkaEventActor : ReceiveActor
     {
+        #region member data
         //private ActorRef _actor;
         Action<object> _eventAction = null;
         Action<object> _eventReplyAction = null;
@@ -32,6 +33,9 @@ namespace EventPlatform
         /// </summary>
         Dictionary<string, Action<object>> _replyActions = new Dictionary<string, Action<object>>();
 
+        #endregion // member data
+
+        #region properties
         public IEventHandlerRef ReplyRef
         {
             get
@@ -41,34 +45,10 @@ namespace EventPlatform
                 return _eventHandlerRef;
             }
         }
-        protected void Request(AkkaRequest reqObj)
-        {
-           
-            if (_replyActions.ContainsKey(reqObj.RequestEvent.Key))
-                return;   //duplicated request
 
-            Action<object> replyAction = new Action<object>((transObj) => {
-                if (transObj is TransactionObject)
-                {
-                    TransactionObject transactionMeta = (TransactionObject)transObj;
-                    try
-                    {
-                        transactionMeta.ActionFunc(transactionMeta.RequestKey, transactionMeta.Para); // call replyCallback
-                    }
-                    finally
-                    {
-                        if (_replyActions.ContainsKey(reqObj.RequestEvent.Key))
-                            _eventReplyAction -= _replyActions[reqObj.RequestEvent.Key];
-                    }
-                }
-            });
-            _replyActions.Add(reqObj.RequestEvent.Key, replyAction);
+        #endregion //properties
 
-            _eventReplyAction += replyAction;
-
-            if(_eventAction != null)
-                _eventAction(reqObj.RequestEvent);  //call to subscribed function for request
-        }
+        #region member function
         public AkkaEventActor()
         {
             Receive<object>(obj =>
@@ -98,11 +78,43 @@ namespace EventPlatform
                         _eventAction(obj); //call to subscribed function for publish
                 }catch(Exception e)
                 {
-                    System.Windows.Forms.MessageBox.Show(e.ToString(), "Actor Excpetion", MessageBoxButtons.OK);
+                    //log.error
+                    //System.Windows.Forms.MessageBox.Show(e.ToString(), "Actor Excpetion", MessageBoxButtons.OK);
                 }
 
             });
         }
+        protected void Request(AkkaRequest reqObj)
+        {
+
+            if (_replyActions.ContainsKey(reqObj.RequestEvent.Key))
+                return;   //duplicated request
+
+            Action<object> replyAction = new Action<object>((transObj) => {
+                if (transObj is TransactionObject)
+                {
+                    TransactionObject transactionMeta = (TransactionObject)transObj;
+                    try
+                    {
+                        transactionMeta.ActionFunc(transactionMeta.RequestKey, transactionMeta.Para); // call replyCallback
+                    }
+                    finally
+                    {
+                        if (_replyActions.ContainsKey(reqObj.RequestEvent.Key))
+                            _eventReplyAction -= _replyActions[reqObj.RequestEvent.Key];
+                    }
+                }
+            });
+            _replyActions.Add(reqObj.RequestEvent.Key, replyAction);
+
+            _eventReplyAction += replyAction;
+
+            if (_eventAction != null)
+                _eventAction(reqObj.RequestEvent);  //call to subscribed function for request
+        }
+        #endregion //member function
+
+        #region akka event class
         public class AkkaSub
         {
             Action<object> _subFunc;
@@ -151,5 +163,6 @@ namespace EventPlatform
             }
 
         }
+        #endregion //akka event class
     }
 }
