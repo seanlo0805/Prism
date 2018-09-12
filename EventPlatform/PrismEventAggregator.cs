@@ -25,7 +25,7 @@ namespace EventPlatform
         IEventAggregator _eventAggregatorReply;
 
         /// <summary>
-        /// 用來處理reply工作function的sub / unsbu, 必免一直累積
+        /// 用來處理reply工作function的sub / unsbu, 避免一直累積
         /// 最後還是透過它來呼叫replyCallback
         /// </summary>
         Dictionary<string, Action<object>> _replyActions = new Dictionary<string, Action<object>>();

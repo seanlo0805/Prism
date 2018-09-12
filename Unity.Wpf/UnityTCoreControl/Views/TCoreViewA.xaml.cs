@@ -25,7 +25,7 @@ namespace UnityTCoreControl.Views
         public TCoreViewA()
         {
             InitializeComponent();
-            this.DataContext = new TCoreViewAViewModel( EventHandlerFactory<PrismEventAggregatorAsync>.FetchEventHandler("tcore"),
+            this.DataContext = new TCoreViewAViewModel( EventHandlerFactory<AkkaEventHandler>.FetchEventHandler("tcore"),
                                                         EventHandlerFactory<PrismEventAggregator>.FetchEventHandler("tcore1"));
         }
     }

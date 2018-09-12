@@ -24,6 +24,7 @@ namespace UnityTCoreControl.ViewModels
         IEventHandler _eh;
         IEventHandler _eh1;
         private string _title = "TCore ViewA";
+        private string _replyMsg = "replyMsg";
         #endregion member data
 
         #region properties
@@ -34,6 +35,11 @@ namespace UnityTCoreControl.ViewModels
         public DelegateCommand SendMessageCommand1
         {
             get; private set;
+        }
+        public string ReplyMsg
+        {
+            get { return _replyMsg; }
+            set { SetProperty(ref _replyMsg, value); }
         }
         public string Title
         {
@@ -61,7 +67,7 @@ namespace UnityTCoreControl.ViewModels
             if(obj is ReplyEvent)
             {
                 ReplyEvent reply = (ReplyEvent)obj;
-
+                ReplyMsg = reply.ReplyObj.ToString();
             }
         }
         private void SendEvent1()

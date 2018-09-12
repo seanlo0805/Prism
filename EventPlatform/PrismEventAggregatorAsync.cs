@@ -85,8 +85,8 @@ namespace EventPlatform
             //{
                 lock (replyLocker)
                 {
-                ReplyRef.GetEvent<MessageSentEvent>().Publish(new TransactionObject(origReq.Key, obj, origReq.ReplyCallback));
-            }
+                    ReplyRef.GetEvent<MessageSentEvent>().Publish(new TransactionObject(origReq.Key, obj, origReq.ReplyCallback));
+                }
             //});
         }
 
@@ -122,7 +122,7 @@ namespace EventPlatform
 
             lock (_eventAggregator)
             {
-                //在發出Request時, 就指定好Reply物件, 並在裡面也己經包含了ReplyFunc, 見property
+                //在發出Request時, 就指定好Reply物件this(IEventHandlerRef), 並在裡面也己經包含了ReplyRef, 見property
                 _eventAggregator.GetEvent<MessageSentEvent>().Publish(new RequestEvent(key, this, actionCallBack, obj));
 
             }

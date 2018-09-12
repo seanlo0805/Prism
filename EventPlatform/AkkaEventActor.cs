@@ -5,19 +5,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using static EventPlatform.PrismEventAggregator;
 
 namespace EventPlatform
 {
-    //it suppose to create an akka system, and then it could create an actor.
+    /// <summary>
+    /// Akka當作Event Handler的優點在於, 自帶的Actor特性, 可以說默認多工的Handler
+    /// Akka本身應該可以適用更多元的EventMessager, 讓每個畫面都持有一個Actor來使用
+    /// 這裡把一個Actor也當成一個EventAggregator, 受侷限了
+    /// </summary>
     public class AkkaEventActor : ReceiveActor
     {
         //private ActorRef _actor;
-        Action<object> _eventHandler = null;
-        Action<object> _eventRefHandler = null;
+        Action<object> _eventAction = null;
+        Action<object> _eventReplyAction = null;
 
         AkkaEventActorRef _eventHandlerRef = null;
 
+        /// <summary>
+        /// 用來處理reply工作function的sub / unsbu, 避免一直累積
+        /// 最後還是透過它來呼叫replyCallback
+        /// </summary>
+        Dictionary<string, Action<object>> _replyActions = new Dictionary<string, Action<object>>();
 
         public IEventHandlerRef ReplyRef
         {
@@ -28,50 +41,65 @@ namespace EventPlatform
                 return _eventHandlerRef;
             }
         }
-        public void Request(string key, object obj, Action<string, object> actionReply)
+        protected void Request(AkkaRequest reqObj)
         {
-            //_eventRefHandler += new Action<object>((para) => {
-            //    try
-            //    {
-            //        actionReply(para);
-            //    }
-            //    finally
-            //    {
-            //        _eventHandler -= actionReply;
-            //    }
-            //});
+           
+            if (_replyActions.ContainsKey(reqObj.RequestEvent.Key))
+                return;   //duplicated request
 
-            //object result = null; //ReplyObj
-            //                      //do something
-            RequestEvent request = (RequestEvent)obj;
-            ReplyEvent reply = new ReplyEvent() { ReplyObj = "123" };
-            //reply.ReplyObj = result;
-            request.Reply(reply);
+            Action<object> replyAction = new Action<object>((transObj) => {
+                if (transObj is TransactionObject)
+                {
+                    TransactionObject transactionMeta = (TransactionObject)transObj;
+                    try
+                    {
+                        transactionMeta.ActionFunc(transactionMeta.RequestKey, transactionMeta.Para); // call replyCallback
+                    }
+                    finally
+                    {
+                        if (_replyActions.ContainsKey(reqObj.RequestEvent.Key))
+                            _eventReplyAction -= _replyActions[reqObj.RequestEvent.Key];
+                    }
+                }
+            });
+            _replyActions.Add(reqObj.RequestEvent.Key, replyAction);
+
+            _eventReplyAction += replyAction;
+
+            if(_eventAction != null)
+                _eventAction(reqObj.RequestEvent);  //call to subscribed function for request
         }
-
         public AkkaEventActor()
         {
             Receive<object>(obj =>
             {
-                if(obj is AkkaUnsub)
+                try
                 {
-                    AkkaUnsub unsubObj = (AkkaUnsub)obj;
-                    _eventHandler -= unsubObj.SubFunc;
-                }
-                else if(obj is AkkaSub)
+                    if (obj is AkkaUnsub)
+                    {
+                        AkkaUnsub unsubObj = (AkkaUnsub)obj;
+                        _eventAction -= unsubObj.SubFunc;
+                    }
+                    else if (obj is AkkaSub)
+                    {
+                        AkkaSub subObj = (AkkaSub)obj;
+                        _eventAction += subObj.SubFunc;
+                    }
+                    else if (_eventAction != null && obj is AkkaRequest)
+                    {
+                        AkkaRequest reqObj = (AkkaRequest)obj;
+                        Request((AkkaRequest)obj);
+                    }
+                    else if (_eventReplyAction != null && obj is TransactionObject)
+                    {
+                        _eventReplyAction(obj); //call to reply function
+                    }
+                    else if (_eventAction != null)
+                        _eventAction(obj); //call to subscribed function for publish
+                }catch(Exception e)
                 {
-                    AkkaSub subObj = (AkkaSub)obj;
-                    _eventHandler += subObj.SubFunc;
+                    System.Windows.Forms.MessageBox.Show(e.ToString(), "Actor Excpetion", MessageBoxButtons.OK);
                 }
-                else if (obj is AkkaRequest)
-                {
-                    AkkaRequest reqObj = (AkkaRequest)obj;
-                    Request(reqObj.Key, reqObj.ReqObject, reqObj.ReplyFunc);
-                }
-                else if (_eventRefHandler != null && obj is ReplyEvent)
-                    _eventRefHandler(obj); //call to reply function
-                else if (_eventHandler != null)
-                    _eventHandler(obj); //call to subscribed function
 
             });
         }
@@ -87,26 +115,13 @@ namespace EventPlatform
         }
         public class AkkaRequest
         {
-            Action<string, object> _replyFunc;
-            object _reqObj;
-            string _key;
+            RequestEvent _requsetEvent;
 
 
-            public string Key
+            public RequestEvent RequestEvent
             {
-                get { return _key; }
-                set { _key = value; }
-            }
-            public Action<string, object> ReplyFunc
-            {
-                get { return _replyFunc; }
-                set { _replyFunc = value; }
-            }
-
-            public object ReqObject
-            {
-                get { return _reqObj; }
-                set { _reqObj = value; }
+                get { return _requsetEvent; }
+                set { _requsetEvent = value; }
             }
         }
         public class AkkaReply
