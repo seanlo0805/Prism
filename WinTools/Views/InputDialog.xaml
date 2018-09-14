@@ -1,0 +1,14 @@
+﻿<Window x:Name="InputDialg" x:Class="WinTools.Views.InputDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WinTools.Views"
+        mc:Ignorable="d"
+        Title="Input" Height="100" Width="200">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding Content}" VerticalAlignment="Top" Width="120"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="108,41,0,0" VerticalAlignment="Top" Width="75" Command="{Binding OkCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=InputDialg}"/>
+
+    </Grid>
+</Window>

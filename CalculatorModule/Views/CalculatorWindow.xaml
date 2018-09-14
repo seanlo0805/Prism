@@ -1,0 +1,43 @@
+﻿<Window x:Class="CalculatorModule.Views.CalculatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:views1="clr-namespace:UnityDialogModule.Views;assembly=UnityDialogModule"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="350" Width="525">
+    <i:Interaction.Triggers>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding CalculatorCommandNotificationRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views1:ViewA />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding Argument1NotificationRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views1:ViewA />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding Argument2NotificationRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views1:ViewA />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+
+    </i:Interaction.Triggers>
+    <StackPanel>
+        <Button Margin="5" Content="Calculator Command" Command="{Binding CalculatorCommand}"/>
+        <Button Margin="5" Content="Argument1" Command="{Binding Argument1Command}"/>
+        <Button Margin="5" Content="Argument2" Command="{Binding Argument2Command}"/>
+        <Button Margin="5" Content="Execute" Command="{Binding ExecuteCommand}"/>
+
+        <TextBlock Text="{Binding Title}" Margin="25" HorizontalAlignment="Center" FontSize="24" />
+    </StackPanel>
+
+</Window>
