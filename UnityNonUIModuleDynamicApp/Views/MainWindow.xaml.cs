@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
-namespace UnityNonUIModuleApp.Views
+namespace UnityNonUIModuleDynamicApp.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -12,6 +11,5 @@ namespace UnityNonUIModuleApp.Views
         {
             InitializeComponent();
         }
-
     }
 }

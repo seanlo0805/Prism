@@ -4,6 +4,7 @@ using Prism.Regions;
 using System;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
+using CalculatorInterfaces;
 
 namespace CalculatorModule
 {
@@ -21,6 +22,9 @@ namespace CalculatorModule
         public void Initialize()
         {
             _container.RegisterTypeForNavigation<ViewA>();
+            _container.RegisterType<ICalculator, Calculator>();
+            _container.RegisterType<ICalculatorReplLoop, CalculatorReplLoop>();
+            //Container.RegisterType<IInputService, ConsoleInputService>();
         }
     }
 }

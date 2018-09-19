@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinTools.ViewModels;
-using WinTools.Views;
 
 namespace InputOutputModule
 {
@@ -17,19 +15,19 @@ namespace InputOutputModule
         //WinTools.Views.InputDialog dlg = new WinTools.Views.InputDialog("");
         public string ReadDialog(string header)
         {
-            InputDialog dlg = new InputDialog("");
-            Nullable<bool> result = dlg.ShowDialog();
-            if (result != null && result.Value == true)
-            {
-                string content = ((InputDialogViewModel)dlg.DataContext).Content;
-            }
-            //InputDialog dlg = new InputDialog(header);
-            //dlg.ShowDialog();
-            //if (dlg.DataContext is InputDialogViewModel)
+            //InputDialog dlg = new InputDialog("");
+            //Nullable<bool> result = dlg.ShowDialog();
+            //if (result != null && result.Value == true)
             //{
-            //    return ((InputDialogViewModel)dlg.DataContext).Content;
+            //    string content = ((InputDialogViewModel)dlg.DataContext).Content;
             //}
-            //else
+            ////InputDialog dlg = new InputDialog(header);
+            ////dlg.ShowDialog();
+            ////if (dlg.DataContext is InputDialogViewModel)
+            ////{
+            ////    return ((InputDialogViewModel)dlg.DataContext).Content;
+            ////}
+            ////else
             return "";
 
         }

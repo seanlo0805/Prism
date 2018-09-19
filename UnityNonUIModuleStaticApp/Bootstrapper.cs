@@ -11,6 +11,11 @@ using System;
 
 namespace UnityNonUIModuleStaticApp
 {
+    /// <summary>
+    /// 在代碼內直接寫入模組(In Code), 便利之處在於可以在模組Initialize()之前, 就可以使用該class
+    /// 以下示範在一開始(MainWindow 在Loaded事件時)就使用Modules的class, 此時按Prism的作業, IModule.Initialize()並未開始
+    /// 為了達到此一目的, 必須在Bootstrapper就先把相關的class先Register進去, 見<code>Bootstrapper.ConfigureContainer()</code>
+    /// </summary>
     class Bootstrapper : UnityBootstrapper
     {
         //protected override DependencyObject CreateShell()

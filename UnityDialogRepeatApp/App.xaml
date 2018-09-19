@@ -1,7 +1,7 @@
-﻿<Application x:Class="UnityNonUIModuleApp.App"
+﻿<Application x:Class="UnityDialogRepeatApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:UnityNonUIModuleApp">
+             xmlns:local="clr-namespace:UnityDialogRepeatApp">
     <Application.Resources>
          
     </Application.Resources>

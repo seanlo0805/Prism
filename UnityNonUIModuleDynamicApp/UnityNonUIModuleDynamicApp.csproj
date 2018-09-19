@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A344315D-28AC-403F-98CB-916FD186DAD7}</ProjectGuid>
+    <ProjectGuid>{C1898168-9284-4B88-A51C-89002F10DBC5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnityNonUIModuleApp</RootNamespace>
-    <AssemblyName>UnityNonUIModuleApp</AssemblyName>
+    <RootNamespace>UnityNonUIModuleDynamicApp</RootNamespace>
+    <AssemblyName>UnityNonUIModuleDynamicApp</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -89,6 +89,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -98,6 +99,30 @@
     <PackageReference Include="Prism.Unity" Version="6.3.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CalculatorInterfaces\CalculatorInterfaces.csproj">
+      <Project>{56EE2A34-3F6A-42AB-9113-20D9655F9D03}</Project>
+      <Name>CalculatorInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CalculatorModule\CalculatorModule.csproj">
+      <Project>{0b989ee1-afaa-40a9-9d16-bdb01cfb4f4c}</Project>
+      <Name>CalculatorModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InputOutputModule\InputOutputModule.csproj">
+      <Project>{beca3dc9-9f2c-4460-bfa7-a3dc542f20c1}</Project>
+      <Name>InputOutputModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NonUICommonDll\NonUICommonDll.csproj">
+      <Project>{D80E6913-52FA-4FBF-A8E7-687C3EC15E11}</Project>
+      <Name>NonUICommonDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unity.Wpf\UnityAutowireControl\UnityAutowireControl.csproj">
+      <Project>{4e5c3d6a-2eb5-4369-9acd-484bde635433}</Project>
+      <Name>UnityAutowireControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unity.Wpf\UnityTCoreControl\UnityTCoreControl.csproj">
+      <Project>{5839f270-d8ad-4d42-a917-ec0bc7c0ffc1}</Project>
+      <Name>UnityTCoreControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnityDialogModule\UnityDialogModule.csproj">
       <Project>{30e64f0c-b315-4ebf-9389-bdcdac988c5d}</Project>
       <Name>UnityDialogModule</Name>

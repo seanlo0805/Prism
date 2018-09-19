@@ -4,6 +4,7 @@ using Prism.Regions;
 using System;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
+using CalculatorInterfaces;
 
 namespace InputOutputModule
 {
@@ -21,6 +22,12 @@ namespace InputOutputModule
         public void Initialize()
         {
             _container.RegisterTypeForNavigation<ViewA>();
+
+            _container.RegisterType<IInputService, MsgBoxInputService>();
+            _container.RegisterType<IInputParserService, InputParserService>();
+
+            _container.RegisterType<IOutputService, ConsoleOutputService>("Consoleoutput");
+            _container.RegisterType<IOutputService, MsgBoxOutputService>("MsgBoxOutput");
         }
     }
 }

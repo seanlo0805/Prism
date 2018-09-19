@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnityNonUIModuleApp.Properties
+namespace UnityNonUIModuleDynamicApp.Properties
 {
 
 

@@ -49,7 +49,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Notification\CalculatorSelectNotification.cs" />
     <Compile Include="Notification\EditBoxNotification.cs" />
+    <Compile Include="Notification\ICalculatorSelectNotification.cs" />
     <Compile Include="Notification\IEditBoxNotification.cs" />
     <Compile Include="UnityDialogModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -65,13 +67,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\ViewCommandSelectorViewModel.cs" />
     <Compile Include="ViewModels\StandalongWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewAViewModel.cs" />
+    <Compile Include="Views\ViewCommandSelector.xaml.cs">
+      <DependentUpon>ViewCommandSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StandalongWindow.xaml.cs">
       <DependentUpon>StandalongWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewA.xaml.cs">
       <DependentUpon>ViewA.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewResult.xaml.cs">
+      <DependentUpon>ViewResult.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -83,13 +92,26 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\NonUICommonDll\NonUICommonDll.csproj">
+      <Project>{d80e6913-52fa-4fbf-a8e7-687c3ec15e11}</Project>
+      <Name>NonUICommonDll</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ViewCommandSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StandalongWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewA.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

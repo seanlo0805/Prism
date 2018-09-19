@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using WinTools.ViewModels;
 using WinTools.Views;
 
-namespace TestDialog
+namespace TestDialog.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
