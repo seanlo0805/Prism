@@ -15,4 +15,6 @@
             <!--docking:TabbedMdiHost /-->
         </docking:Workspace>
     </docking:DockSite>
+    
+
 </Window>
