@@ -7,7 +7,11 @@
         Title="{Binding Title}" Height="350" Width="525">
     <docking:DockSite x:Name="dockSite" Grid.Row="1" prism:RegionManager.RegionName="MainRegion" CanDocumentWindowsFloat="True">
         <docking:Workspace>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="233,120,0,0" Command="{Binding OpenRaftingWindowA}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+            <Grid>
+                <Button Content="OpenViewA" HorizontalAlignment="Left" Margin="76,127,0,0" Command="{Binding OpenRaftingWindowA}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+
+                <Button Content="OpenViewB" HorizontalAlignment="Left" Margin="226,127,0,0" Command="{Binding OpenRaftingWindowB}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+            </Grid>
             <!--docking:TabbedMdiHost /-->
         </docking:Workspace>
     </docking:DockSite>
