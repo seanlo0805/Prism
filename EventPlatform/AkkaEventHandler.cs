@@ -53,6 +53,8 @@ namespace EventPlatform
                 if (!_actorPool_.ContainsKey(handlerName))
                 {
                     _actorRef = _akkaSystem_.ActorOf(Props.Create(() => new AkkaEventActor()), _handlerName);
+                    //_actorRef = _akkaSystem_.ActorOf(Props.Create(typeof(AkkaEventActor)), _handlerName);
+                    //_actorRef = _akkaSystem_.ActorOf(new Props( typeof(AkkaEventActor), new object[] { _handlerName }));
                     _actorPool_.Add(handlerName, new ActorMeta() { Count = 1, ActorRef = _actorRef });
                 }
                 else

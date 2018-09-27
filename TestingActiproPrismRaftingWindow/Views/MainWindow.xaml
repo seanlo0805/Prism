@@ -1,0 +1,14 @@
+﻿<Window x:Class="TestingActiproPrismRaftingWindow.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+		xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="350" Width="525">
+    <docking:DockSite x:Name="dockSite" Grid.Row="1" prism:RegionManager.RegionName="MainRegion" CanDocumentWindowsFloat="True">
+        <docking:Workspace>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="233,120,0,0" Command="{Binding OpenRaftingWindowA}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+            <!--docking:TabbedMdiHost /-->
+        </docking:Workspace>
+    </docking:DockSite>
+</Window>

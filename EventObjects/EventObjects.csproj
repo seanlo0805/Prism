@@ -41,12 +41,17 @@
     <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
     </Reference>
+    <Reference Include="Prism.Wpf">
+      <HintPath>..\Unity.Wpf\UnityTCoreApp\bin\Debug\Prism.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,6 +64,9 @@
   <ItemGroup>
     <Compile Include="EventHandlerInterface\IEventHandler.cs" />
     <Compile Include="EventHandlerInterface\IEventHandlerRef.cs" />
+    <Compile Include="EventHandlerInterface\IEventTransactionMediator.cs" />
+    <Compile Include="EventHandlerInterface\IServiceConsumerHandler.cs" />
+    <Compile Include="EventHandlerInterface\IServiceProviderHandler.cs" />
     <Compile Include="EventObjects\ReplyEvent.cs" />
     <Compile Include="EventObjects\TextEvent.cs" />
     <Compile Include="EventObjects\RequestEvent.cs" />
