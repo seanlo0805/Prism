@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using TestingActiproPrismRaftingWindow.Views.Docking;
 
 namespace TestingActiproPrismRaftingWindow.ViewModels
@@ -41,10 +42,14 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
                 layoutSerializer.LoadFromFile(layoutXmlFile, dockMgr);
         }
 
+        ///
         private void OpenViewB(DockSite dockMgr)
         {
             ToolWindow toolwindows = new ToolWindow(true);
             toolwindows.Title = "ViewB";
+
+            //https://www.actiprosoftware.com/community/thread/23398/styling-a-document-like-a-toolwindow#111977%20
+            toolwindows.ImageSource = new BitmapImage(new Uri("/Resources/Images/AppImg.png", UriKind.Relative));
             UserControl ctrl = new ViewB();
             ctrl.Width = Double.NaN;
             ctrl.Height = Double.NaN;

@@ -5,7 +5,7 @@
 		xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="350" Width="525">
-    <docking:DockSite x:Name="dockSite" Grid.Row="1" prism:RegionManager.RegionName="MainRegion" CanDocumentWindowsFloat="True">
+    <docking:DockSite x:Name="dockSite" Grid.Row="1" prism:RegionManager.RegionName="MainRegion" ToolWindowsHaveTitleBarIcons="true" ToolWindowsHaveTabImages="true" CanDocumentWindowsFloat="True">
         <docking:Workspace>
             <Grid>
                 <Button Content="OpenViewA" HorizontalAlignment="Left" Margin="76,127,0,0" Command="{Binding OpenRaftingWindowA}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
