@@ -23,11 +23,12 @@
             <avalon:LayoutPanel Orientation="Horizontal">
                 <avalon:LayoutDocumentPaneGroup DockWidth="100" Orientation="Vertical">
                     <avalon:LayoutDocumentPane>
-                        <avalon:LayoutAnchorable>
+                        <avalon:LayoutAnchorable Title="MainLayout">
                             <Grid>
                                 <Button Content="OpenViewA" HorizontalAlignment="Left" Margin="76,127,0,0" Command="{Binding OpenRaftingWindowA}" CommandParameter="{Binding ElementName=DockManager}" VerticalAlignment="Top" Width="75"/>
 
-                                <Button Content="SaveLayout" HorizontalAlignment="Left" Margin="176,127,0,0" Command="{Binding SaveLayoutToXml}" CommandParameter="{Binding ElementName=DockManager}" VerticalAlignment="Top" Width="75"/>
+                                <Button Content="SaveLayout" HorizontalAlignment="Left" Margin="176,127,0,0" Command="{Binding SaveLayoutToFile}" CommandParameter="{Binding ElementName=DockManager}" VerticalAlignment="Top" Width="75"/>
+                                <Button Content="LoadLayout" HorizontalAlignment="Left" Margin="176,164,0,0" Command="{Binding LoadLayoutFromFile}" CommandParameter="{Binding ElementName=DockManager}" VerticalAlignment="Top" Width="75"/>
                             </Grid>
                         </avalon:LayoutAnchorable>
 

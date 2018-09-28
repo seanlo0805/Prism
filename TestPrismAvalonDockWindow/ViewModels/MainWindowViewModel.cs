@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
@@ -12,6 +13,12 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace TestPrismAvalonDockWindow.ViewModels
 {
+    /// <summary>
+    /// 經過測試, 有幾個問題
+    /// 1. 不能在一次執行期間SaveLayout / LoadLayout, 關閉程式時會Exception
+    /// 2. 透過OpenViewA 開啟的FloatingWindow不能docking在同一個widnow
+    ///    但docking進MainWindow, 再拉出來的可以; 透過SaveLayout/ LoadLayout的window也可以
+    /// </summary>
     public class MainWindowViewModel : BindableBase
     {
         private string _title = "Prism Application";
@@ -21,7 +28,8 @@ namespace TestPrismAvalonDockWindow.ViewModels
             set { SetProperty(ref _title, value); }
         }
         public ICommand OpenRaftingWindowA { get { return new DelegateCommand<DockingManager>(OpenViewA); } }
-        public ICommand SaveLayoutToXml { get { return new DelegateCommand<DockingManager>(SaveLayout); } }
+        public ICommand SaveLayoutToFile { get { return new DelegateCommand<DockingManager>(SaveLayout); } }
+        public ICommand LoadLayoutFromFile { get { return new DelegateCommand<DockingManager>(LoadLayout); } }
 
 
         public MainWindowViewModel()
@@ -32,6 +40,26 @@ namespace TestPrismAvalonDockWindow.ViewModels
         {
             var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(dockMgr);
             serializer.Serialize(@".\AvalonDock.config");
+
+        }
+        private void LoadLayout(DockingManager dockMgr)
+        {
+            var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(dockMgr);
+            serializer.LayoutSerializationCallback += (s, args) =>
+            {
+                if (args != null && args.Model != null && args.Model.Title != null)
+                {
+                    switch (args.Model.Title)
+                    {
+                        case "ViewA":
+                            args.Content = new ViewA();
+                            break;
+
+                    }
+                }
+            };
+            if (File.Exists(@".\AvalonDock.config"))
+                serializer.Deserialize(@".\AvalonDock.config");
 
         }
         private void OpenViewA(DockingManager dockMgr)
@@ -69,8 +97,8 @@ namespace TestPrismAvalonDockWindow.ViewModels
             dockMgr.UpdateLayout();
             lfwc.Width = 300;
             lfwc.Height = 300;
-            lfwc.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
-            lfwc.ShowInTaskbar = true;
+            //lfwc.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+            //lfwc.ShowInTaskbar = true;
             //lfwc.Topmost = true;
             lfwc.Show();
         }

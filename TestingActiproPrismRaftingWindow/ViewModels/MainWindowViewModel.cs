@@ -1,7 +1,9 @@
 ﻿using ActiproSoftware.Windows.Controls.Docking;
+using ActiproSoftware.Windows.Controls.Docking.Serialization;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TestingActiproPrismRaftingWindow.Views.Docking;
@@ -10,6 +12,8 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        private DockSiteLayoutSerializer layoutSerializer = new DockSiteLayoutSerializer();
+        private string layoutXmlFile = @".\Actiprosoft.xml";
         private string _title = "Prism Application";
         public string Title
         {
@@ -18,11 +22,23 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
         }
         public ICommand OpenRaftingWindowA { get { return new DelegateCommand<DockSite>(OpenViewA); } }
         public ICommand OpenRaftingWindowB { get { return new DelegateCommand<DockSite>(OpenViewB); } }
+        public ICommand SaveLayoutToXml { get { return new DelegateCommand<DockSite>(SaveLayout); } }
+        public ICommand LoadLayoutFromXml { get { return new DelegateCommand<DockSite>(LoadLayout); } }
 
 
         public MainWindowViewModel()
         {
 
+        }
+
+        private void SaveLayout(DockSite dockMgr)
+        {
+            layoutSerializer.SaveToFile(layoutXmlFile, dockMgr);
+        }
+        private void LoadLayout(DockSite dockMgr)
+        {
+            if (File.Exists(layoutXmlFile))
+                layoutSerializer.LoadFromFile(layoutXmlFile, dockMgr);
         }
 
         private void OpenViewB(DockSite dockMgr)

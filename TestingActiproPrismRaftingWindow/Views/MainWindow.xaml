@@ -11,6 +11,8 @@
                 <Button Content="OpenViewA" HorizontalAlignment="Left" Margin="76,127,0,0" Command="{Binding OpenRaftingWindowA}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
 
                 <Button Content="OpenViewB" HorizontalAlignment="Left" Margin="226,127,0,0" Command="{Binding OpenRaftingWindowB}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+                <Button Content="SaveLayout" HorizontalAlignment="Left" Margin="76,176,0,0" Command="{Binding SaveLayoutToXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+                <Button Content="LoadLayout" HorizontalAlignment="Left" Margin="226,176,0,0" Command="{Binding LoadLayoutFromXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
             </Grid>
             <!--docking:TabbedMdiHost /-->
         </docking:Workspace>
