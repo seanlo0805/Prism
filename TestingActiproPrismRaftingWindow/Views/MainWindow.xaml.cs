@@ -22,6 +22,10 @@ namespace TestingActiproPrismRaftingWindow.Views
             layoutSerializer.DocumentWindowDeserializationBehavior = DockingWindowDeserializationBehavior.Discard;
             layoutSerializer.ToolWindowDeserializationBehavior = DockingWindowDeserializationBehavior.Discard;
             layoutSerializer.DockingWindowDeserializing += this.OnLayoutSerializerDockingWindowDeserializing;
+
+            ////if you would like to customizing serialization layout detail, implement "layoutSerializer.ObjectSerialized"
+            ////Add customizing layout configuration into "e.Node.Tag"
+            //layoutSerializer.ObjectSerialized += OnLayoutSerializerDockingWindowSerializaing
         }
 
         private void OnLayoutSerializerDockingWindowDeserializing(object sender, DockingWindowDeserializingEventArgs e)
