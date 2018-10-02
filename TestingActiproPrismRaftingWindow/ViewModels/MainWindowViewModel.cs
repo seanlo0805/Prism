@@ -132,7 +132,7 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
         //    if (File.Exists(layoutXmlFile))
         //        layoutSerializer.LoadFromFile(layoutXmlFile, dockMgr);
         //}
-        public void InitializeViewA(ToolWindow toolwindows)
+        public void InitializeViewA(DockSite dockSite, ToolWindow toolwindows)
         {
             if (toolwindows == null)
                 throw new ArgumentNullException("toolWindow for ViewA");
@@ -150,8 +150,18 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             toolwindows.Title = "ViewA";
             toolwindows.Tag = "ViewA"; //for deserialization
             toolwindows.Content = ctrl;
+
+            /// 這裡實作, 當Toolwindow closing時, 回收DockSite中的Toolwin resource
+            /// 但, 在Docking Toolwindow時, 其實會先Load -> UnLoad -> Load, 此時DockHost仍然存在
+            /// 只有在真的按下close windows時, DockHost才會變成null 
+            /// 如果DockHost ==null 表示真的要離開DockSite
+            toolwindows.Unloaded += (object sender, RoutedEventArgs e) => {
+                if (sender is ToolWindow win)
+                    if (win.DockHost == null) // window is leaving
+                        dockSite.ToolWindows.Remove(win);
+            };
         }
-        public void InitializeViewB(ToolWindow toolwindows)
+        public void InitializeViewB(DockSite dockSite, ToolWindow toolwindows)
         {
             if (toolwindows == null)
                 throw new ArgumentNullException("toolWindow for ViewB");
@@ -172,15 +182,26 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             toolwindows.CanDock = false;
             toolwindows.Content = ctrl;
 
+            /// 這裡實作, 當Toolwindow closing時, 回收DockSite中的Toolwin resource
+            /// 但, 在Docking Toolwindow時, 其實會先Load -> UnLoad -> Load, 此時DockHost仍然存在
+            /// 只有在真的按下close windows時, DockHost才會變成null 
+            /// 如果DockHost ==null 表示真的要離開DockSite
+            toolwindows.Unloaded += (object sender, RoutedEventArgs e) =>{
+                if (sender is ToolWindow win)
+                    if (win.DockHost == null) // window is leaving
+                        dockSite.ToolWindows.Remove(win);
+            };
+
             //https://www.actiprosoftware.com/community/thread/23398/styling-a-document-like-a-toolwindow#111977%20
             toolwindows.ImageSource = new BitmapImage(new Uri("/Resources/Images/AppImg.png", UriKind.Relative));
 
         }
+
         public void OpenViewB(DockSite dockMgr)
         {
             ToolWindow toolwindows = new ToolWindow(true);
 
-            InitializeViewB(toolwindows);
+            InitializeViewB(dockMgr, toolwindows);
 
             dockMgr.ToolWindows.Add(toolwindows);
             System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;
@@ -193,7 +214,7 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
         {
             ToolWindow toolwindows = new ToolWindow(true);
 
-            InitializeViewA(toolwindows);
+            InitializeViewA(dockMgr, toolwindows);
 
             dockMgr.ToolWindows.Add(toolwindows);
             System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;

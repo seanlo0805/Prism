@@ -33,7 +33,6 @@ namespace TestingActiproPrismRaftingWindow.Views
             ToolWindow tw = e.Item as ToolWindow;
             if (tw == null)
                 return;
-
             e.Node.Tag = tw.Tag.ToString();
             //IToolWindowContentControl ss = tw.Content as IToolWindowContentControl;
             //if (ss == null)
@@ -49,13 +48,13 @@ namespace TestingActiproPrismRaftingWindow.Views
         private void OnLayoutSerializerDockingWindowDeserializing(object sender, DockingWindowDeserializingEventArgs e)
         {
             MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            if (vm == null)
+            if (vm == null || !e.Node.IsOpen)
                 return;
 
             if (e.Node.Tag.ToString() == "ViewA")
             {
                 if (e.Window != null)
-                    vm.InitializeViewA(e.Window as ToolWindow);
+                    vm.InitializeViewA(dockSite, e.Window as ToolWindow);
                 else
                 {
                     vm.OpenViewA(dockSite);
@@ -64,7 +63,7 @@ namespace TestingActiproPrismRaftingWindow.Views
             else if (e.Node.Tag.ToString() == "ViewB")
             {
                 if (e.Window != null)
-                    vm.InitializeViewB(e.Window as ToolWindow);
+                    vm.InitializeViewB(dockSite, e.Window as ToolWindow);
                 else
                 {
                     vm.OpenViewB(dockSite);

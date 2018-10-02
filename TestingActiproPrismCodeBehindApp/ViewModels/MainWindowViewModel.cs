@@ -188,26 +188,40 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
         {
             ToolWindow toolwindows = new ToolWindow(DockSite);
 
+            toolwindows.Unloaded += OnToolWindow_Unload;
             InitializeViewB(toolwindows);
 
             //DockSite.ToolWindows.Add(toolwindows);
-            System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;
-            System.Windows.Point pt2 = new System.Windows.Point((pt.X - 32), (pt.Y + 8));
-            toolwindows.Float(pt2, new System.Windows.Size(300, 300));
+            //System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;
+            //System.Windows.Point pt2 = new System.Windows.Point((pt.X - 32), (pt.Y + 8));
+            //toolwindows.Float(pt2, new System.Windows.Size(300, 300));
+            toolwindows.Float(new System.Windows.Size(300, 300));
 
         }
 
         public void OpenViewA()
         {
             ToolWindow toolwindows = new ToolWindow(DockSite);
-
+            toolwindows.Unloaded += OnToolWindow_Unload;
             InitializeViewA(toolwindows);
 
             //DockSite.ToolWindows.Add(toolwindows);
-            System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;
-            System.Windows.Point pt2 = new System.Windows.Point((pt.X - 32), (pt.Y + 8));
-            toolwindows.Float(pt2, new System.Windows.Size(300, 300));
+            //System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;
+            //System.Windows.Point pt2 = new System.Windows.Point((pt.X - 32), (pt.Y + 8));
+            //toolwindows.Float(pt2, new System.Windows.Size(300, 300));
+            toolwindows.Float(new System.Windows.Size(300, 300));
 
+        }
+
+        private void OnToolWindow_Unload(object sender, RoutedEventArgs e)
+        {
+            /// 這裡實作, 當Toolwindow closing時, 回收DockSite中的Toolwin resource
+            /// 但, 在Docking Toolwindow時, 其實會先Load -> UnLoad -> Load, 此時DockHost仍然存在
+            /// 只有在真的按下close windows時, DockHost才會變成null 
+            /// 如果DockHost ==null 表示真的要離開DockSite
+            if (sender is ToolWindow win)
+                if(win.DockHost  == null) // window is leaving
+                    DockSite.ToolWindows.Remove(win);
         }
 
         private void OnLayoutSerializerDockingWindowDeserializing(object sender, DockingWindowDeserializingEventArgs e)
@@ -222,7 +236,7 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
                 }
             }
 
-            if (string.IsNullOrEmpty(controlName))
+            if (string.IsNullOrEmpty(controlName) || !e.Node.IsOpen)
                 return;
 
             if (controlName == "ViewA")
