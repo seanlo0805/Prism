@@ -1,5 +1,6 @@
 ﻿using ActiproSoftware.Windows.Controls.Docking;
 using ActiproSoftware.Windows.Controls.Docking.Serialization;
+using ActiproSoftware.Windows.Serialization;
 using System.IO;
 using System.Windows;
 using TestingActiproPrismRaftingWindow.ViewModels;
@@ -23,9 +24,26 @@ namespace TestingActiproPrismRaftingWindow.Views
             layoutSerializer.ToolWindowDeserializationBehavior = DockingWindowDeserializationBehavior.Discard;
             layoutSerializer.DockingWindowDeserializing += this.OnLayoutSerializerDockingWindowDeserializing;
 
-            ////if you would like to customizing serialization layout detail, implement "layoutSerializer.ObjectSerialized"
-            ////Add customizing layout configuration into "e.Node.Tag"
-            //layoutSerializer.ObjectSerialized += OnLayoutSerializerDockingWindowSerializaing
+            //if you would like to customizing serialization layout detail, implement "layoutSerializer.ObjectSerialized"
+            //Add customizing layout configuration into "e.Node.Tag"
+            layoutSerializer.ObjectSerialized += OnLayoutSerializerDockingWindowSerializaing;
+        }
+        void OnLayoutSerializerDockingWindowSerializaing(object sender, ItemSerializationEventArgs e)
+        {
+            ToolWindow tw = e.Item as ToolWindow;
+            if (tw == null)
+                return;
+
+            e.Node.Tag = tw.Tag.ToString();
+            //IToolWindowContentControl ss = tw.Content as IToolWindowContentControl;
+            //if (ss == null)
+            //    return;
+            //XElement xElem = ss.ToXMLConfigNode();
+            //if (xElem != null)
+            //{
+            //    xElem.Add(new XAttribute("Creater", ss.ObjectCreaterGUID));
+            //}
+            //e.Node.Tag = xElem.ToString();
         }
 
         private void OnLayoutSerializerDockingWindowDeserializing(object sender, DockingWindowDeserializingEventArgs e)
@@ -34,7 +52,7 @@ namespace TestingActiproPrismRaftingWindow.Views
             if (vm == null)
                 return;
 
-            if (e.Node.Name == "ViewA")
+            if (e.Node.Tag.ToString() == "ViewA")
             {
                 if (e.Window != null)
                     vm.InitializeViewA(e.Window as ToolWindow);
@@ -43,7 +61,7 @@ namespace TestingActiproPrismRaftingWindow.Views
                     vm.OpenViewA(dockSite);
                 }
             }
-            else if (e.Node.Name == "ViewB")
+            else if (e.Node.Tag.ToString() == "ViewB")
             {
                 if (e.Window != null)
                     vm.InitializeViewB(e.Window as ToolWindow);

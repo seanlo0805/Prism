@@ -5,7 +5,9 @@
 		xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="350" Width="525">
-    <docking:DockSite x:Name="dockSite" Grid.Row="1" prism:RegionManager.RegionName="MainRegion" ToolWindowsHaveTitleBarIcons="true" ToolWindowsHaveTabImages="true" CanDocumentWindowsFloat="True" FloatingWindowShowInTaskBarMode="Always">
+
+    <ContentControl Content="{Binding DockSite}" ></ContentControl>
+    <!--<docking:DockSite x:Name="dockSite" Grid.Row="1" prism:RegionManager.RegionName="MainRegion" ToolWindowsHaveTitleBarIcons="true" ToolWindowsHaveTabImages="true" CanDocumentWindowsFloat="True">
         <docking:Workspace>
             <Grid>
                 <ContentControl Content="{Binding TitleBarGrid}" ></ContentControl>
@@ -16,14 +18,14 @@
                     <Button Content="SaveLayout" HorizontalAlignment="Left" Margin="76,176,0,0"  VerticalAlignment="Top" Width="75" Click="Button_ClickSaveLayout"/>
                     <Button Content="LoadLayout" HorizontalAlignment="Left" Margin="226,176,0,0"  VerticalAlignment="Top" Width="75" Click="Button_ClickLoadLayout"/>
 
-                    <!--<Button Content="SaveLayout" HorizontalAlignment="Left" Margin="76,176,0,0" Command="{Binding SaveLayoutToXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
-                    <Button Content="LoadLayout" HorizontalAlignment="Left" Margin="226,176,0,0" Command="{Binding LoadLayoutFromXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>-->
+                    --><!--<Button Content="SaveLayout" HorizontalAlignment="Left" Margin="76,176,0,0" Command="{Binding SaveLayoutToXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="LoadLayout" HorizontalAlignment="Left" Margin="226,176,0,0" Command="{Binding LoadLayoutFromXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>--><!--
 
                 </Grid>
             </Grid>
-            <!--docking:TabbedMdiHost /-->
+            --><!--docking:TabbedMdiHost /--><!--
         </docking:Workspace>
-    </docking:DockSite>
+    </docking:DockSite>-->
     
 
 </Window>

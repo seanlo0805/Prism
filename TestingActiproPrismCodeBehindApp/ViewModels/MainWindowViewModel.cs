@@ -2,6 +2,7 @@
 using ActiproSoftware.Windows.Controls.Docking.Serialization;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.IO;
 using System.Windows;
@@ -16,11 +17,13 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        private DockSiteLayoutSerializer layoutSerializer = new DockSiteLayoutSerializer();
+        private string layoutXmlFile = @".\Actiprosoft.xml";
+
+
         private Grid _titleBarGrid;
         private Menu _menu;
-
-        //private DockSiteLayoutSerializer layoutSerializer = new DockSiteLayoutSerializer();
-        //private string layoutXmlFile = @".\Actiprosoft.xml";
+        DockSite _dockSite;
 
         private string _title = "Prism Application";
         public string Title
@@ -28,10 +31,16 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
-        public ICommand OpenRaftingWindowA { get { return new DelegateCommand<DockSite>(OpenViewA); } }
-        public ICommand OpenRaftingWindowB { get { return new DelegateCommand<DockSite>(OpenViewB); } }
-        //public ICommand SaveLayoutToXml { get { return new DelegateCommand<DockSite>(SaveLayout); } }
-        //public ICommand LoadLayoutFromXml { get { return new DelegateCommand<DockSite>(LoadLayout); } }
+        public ICommand OpenRaftingWindowA { get { return new DelegateCommand(OpenViewA); } }
+        public ICommand OpenRaftingWindowB { get { return new DelegateCommand(OpenViewB); } }
+        public ICommand SaveLayoutToXml { get { return new DelegateCommand(SaveLayout); } }
+        public ICommand LoadLayoutFromXml { get { return new DelegateCommand(LoadLayout); } }
+
+        public DockSite DockSite
+        {
+            get { return _dockSite; }
+            set { SetProperty(ref _dockSite, value); }
+        }
 
         public Menu Menu
         {
@@ -48,30 +57,46 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
         public MainWindowViewModel()
         {
             _titleBarGrid = new Grid();
-            _menu = new Menu();
+            _menu = SetupMenu();
+            _dockSite = SetupDockSite(_menu, _titleBarGrid);
 
-            SetupMenu(_menu);
+            //layout serialization
+            layoutSerializer.SerializationBehavior = DockSiteSerializationBehavior.ToolWindowsOnly;
+            layoutSerializer.DocumentWindowDeserializationBehavior = DockingWindowDeserializationBehavior.Discard;
+            layoutSerializer.ToolWindowDeserializationBehavior = DockingWindowDeserializationBehavior.Discard;
+            layoutSerializer.DockingWindowDeserializing += this.OnLayoutSerializerDockingWindowDeserializing;
 
-            _titleBarGrid.Children.Add(_menu);
-
-
-
-            //layoutSerializer.SerializationBehavior = DockSiteSerializationBehavior.ToolWindowsOnly;
-            //layoutSerializer.DocumentWindowDeserializationBehavior = DockingWindowDeserializationBehavior.Discard;
-            //layoutSerializer.ToolWindowDeserializationBehavior = DockingWindowDeserializationBehavior.Discard;
-            //layoutSerializer.DockingWindowDeserializing += this.OnLayoutSerializerDockingWindowDeserializing;
-
+            ////if you would like to customizing serialization layout detail, implement "layoutSerializer.ObjectSerialized"
+            ////Add customizing layout configuration into "e.Node.Tag"
+            //layoutSerializer.ObjectSerialized += OnLayoutSerializerDockingWindowSerializaing
         }
 
+        private DockSite SetupDockSite(Menu menu, Grid titleBarGrid)
+        {
+            DockSite dockSite = new DockSite();
+
+            //create toolwindow and show in Taskbar
+            dockSite.SetValue(DockSite.FloatingWindowShowInTaskBarModeProperty, FloatingWindowShowInTaskBarMode.Always);
+            dockSite.SetValue(FrameworkElement.NameProperty, "dockSite");
+            dockSite.SetValue(FrameworkElement.NameProperty, "dockSite");
+            dockSite.SetValue(RegionManager.RegionNameProperty, "MainRegion");
+
+            Grid grid = new Grid();
+            grid.Children.Add(titleBarGrid);
+            dockSite.SetValue(DockSite.ChildProperty, grid);
+
+            titleBarGrid.Children.Add(_menu);
+            return dockSite;
+
+        }
 
         // http://osask.cn/front/ask/view/1478001
         // https://www.cnblogs.com/yanxiaodi/p/4237576.html
         // https://hk.saowen.com/a/d9943e880f63ec25221ab5de3a1a2c820b548221727ed5051d96389511ae6277
         // https://stackoverflow.com/questions/14354773/wpf-how-to-bind-control-by-mvvm
-        private void SetupMenu(Menu menu)
+        private Menu SetupMenu()
         {
-            if (menu == null)
-                return;
+            Menu menu = new Menu();
 
             //IMenuService, data meta
             // 1. Command
@@ -85,53 +110,34 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             // 9. position ?!
             MenuItem openViewAItem = new MenuItem();
             openViewAItem.Command = OpenRaftingWindowA;
-            openViewAItem.SetBinding(MenuItem.CommandParameterProperty, new Binding() { ElementName = "dockSite" });
-            //BindingOperations.SetBinding(openViewAItem, MenuItem.CommandParameterProperty, new Binding() { ElementName = "dockSite" });
             openViewAItem.Header = "OpenViewA";
-            Menu.Items.Add(openViewAItem);
+            menu.Items.Add(openViewAItem);
 
 
             //https://social.msdn.microsoft.com/Forums/vstudio/en-US/71cd9782-8fd3-4094-89ce-8606cd05db4f/adding-images-to-menuitem?forum=wpf
             MenuItem openViewBItem = new MenuItem();
             openViewBItem.Command = OpenRaftingWindowB;
-            BindingOperations.SetBinding(openViewBItem, MenuItem.CommandParameterProperty, new Binding() { ElementName = "dockSite" });
             openViewBItem.Header = "OpenViewB";
             Image img = new Image();
             img.Source = new BitmapImage(new Uri("/Resources/Images/AppImg.png", UriKind.Relative));
             openViewBItem.Icon = img;
-            //openViewBItem.VerticalAlignment = VerticalAlignment.Bottom;
-            Menu.Items.Add(openViewBItem);
+            menu.Items.Add(openViewBItem);
+
+            MenuItem loadLayoutItem = new MenuItem();
+            loadLayoutItem.Command = LoadLayoutFromXml;
+            loadLayoutItem.Header = "LoadLayout";
+            menu.Items.Add(loadLayoutItem);
+
+            MenuItem saveLayoutItem = new MenuItem();
+            saveLayoutItem.Command = SaveLayoutToXml;
+            saveLayoutItem.Header = "SaveLayout";
+            menu.Items.Add(saveLayoutItem);
+
+            return menu;
+
         }
 
-        //private void OnLayoutSerializerDockingWindowDeserializing(object sender, DockingWindowDeserializingEventArgs e)
-        //{
-        //    if (e.Node.Name == "ViewA")
-        //    {
-        //        if(e.Window != null)
-        //            InitializeViewA(e.Window as ToolWindow);
-        //        else
-        //        {
-        //            //DockSite dockSite = e.Window.DockSite;
 
-        //            //DockSite.ge
-        //        }
-        //    }
-        //    else if (e.Node.Name == "ViewB")
-        //    {
-        //        InitializeViewB(e.Window as ToolWindow);
-
-        //    }
-
-        //}
-        //public void SaveLayout(DockSite dockMgr)
-        //{
-        //    layoutSerializer.SaveToFile(layoutXmlFile, dockMgr);
-        //}
-        //public void LoadLayout(DockSite dockMgr)
-        //{
-        //    if (File.Exists(layoutXmlFile))
-        //        layoutSerializer.LoadFromFile(layoutXmlFile, dockMgr);
-        //}
         public void InitializeViewA(ToolWindow toolwindows)
         {
             if (toolwindows == null)
@@ -148,15 +154,16 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             //ctrl.InitialUI();
 
             toolwindows.Title = "ViewA";
-            toolwindows.Tag = "ViewA"; //for deserialization
+            toolwindows.Name = "ViewA" + "_" + Guid.NewGuid().ToString().Replace("-", "_"); // no name no deserialization, you could use toolwindows.Tag instead
             toolwindows.Content = ctrl;
+            //toolwindows.Uid = Guid.NewGuid().ToString();
         }
         public void InitializeViewB(ToolWindow toolwindows)
         {
             if (toolwindows == null)
                 throw new ArgumentNullException("toolWindow for ViewB");
 
-            UserControl ctrl = new ViewB();
+            ViewB ctrl = new ViewB();
             ctrl.Width = Double.NaN;
             ctrl.Height = Double.NaN;
             ctrl.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
@@ -167,39 +174,87 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             //ctrl.InitialUI();
 
             toolwindows.Title = "ViewB";
-            toolwindows.Tag = "ViewB"; //for deserialization
+            toolwindows.Name = "ViewB"+"_"+ Guid.NewGuid().ToString().Replace("-","_");// no name no deserialization, you could use toolwindows.Tag instead
             //toolwindows.CanAttach = false;
-            toolwindows.CanDock = false;
+            //toolwindows.CanDock = false;
             toolwindows.Content = ctrl;
+            //toolwindows.Uid = Guid.NewGuid().ToString();
 
             //https://www.actiprosoftware.com/community/thread/23398/styling-a-document-like-a-toolwindow#111977%20
             toolwindows.ImageSource = new BitmapImage(new Uri("/Resources/Images/AppImg.png", UriKind.Relative));
 
         }
-        public void OpenViewB(DockSite dockMgr)
+        public void OpenViewB()
         {
-            ToolWindow toolwindows = new ToolWindow(true);
+            ToolWindow toolwindows = new ToolWindow(DockSite);
 
             InitializeViewB(toolwindows);
 
-            dockMgr.ToolWindows.Add(toolwindows);
+            //DockSite.ToolWindows.Add(toolwindows);
             System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;
             System.Windows.Point pt2 = new System.Windows.Point((pt.X - 32), (pt.Y + 8));
             toolwindows.Float(pt2, new System.Windows.Size(300, 300));
 
         }
 
-        public void OpenViewA(DockSite dockMgr)
+        public void OpenViewA()
         {
-            ToolWindow toolwindows = new ToolWindow(true);
+            ToolWindow toolwindows = new ToolWindow(DockSite);
 
             InitializeViewA(toolwindows);
 
-            dockMgr.ToolWindows.Add(toolwindows);
+            //DockSite.ToolWindows.Add(toolwindows);
             System.Drawing.Point pt = System.Windows.Forms.Control.MousePosition;
             System.Windows.Point pt2 = new System.Windows.Point((pt.X - 32), (pt.Y + 8));
             toolwindows.Float(pt2, new System.Windows.Size(300, 300));
 
         }
+
+        private void OnLayoutSerializerDockingWindowDeserializing(object sender, DockingWindowDeserializingEventArgs e)
+        {
+            string controlName="";
+            if(e.Node.Name != null )
+            {
+                int pos = e.Node.Name.IndexOf("_");
+                if(pos >= 0)
+                {
+                    controlName = e.Node.Name.Substring(0, pos);
+                }
+            }
+
+            if (string.IsNullOrEmpty(controlName))
+                return;
+
+            if (controlName == "ViewA")
+            {
+                if (e.Window != null)
+                    InitializeViewA(e.Window as ToolWindow);
+                else
+                {
+                    OpenViewA();
+                }
+            }
+            else if (controlName == "ViewB")
+            {
+                if (e.Window != null)
+                    InitializeViewB(e.Window as ToolWindow);
+                else
+                {
+                    OpenViewB();
+                }
+
+            }
+
+        }
+        public void SaveLayout()
+        {
+            layoutSerializer.SaveToFile(layoutXmlFile, DockSite);
+        }
+        public void LoadLayout()
+        {
+            if (File.Exists(layoutXmlFile))
+                layoutSerializer.LoadFromFile(layoutXmlFile, DockSite);
+        }
+
     }
 }
