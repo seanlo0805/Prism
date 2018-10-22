@@ -1,0 +1,16 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf"
+		>
+
+	<!-- NOTE: This resource allows the ThemeManager to ensure that the Shared Library's theme resources are loaded by WPF. -->
+	<SolidColorBrush x:Key="{ComponentResourceKey {x:Type themes:ThemeManager}, __LoadMarkerKey}" />
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/ActiproSoftware.Shared.Wpf;component/Themes/Includes/Common.xaml" />
+		<ResourceDictionary Source="/ActiproSoftware.Shared.Wpf;component/Themes/Includes/AeroNormalColor.xaml" />
+
+		<themes:SharedThemeCatalogRegistrar SystemTheme="Generic" />
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

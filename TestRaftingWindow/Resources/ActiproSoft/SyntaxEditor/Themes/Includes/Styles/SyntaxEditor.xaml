@@ -1,0 +1,616 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:editor="clr-namespace:ActiproSoftware.Windows.Controls.SyntaxEditor;assembly=ActiproSoftware.SyntaxEditor.Wpf"
+	xmlns:editorPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.SyntaxEditor.Primitives;assembly=ActiproSoftware.SyntaxEditor.Wpf"
+    xmlns:productsEditor="clr-namespace:ActiproSoftware.Products.SyntaxEditor;assembly=ActiproSoftware.SyntaxEditor.Wpf" 
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    >
+
+	<!-- 
+	
+		STYLES
+	
+	-->
+	
+    <!-- editorPrimitives:EditorViewSplitter -->
+    <Style x:Key="{x:Type editorPrimitives:EditorViewSplitter}" TargetType="{x:Type editorPrimitives:EditorViewSplitter}">
+		<Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:EditorViewSplitter}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True" />
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="Orientation" Value="Horizontal">
+				<Setter Property="Cursor" Value="{x:Static Cursors.SizeNS}" />
+				<Setter Property="Height" Value="4" />
+			</Trigger>
+			<Trigger Property="Orientation" Value="Vertical">
+				<Setter Property="Cursor" Value="{x:Static Cursors.SizeWE}" />
+				<Setter Property="Width" Value="4" />
+			</Trigger>
+		</Style.Triggers>
+    </Style>
+	
+	<!-- MagnifyingGlassIcon -->
+	<DrawingImage x:Key="MagnifyingGlassIcon">
+		<DrawingImage.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 197.959,235.714C 139.728,273.095 62.2161,256.192 24.8352,197.957C -12.5451,139.725 4.35768,62.214 62.5916,24.8361C 120.823,-12.5457 198.334,4.35809 235.713,62.5894C 273.095,120.822 256.191,198.334 197.959,235.714 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" MiterLimit="2.75" Brush="#FF686752"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.575448" RadiusY="0.575449" Center="0.415122,0.409627" GradientOrigin="0.415122,0.409627">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFFDFEFF" Offset="5.34058e-005"/>
+									<GradientStop Color="#FFD9F7F9" Offset="0.87001"/>
+									<GradientStop Color="#FFB5F1F3" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup>
+										<RotateTransform CenterX="0.415122" CenterY="0.409627" Angle="56.3099"/>
+									</TransformGroup>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 207.782,290.397L 178.895,245.399L 214.701,222.412L 243.592,267.412L 207.782,290.397 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" MiterLimit="2.75" Brush="#FF686752"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0.315498,0.626425" EndPoint="0.783949,0.626425">
+								<LinearGradientBrush.RelativeTransform>
+									<TransformGroup>
+										<SkewTransform CenterX="0.315498" CenterY="0.626425" AngleX="2.69332" AngleY="0"/>
+										<RotateTransform CenterX="0.315498" CenterY="0.626425" Angle="-34.4178"/>
+									</TransformGroup>
+								</LinearGradientBrush.RelativeTransform>
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FFBFC1A0" Offset="0"/>
+									<GradientStop Color="#FFCFD0AE" Offset="0.299394"/>
+									<GradientStop Color="#FFDFE0BD" Offset="0.522472"/>
+									<GradientStop Color="#FFBFC1A0" Offset="1"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 299.4,451.629L 199.06,295.312L 251.685,261.534L 352.027,417.842L 299.4,451.629 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" MiterLimit="2.75" Brush="#FF564928"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0.35152,0.580565" EndPoint="0.671342,0.580565">
+								<LinearGradientBrush.RelativeTransform>
+									<TransformGroup>
+										<SkewTransform CenterX="0.35152" CenterY="0.580565" AngleX="11.4782" AngleY="0"/>
+										<RotateTransform CenterX="0.35152" CenterY="0.580565" Angle="-28.4886"/>
+									</TransformGroup>
+								</LinearGradientBrush.RelativeTransform>
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FF5D5942" Offset="0"/>
+									<GradientStop Color="#FF807950" Offset="0.315654"/>
+									<GradientStop Color="#FFA4995E" Offset="0.550847"/>
+									<GradientStop Color="#FF615D44" Offset="1"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingImage.Drawing>
+	</DrawingImage>
+	
+    <!-- editor:SyntaxEditor -->
+    <Style x:Key="{x:Type editor:SyntaxEditor}" TargetType="{x:Type editor:SyntaxEditor}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalThicknessKey}}" />
+		<Setter Property="CaretBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditCaretBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+		<Setter Property="IndicatorMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditIndicatorMarginBackgroundNormalBrushKey}}" />
+		<Setter Property="LineNumberMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="LineNumberMarginForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditLineNumberMarginForegroundNormalBrushKey}}" />
+		<Setter Property="OutliningMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="Padding" Value="0" />
+		<Setter Property="RulerMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditRulerMarginBackgroundNormalBrushKey}}" />
+		<Setter Property="RulerMarginForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditRulerMarginForegroundNormalBrushKey}}" />
+		<Setter Property="SelectionBackgroundActive" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionSemiTransparentBackgroundFocusedBrushKey}}" />
+		<Setter Property="SelectionBackgroundInactive" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionSemiTransparentBackgroundNormalBrushKey}}" />
+		<Setter Property="SelectionBorderActiveBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionSemiTransparentBorderFocusedBrushKey}}" />
+		<Setter Property="SelectionBorderInactiveBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionSemiTransparentBorderNormalBrushKey}}" />
+		<Setter Property="SelectionMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="VisibleWhitespaceForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditWhitespaceForegroundNormalBrushKey}}" />
+		<Setter Property="WordWrapGlyphMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="WordWrapGlyphMarginForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditWordWrapGlyphMarginForegroundNormalBrushKey}}" />
+		<Setter Property="ZoomLevelIndicatorTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<DataTemplate.Resources>
+						<shared:PercentageConverter x:Key="PercentageConverter" />						
+					</DataTemplate.Resources>
+					
+					<Border Background="White" BorderBrush="Gray" BorderThickness="1">
+						<StackPanel Orientation="Horizontal">
+							<Image Width="16" Height="16" Stretch="Uniform" Source="{StaticResource MagnifyingGlassIcon}" />
+							<TextBlock FontWeight="Bold" FontSize="16" Foreground="Gray" VerticalAlignment="Center" Text="{Binding Converter={StaticResource PercentageConverter}, ConverterParameter=%}" />
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editor:SyntaxEditor}">
+					
+					<AdornerDecorator>
+						<editorPrimitives:EditorViewHost x:Name="PART_EditorViewHost" />
+					</AdornerDecorator>
+				
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}" />
+				<Setter Property="LineNumberMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}" />
+				<Setter Property="OutliningMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}" />
+				<Setter Property="SelectionMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}" />
+				<Setter Property="WordWrapGlyphMarginBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}" />
+			</Trigger>
+			<Trigger Property="IsMultiLine" Value="False">
+				<Setter Property="AcceptsTab" Value="False" />
+				<Setter Property="IsOutliningMarginVisible" Value="False" />
+				<Setter Property="IsSelectionMarginVisible" Value="False" />
+				<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBoxEditPaddingNormalThicknessKey}}" />
+				<Setter Property="SelectionBackgroundInactive" Value="{x:Null}" />
+				<Setter Property="SelectionBorderInactiveBrush" Value="{x:Null}" />
+			</Trigger>
+		</Style.Triggers>
+    </Style>
+	
+    <!-- editorPrimitives:EditorView -->
+    <Style x:Key="{x:Type editorPrimitives:EditorView}" TargetType="{x:Type editorPrimitives:EditorView}">
+		<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type editor:SyntaxEditor}}, Path=Background}" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditIsAnimationEnabledBooleanKey}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:EditorView}">
+                
+					<shared:ElementChrome x:Name="chrome"
+							Background="{TemplateBinding Background}" 
+							BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}"
+							BackgroundFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundFocusedBrushKey}}"
+							BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundHoverBrushKey}}"
+							BorderBrush="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type editor:SyntaxEditor}}, Path=BorderBrush}" 
+							BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderDisabledBrushKey}}"
+							BorderBrushFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderFocusedBrushKey}}"
+							BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderHoverBrushKey}}"
+							BorderThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type editor:SyntaxEditor}}, Path=BorderThickness}"
+							Padding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type editor:SyntaxEditor}}, Path=Padding}"
+							IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.EditElementChromeBorderStyleKey}}"
+							CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+							SnapsToDevicePixels="true">
+						<ContentPresenter ClipToBounds="True" />
+					</shared:ElementChrome>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocused" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Focused" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+    <!-- editorPrimitives:ScrollBarTray -->
+    <Style x:Key="{x:Type editorPrimitives:ScrollBarTray}" TargetType="{x:Type editorPrimitives:ScrollBarTray}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollViewerSpacerBackgroundNormalBrushKey}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:ScrollBarTray}">
+					<ControlTemplate.Resources>
+						<Style TargetType="shared:PopupButton" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.EmbeddedPopupButtonStyleKey}}" />
+						<Style TargetType="Button" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseStyleKey}}">
+							<Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+							<Setter Property="Focusable" Value="False" />
+							<Setter Property="IsTabStop" Value="False" />
+							<Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+						</Style>
+						<Style TargetType="RepeatButton" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseStyleKey}}">
+							<Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+							<Setter Property="Focusable" Value="False" />
+							<Setter Property="IsTabStop" Value="False" />
+							<Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+						</Style>
+						<Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseStyleKey}}">
+							<Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+							<Setter Property="Focusable" Value="False" />
+							<Setter Property="IsTabStop" Value="False" />
+							<Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+						</Style>
+					</ControlTemplate.Resources>
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<ContentPresenter />
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="Orientation" Value="Horizontal">
+							<Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+						</Trigger>
+						<Trigger Property="Orientation" Value="Vertical">
+							<Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+    <!-- editorPrimitives:ScrollBarBlock -->
+    <Style x:Key="{x:Type editorPrimitives:ScrollBarBlock}" TargetType="{x:Type editorPrimitives:ScrollBarBlock}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollViewerSpacerBackgroundNormalBrushKey}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:ScrollBarBlock}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True" />
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+    <!-- editorPrimitives:ScrollBarSplitter -->
+    <Style x:Key="{x:Type editorPrimitives:ScrollBarSplitter}" TargetType="{x:Type editorPrimitives:ScrollBarSplitter}">
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalThicknessKey}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:ScrollBarSplitter}">
+
+					<shared:ScrollChrome Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderNormalBrushKey}}"
+							InnerBorderThickness="1" 
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonElementChromeBorderStyleKey}}"
+							CornerRadius="0"
+							SnapsToDevicePixels="true" />
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="Orientation" Value="Horizontal">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundNormalBrushKey}}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalBrushKey}}" />
+				<Setter Property="Cursor" Value="{x:Static Cursors.SizeNS}" />
+				<Setter Property="Height" Value="7" />
+			</Trigger>
+			<Trigger Property="Orientation" Value="Vertical">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundNormalBrushKey}}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalBrushKey}}" />
+				<Setter Property="Cursor" Value="{x:Static Cursors.SizeWE}" />
+				<Setter Property="Width" Value="7" />
+			</Trigger>
+		</Style.Triggers>
+    </Style>
+	
+    <!-- editorPrimitives:EditorIndicatorMargin -->
+    <Style x:Key="{x:Type editorPrimitives:EditorIndicatorMargin}" TargetType="{x:Type editorPrimitives:EditorIndicatorMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="MinWidth" Value="20" />
+		<Setter Property="Padding" Value="2,0" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="editorPrimitives:EditorIndicatorMargin">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="{TemplateBinding Padding}"
+							SnapsToDevicePixels="True">
+						<Canvas x:Name="PART_Presenter" />
+					</Border>
+					
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+    </Style>
+	
+    <!-- editorPrimitives:EditorLineNumberMargin -->
+    <Style x:Key="{x:Type editorPrimitives:EditorLineNumberMargin}" TargetType="{x:Type editorPrimitives:EditorLineNumberMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="ClipToBounds" Value="True" />
+		<Setter Property="MinWidth" Value="42" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:EditorLineNumberMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<shared:CustomDrawElement x:Name="PART_Presenter" Margin="2,0,2,0" />
+					</Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- editorPrimitives:EditorOutliningMargin -->
+    <Style x:Key="{x:Type editorPrimitives:EditorOutliningMargin}" TargetType="{x:Type editorPrimitives:EditorOutliningMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Width" Value="11" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:EditorOutliningMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<shared:CustomDrawElement x:Name="PART_Presenter" />
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+    <!-- editorPrimitives:EditorRulerMargin -->
+    <Style x:Key="{x:Type editorPrimitives:EditorRulerMargin}" TargetType="{x:Type editorPrimitives:EditorRulerMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditRulerMarginBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="0,0,0,1" />
+		<Setter Property="ClipToBounds" Value="True" />
+		<Setter Property="FontSize" Value="9" />
+		<Setter Property="Height" Value="18" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:EditorRulerMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<shared:CustomDrawElement x:Name="PART_Presenter" />
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+    <!-- editorPrimitives:EditorSelectionMargin -->
+    <Style x:Key="{x:Type editorPrimitives:EditorSelectionMargin}" TargetType="{x:Type editorPrimitives:EditorSelectionMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Width" Value="8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:EditorSelectionMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<shared:CustomDrawElement x:Name="PART_Presenter" />
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+    <!-- editorPrimitives:EditorWordWrapGlyphMargin -->
+    <Style x:Key="{x:Type editorPrimitives:EditorWordWrapGlyphMargin}" TargetType="{x:Type editorPrimitives:EditorWordWrapGlyphMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Width" Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:EditorWordWrapGlyphMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<shared:CustomDrawElement x:Name="PART_Presenter" />
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- editorPrimitives:PrinterDocumentTitleMargin -->
+    <Style x:Key="{x:Type editorPrimitives:PrinterDocumentTitleMargin}" TargetType="{x:Type editorPrimitives:PrinterDocumentTitleMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Gray" />
+		<Setter Property="BorderThickness" Value="0,0,0,1" />
+		<Setter Property="Margin" Value="0,0,0,10" />
+		<Setter Property="Padding" Value="0,0,0,3" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:PrinterDocumentTitleMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<TextBlock Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" 
+							Text="{TemplateBinding DocumentTitle}" TextWrapping="Wrap" />
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- editorPrimitives:PrinterLineNumberMargin -->
+    <Style x:Key="{x:Type editorPrimitives:PrinterLineNumberMargin}" TargetType="{x:Type editorPrimitives:PrinterLineNumberMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="MinWidth" Value="42" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:PrinterLineNumberMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Margin="0,0,7,0"
+							SnapsToDevicePixels="True">
+						<shared:CustomDrawElement x:Name="PART_Presenter" Margin="2,0,2,0" />
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- editorPrimitives:PrinterPageNumberMargin -->
+    <Style x:Key="{x:Type editorPrimitives:PrinterPageNumberMargin}" TargetType="{x:Type editorPrimitives:PrinterPageNumberMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Gray" />
+		<Setter Property="BorderThickness" Value="0,1,0,0" />
+		<Setter Property="Margin" Value="0,10,0,0" />
+		<Setter Property="Padding" Value="0,3,0,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:PrinterPageNumberMargin}">
+					<ControlTemplate.Resources>
+						
+						<shared:StringFormatConverter x:Key="StringFormatConverter" />
+					
+					</ControlTemplate.Resources>
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<TextBlock Margin="{TemplateBinding Padding}" HorizontalAlignment="Center">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource StringFormatConverter}" ConverterParameter="{productsEditor:SRExtension UIPrinterPageNumberText}">
+									<Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type editor:IPrinterView}}" Path="PageNumber" />
+									<Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type editor:IPrinterView}}" Path="PageCount" />
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- editorPrimitives:PrinterWordWrapGlyphMargin -->
+    <Style x:Key="{x:Type editorPrimitives:PrinterWordWrapGlyphMargin}" TargetType="{x:Type editorPrimitives:PrinterWordWrapGlyphMargin}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Width" Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:PrinterWordWrapGlyphMargin}">
+
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<shared:CustomDrawElement x:Name="PART_Presenter" />
+					</Border>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- editorPrimitives:CollapsedRegionAdornment -->
+    <Style x:Key="{x:Type editorPrimitives:CollapsedRegionAdornment}" TargetType="{x:Type editorPrimitives:CollapsedRegionAdornment}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Gray" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Cursor" Value="Arrow" />
+		<Setter Property="Foreground" Value="Gray" />
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editorPrimitives:CollapsedRegionAdornment}">
+
+					<Grid>
+						<Border Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								CornerRadius="2.0"
+								SnapsToDevicePixels="True" />
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+										  Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True" />
+					</Grid>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+    <!-- editorPrimitives:TextStylePreview -->
+    <Style x:Key="{x:Type editorPrimitives:TextStylePreview}" TargetType="editorPrimitives:TextStylePreview">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+		<Setter Property="Padding" Value="15" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="editorPrimitives:TextStylePreview">
+
+					<shared:ElementChrome x:Name="chrome"
+							Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="{TemplateBinding Padding}"
+							IsAnimationEnabled="False"
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.EditElementChromeBorderStyleKey}}"
+							SnapsToDevicePixels="true">
+						<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+							<Rectangle x:Name="PART_Border" />
+							<TextBlock x:Name="PART_TextBlock" Text="AaBbCcXxYyZz" />
+						</Grid>
+					</shared:ElementChrome>
+					
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+	
+</ResourceDictionary>

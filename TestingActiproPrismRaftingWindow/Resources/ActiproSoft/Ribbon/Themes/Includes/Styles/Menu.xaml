@@ -1,0 +1,490 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+	xmlns:productsRibbon="clr-namespace:ActiproSoftware.Products.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonInput="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Input;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+
+	<DrawingImage x:Key="PinInIcon">
+		<DrawingImage.Drawing>
+			<GeometryDrawing Brush="#51aa34" Geometry="F1 M 13,5L 13,11L 12,11L 12,10L 9,10L 7,12L 6,12L 6,9L 2,9L 2,7L 6,7L 6,4L 7,4L 9,6L 12,6L 12,5L 13,5 Z  M 0,0 M 16,16" />
+		</DrawingImage.Drawing>
+	</DrawingImage>
+
+	<DrawingImage x:Key="PinOutIcon">
+		<DrawingImage.Drawing>
+			<GeometryDrawing Brush="#808080" Geometry="F1 M 5,3L 11,3L 11,4L 10,4L 10,7L 12,9L 12,10L 9,10L 9,14L 7,14L 7,10L 4,10L 4,9L 6,7L 6,4L 5,4L 5,3 Z  M 0,0 M 16,16" />
+		</DrawingImage.Drawing>
+	</DrawingImage>
+
+	
+	<!-- ribbonControlsPrimitives:MenuItem -->
+	<Style x:Key="{x:Type ribbonControlsPrimitives:MenuItem}" TargetType="{x:Type ribbonControlsPrimitives:MenuItem}">
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				
+				<ControlTemplate TargetType="{x:Type ribbonControlsPrimitives:MenuItem}">
+					<ContentPresenter Content="{TemplateBinding Content}"
+						ContentTemplate="{TemplateBinding ContentTemplate}" 
+						ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" /> 
+					
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="ribbonUI:RibbonControlService.IsExternalContentSupported" Value="True">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type ribbonControlsPrimitives:MenuItem}">
+							
+							<Grid SnapsToDevicePixels="True">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="{x:Static ribbonUI:RibbonMeasurements.MenuItemSmallIconColumnWidthGridLength}" SharedSizeGroup="MenuItemIconColumnGroup"/>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="{x:Static ribbonUI:RibbonMeasurements.MenuItemSmallPopupColumnWidthGridLength}"/>
+								</Grid.ColumnDefinitions>
+
+								<Border BorderThickness="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemIconColumnBorderNormalThicknessKey}}" SnapsToDevicePixels="True" 
+									BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemIconColumnBorderNormalBrushKey}}" 
+									Background="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemIconColumnBackgroundNormalBrushKey}}" />
+								
+								<Rectangle x:Name="OuterBorder" Grid.ColumnSpan="4" RadiusX="1" RadiusY="1" SnapsToDevicePixels="True" />
+								<Rectangle x:Name="Background" Grid.ColumnSpan="4" Margin="1" Fill="Transparent" SnapsToDevicePixels="True" />
+								<Rectangle x:Name="InnerBorder" Grid.ColumnSpan="4" Margin="1" RadiusX="1" RadiusY="1" SnapsToDevicePixels="True" />
+								
+								<Border x:Name="ImageBorder" Margin="2" Width="20" Height="20" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Left" VerticalAlignment="Center" SnapsToDevicePixels="True">
+									<Grid>
+										<shared:DynamicImage x:Name="Image" Width="16" Height="16" VerticalAlignment="Center"
+											Source="{TemplateBinding ribbonUI:RibbonControlService.ImageSourceSmall}" Stretch="Uniform" />
+										<Path x:Name="Checkmark" Data="M 0,5 L 3.5,10 L 7,0 L 6,0 L 3.5,8 L 1,5 Z" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"
+											Fill="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemForegroundNormalBrushKey}}" SnapsToDevicePixels="True" />
+									</Grid>
+								</Border>
+								<TextBlock x:Name="Label" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+								  Text="{TemplateBinding ribbonUI:RibbonControlService.Label}" Foreground="{TemplateBinding Foreground}" />
+
+								<ContentPresenter Grid.Column="2" Margin="5,0,5,0" Content="{TemplateBinding Content}"
+									ContentTemplate="{TemplateBinding ContentTemplate}" 
+									ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" /> 
+							</Grid>
+
+							<ControlTemplate.Triggers>
+								<Trigger Property="ribbonUI:RibbonControlService.Label" Value="{x:Null}">
+									<Setter TargetName="Label" Property="Visibility" Value="Collapsed" />
+								</Trigger>
+								<Trigger Property="ribbonUI:RibbonControlService.Label" Value="">
+									<Setter TargetName="Label" Property="Visibility" Value="Collapsed" />
+								</Trigger>
+								<Trigger Property="ribbonUI:RibbonControlService.ImageSourceSmall" Value="{x:Null}">
+									<Setter TargetName="Image" Property="Source" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonUI:RibbonControlService.ImageSourceLarge)}"/>
+								</Trigger>
+								<Trigger Property="IsContentEnabled" Value="False">
+									<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemForegroundDisabledBrushKey}}"/>
+									<Setter TargetName="Image" Property="Opacity" Value="0.4"/>
+								</Trigger>						
+								
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="IsContentEnabled" Value="True" />
+										<Condition Property="ribbonUI:RibbonControlService.IsHighlighted" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="Background" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+									<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+									<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="IsContentEnabled" Value="False" />
+										<Condition Property="ribbonUI:RibbonControlService.IsHighlighted" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="Background" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundDisabledBrushKey}}" />
+									<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderDisabledBrushKey}}"/>
+									<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderDisabledBrushKey}}"/>
+								</MultiTrigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- ribbonControls:Menu -->
+	<Style x:Key="{x:Type ribbonControls:Menu}" TargetType="{x:Type ribbonControls:Menu}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBackgroundNormalBrushKey}}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuForegroundNormalBrushKey}}" />
+		
+		<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+		<Setter Property="SnapsToDevicePixels" Value="True"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ribbonControls:Menu}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+						Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+						<ItemsPresenter />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- RecentDocumentPinButtonStyle -->
+	<Style x:Key="RecentDocumentPinButtonStyle" TargetType="ribbonControls:Button">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Command" Value="{x:Static ribbonInput:RibbonCommands.TogglePin}" />
+		<Setter Property="CommandParameter" Value="{Binding}" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+		<Setter Property="ribbonUI:CloneService.CanCloneToQuickAccessToolBar" Value="False" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ribbonControls:Button">
+					<Border x:Name="OuterBorder" BorderThickness="1" BorderBrush="Transparent" Background="{TemplateBinding Background}">
+						<Border x:Name="InnerBorder" BorderThickness="1" BorderBrush="Transparent">
+							<shared:DynamicImage Margin="{TemplateBinding Padding}" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"
+								Source="{TemplateBinding ImageSourceSmall}" SnapsToDevicePixels="True" />
+						</Border>						
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsKeyboardFocused" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundPressedBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>								
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- MediumRecentDocumentButtonStyle -->
+	<Style x:Key="MediumRecentDocumentButtonStyle" TargetType="{x:Type ribbonControls:Button}">
+		<Setter Property="Command" Value="ApplicationCommands.Open" />
+		<Setter Property="CommandParameter" Value="{Binding}" />
+		<Setter Property="Context" Value="MenuItem" />
+		<Setter Property="ribbonUI:CloneService.CanCloneToQuickAccessToolBar" Value="False" />
+		<Setter Property="ribbonUI:ScreenTipService.CanDeriveKeyboardShortcutFromCommand" Value="False" />
+		<Setter Property="Template">
+			<Setter.Value>
+
+				<ControlTemplate TargetType="{x:Type ribbonControls:Button}">
+					<ControlTemplate.Resources>
+						<shared:RecentDocumentIndexToAccessTextConverter x:Key="RecentDocumentIndexToAccessTextConverter" />
+					</ControlTemplate.Resources>
+					
+					<Grid SnapsToDevicePixels="True">
+						<Rectangle x:Name="OuterBorder" Fill="Transparent" RadiusX="1" RadiusY="1" SnapsToDevicePixels="True" />
+						<Rectangle x:Name="InnerBorder" Margin="1" RadiusX="1" RadiusY="1" SnapsToDevicePixels="True" />
+					
+						<Grid x:Name="PART_Button" SnapsToDevicePixels="True">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" SharedSizeGroup="AccessText" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							
+							<TextBlock Margin="5,0,5,0" VerticalAlignment="Center" SnapsToDevicePixels="True" TextDecorations="{x:Static TextDecorations.Underline}"
+								Text="{Binding Path=(shared:RecentDocumentManager.Index), Converter={StaticResource RecentDocumentIndexToAccessTextConverter}}" Foreground="{TemplateBinding Foreground}" />
+							<TextBlock x:Name="Label" Grid.Column="1" Margin="4,0,4,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+								Text="{TemplateBinding Label}" Foreground="{TemplateBinding Foreground}" SnapsToDevicePixels="True" />
+							<ribbonControls:Button x:Name="PinButton" Grid.Column="2" Style="{StaticResource RecentDocumentPinButtonStyle}" 
+								Padding="4,1,4,1" VerticalAlignment="Center" StaysOpenOnClick="True" 
+								ribbonUI:ScreenTipService.ScreenTipHeader="{productsRibbon:SRExtension UIRecentDocumentPinButtonPinToolTip}"
+								ImageSourceSmall="{StaticResource PinOutIcon}"
+								AutomationProperties.AutomationId="PinButton"
+								AutomationProperties.Name="{productsRibbon:SRExtension UIRecentDocumentPinButtonUnpinAutomationName}"
+								/>
+						</Grid>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter TargetName="Label" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundDisabledBrushKey}}"/>
+						</Trigger>
+						
+						<DataTrigger Binding="{Binding IsPinnedRecentDocument}" Value="True">
+							<Setter TargetName="PinButton" Property="ribbonUI:ScreenTipService.ScreenTipHeader" Value="{productsRibbon:SRExtension UIRecentDocumentPinButtonUnpinToolTip}"/>
+							<Setter TargetName="PinButton" Property="ImageSourceSmall" Value="{StaticResource PinInIcon}"/>
+							<Setter TargetName="PinButton" Property="AutomationProperties.Name"
+									Value="{productsRibbon:SRExtension UIRecentDocumentPinButtonPinAutomationName}" />
+						</DataTrigger>
+						
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="True" />
+								<Condition Property="IsMouseOver" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="True" />
+								<Condition Property="IsKeyboardFocused" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="True" />
+								<Condition Property="IsPressed" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundPressedBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}"/>
+						</MultiTrigger>
+						
+						<Trigger SourceName="PinButton" Property="IsMouseOver" Value="True">
+							<Setter TargetName="OuterBorder" Property="Fill" Value="Transparent" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="Transparent"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="Transparent"/>
+						</Trigger>
+						<Trigger SourceName="PinButton" Property="IsPressed" Value="True">
+							<Setter TargetName="OuterBorder" Property="Fill" Value="Transparent" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="Transparent"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="Transparent"/>
+						</Trigger>
+					</ControlTemplate.Triggers>					
+				</ControlTemplate>
+				
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- LargeRecentDocumentButtonStyle -->
+	<Style x:Key="LargeRecentDocumentButtonStyle" TargetType="{x:Type ribbonControls:Button}">
+		<Setter Property="Command" Value="ApplicationCommands.Open" />
+		<Setter Property="CommandParameter" Value="{Binding}" />
+		<Setter Property="Context" Value="MenuItem" />
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Margin" Value="0,1,0,1"/>
+		<Setter Property="Padding" Value="7,2,7,2"/>
+		<Setter Property="ribbonUI:CloneService.CanCloneToQuickAccessToolBar" Value="False" />
+		<Setter Property="ribbonUI:ScreenTipService.CanDeriveKeyboardShortcutFromCommand" Value="False" />
+		<Setter Property="Template">
+			<Setter.Value>
+
+				<ControlTemplate TargetType="{x:Type ribbonControls:Button}">
+					
+					<Grid SnapsToDevicePixels="True">
+						<Rectangle x:Name="OuterBorder" Fill="Transparent" RadiusX="1" RadiusY="1" SnapsToDevicePixels="True" />
+						<Rectangle x:Name="InnerBorder" Margin="1" RadiusX="1" RadiusY="1" SnapsToDevicePixels="True" />
+					
+						<Grid x:Name="PART_Button" SnapsToDevicePixels="True">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" SharedSizeGroup="Image" />
+								<ColumnDefinition Width="*" MinWidth="48" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+
+							<shared:DynamicImage x:Name="Image" Margin="{TemplateBinding Padding}" Width="32" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"
+								Source="{Binding ImageSourceLarge}" SnapsToDevicePixels="True" />
+							<shared:PixelSnapper Grid.Column="1" Margin="{TemplateBinding Padding}" VerticalRoundMode="CeilingToEven">
+								<StackPanel VerticalAlignment="Center">
+									<TextBlock x:Name="Label" TextTrimming="CharacterEllipsis"
+										Text="{TemplateBinding Label}" Foreground="{TemplateBinding Foreground}" SnapsToDevicePixels="True" />
+									<TextBlock TextTrimming="CharacterEllipsis" Opacity="0.7"
+										Text="{Binding Description}" Foreground="{TemplateBinding Foreground}" SnapsToDevicePixels="True" />
+								</StackPanel>
+							</shared:PixelSnapper>
+							<ribbonControls:Button x:Name="PinButton" Grid.Column="2" Style="{StaticResource RecentDocumentPinButtonStyle}"
+								Padding="4,1,4,1" StaysOpenOnClick="True" 
+								ribbonUI:ScreenTipService.ScreenTipHeader="{productsRibbon:SRExtension UIRecentDocumentPinButtonPinToolTip}"
+								ImageSourceSmall="{StaticResource PinOutIcon}"
+								AutomationProperties.AutomationId="PinButton"
+								AutomationProperties.Name="{productsRibbon:SRExtension UIRecentDocumentPinButtonUnpinAutomationName}"
+								/>
+						</Grid>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<DataTrigger Binding="{Binding ImageSourceLarge}" Value="{x:Null}">
+							<Setter TargetName="Image" Property="Source" Value="{Binding ImageSourceSmall}"/>
+							<Setter TargetName="Image" Property="Width" Value="16"/>
+							<Setter TargetName="Image" Property="Height" Value="16"/>
+						</DataTrigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter TargetName="Label" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundDisabledBrushKey}}"/>
+						</Trigger>
+						
+						<DataTrigger Binding="{Binding IsPinnedRecentDocument}" Value="True">
+							<Setter TargetName="PinButton" Property="ribbonUI:ScreenTipService.ScreenTipHeader" Value="{productsRibbon:SRExtension UIRecentDocumentPinButtonUnpinToolTip}"/>
+							<Setter TargetName="PinButton" Property="ImageSourceSmall" Value="{StaticResource PinInIcon}"/>
+							<Setter TargetName="PinButton" Property="AutomationProperties.Name"
+									Value="{productsRibbon:SRExtension UIRecentDocumentPinButtonPinAutomationName}" />
+						</DataTrigger>
+						
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="True" />
+								<Condition Property="IsMouseOver" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="True" />
+								<Condition Property="IsKeyboardFocused" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="True" />
+								<Condition Property="IsPressed" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundPressedBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}"/>
+						</MultiTrigger>
+						
+						<Trigger SourceName="PinButton" Property="IsMouseOver" Value="True">
+							<Setter TargetName="OuterBorder" Property="Fill" Value="Transparent" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="Transparent"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="Transparent"/>
+						</Trigger>
+						<Trigger SourceName="PinButton" Property="IsPressed" Value="True">
+							<Setter TargetName="OuterBorder" Property="Fill" Value="Transparent" />
+							<Setter TargetName="OuterBorder" Property="Stroke" Value="Transparent"/>
+							<Setter TargetName="InnerBorder" Property="Stroke" Value="Transparent"/>
+						</Trigger>
+					</ControlTemplate.Triggers>					
+				</ControlTemplate>
+				
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- BackstageHeaderRecentDocumentButtonStyle -->
+	<Style x:Key="BackstageHeaderRecentDocumentButtonStyle" TargetType="{x:Type ribbonControls:Button}">
+		<Setter Property="Command" Value="ApplicationCommands.Open" />
+		<Setter Property="CommandParameter" Value="{Binding}" />
+		<Setter Property="Context" Value="BackstageHeaderItem" />
+		<Setter Property="ribbonUI:CloneService.CanCloneToQuickAccessToolBar" Value="False" />
+		<Setter Property="ribbonUI:ScreenTipService.CanDeriveKeyboardShortcutFromCommand" Value="False" />
+	</Style>
+	
+	<!-- ribbonControls:RecentDocumentMenu -->
+	<Style x:Key="{x:Type ribbonControls:RecentDocumentMenu}" TargetType="{x:Type ribbonControls:RecentDocumentMenu}" BasedOn="{StaticResource {x:Type ribbonControls:Menu}}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Width" Value="300" />
+		<Setter Property="ItemTemplate">
+			<Setter.Value>
+				<DataTemplate DataType="shared:IDocumentReference">
+					<DataTemplate.Resources>
+						<shared:RecentDocumentIndexToAccessTextConverter x:Key="RecentDocumentIndexToAccessTextConverter" />
+					</DataTemplate.Resources>
+
+					<!-- 4/29/2010 - Added AutomationId so actual name is used and not Open command text (http://www.actiprosoftware.com/Support/Forums/ViewForumTopic.aspx?ForumTopicID=4838) --> 
+					<ribbonControls:Button AutomationProperties.AutomationId="{Binding Name}" Style="{StaticResource MediumRecentDocumentButtonStyle}"
+							KeyTipAccessText="{Binding Path=(shared:RecentDocumentManager.Index), Converter={StaticResource RecentDocumentIndexToAccessTextConverter}}"
+							Label="{Binding Name}" ScreenTipHeader="{Binding Location}" ScreenTipDescription="" InputGestureText=""
+							/>
+				</DataTemplate>
+			</Setter.Value>			
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ribbonControls:RecentDocumentMenu">
+					
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+						Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+						<StackPanel>
+							<StackPanel x:Name="LabelPanel">
+								<TextBlock Margin="7,5,7,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemForegroundNormalBrushKey}}" Text="{TemplateBinding Label}" />
+								<Rectangle Margin="0,4,0,0" Height="1" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.MenuSeparatorBackgroundNormalBrushKey}}" SnapsToDevicePixels="True" />
+								<Rectangle Margin="0,0,0,4" Height="1" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.MenuSeparatorHighlightNormalBrushKey}}" SnapsToDevicePixels="True" />
+							</StackPanel>
+							<ItemsPresenter Grid.IsSharedSizeScope="True" />							
+						</StackPanel>
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="Label" Value="{x:Null}">
+							<Setter TargetName="LabelPanel" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>			
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="VariantSize" Value="Large">
+				<Setter Property="Width" Value="Auto" />
+				<Setter Property="ItemTemplate">
+					<Setter.Value>
+						<DataTemplate DataType="shared:IDocumentReference">
+							<DataTemplate.Resources>
+								<shared:RecentDocumentIndexToAccessTextConverter x:Key="RecentDocumentIndexToAccessTextConverter" />
+							</DataTemplate.Resources>
+
+							<ribbonControls:Button AutomationProperties.AutomationId="{Binding Name}" Style="{StaticResource LargeRecentDocumentButtonStyle}"
+												   KeyTipAccessText="{Binding Path=(shared:RecentDocumentManager.Index), Converter={StaticResource RecentDocumentIndexToAccessTextConverter}}"
+												   Label="{Binding Name}" ScreenTipHeader="{Binding Location}" ScreenTipDescription="" InputGestureText="" />
+						</DataTemplate>
+					</Setter.Value>			
+				</Setter>
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="ribbonControls:RecentDocumentMenu">
+							<ItemsPresenter Grid.IsSharedSizeScope="True" />							
+						</ControlTemplate>
+					</Setter.Value>			
+				</Setter>
+			</Trigger>
+			<Trigger Property="Context" Value="BackstageHeaderItem">
+				<Setter Property="Width" Value="Auto" />
+				<Setter Property="ItemTemplate">
+					<Setter.Value>
+						<DataTemplate DataType="shared:IDocumentReference">
+							<DataTemplate.Resources>
+								<shared:RecentDocumentIndexToAccessTextConverter x:Key="RecentDocumentIndexToAccessTextConverter" />
+							</DataTemplate.Resources>
+							
+							<ribbonControls:Button AutomationProperties.AutomationId="{Binding Name}" Style="{StaticResource BackstageHeaderRecentDocumentButtonStyle}"
+												   ImageSourceLarge="{Binding ImageSourceLarge}" ImageSourceSmall="{Binding ImageSourceSmall}"
+												   KeyTipAccessText="{Binding Path=(shared:RecentDocumentManager.Index), Converter={StaticResource RecentDocumentIndexToAccessTextConverter}}"
+												   Label="{Binding Name}" ScreenTipHeader="{Binding Location}" ScreenTipDescription="" InputGestureText="" />
+						</DataTemplate>
+					</Setter.Value>			
+				</Setter>
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="ribbonControls:RecentDocumentMenu">
+							<ItemsPresenter Grid.IsSharedSizeScope="True" />							
+						</ControlTemplate>
+					</Setter.Value>			
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+	
+</ResourceDictionary>

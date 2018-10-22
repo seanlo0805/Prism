@@ -77,6 +77,11 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
 
             //create toolwindow and show in Taskbar
             dockSite.SetValue(DockSite.FloatingWindowShowInTaskBarModeProperty, FloatingWindowShowInTaskBarMode.Always);
+            dockSite.SetValue(DockSite.FloatingToolWindowContainersHaveMinimizeButtonsProperty, true);
+            //dockSite.SetValue(DockSite.CanToolWindowsDockProperty, false);
+            //dockSite.SetValue(DockSite.CanToolWindowsCloseProperty, true);
+            //dockSite.SetValue(DockSite.CanToolWindowsAutoHideProperty, false);
+            dockSite.CanToolWindowsAutoHide = true;
             dockSite.SetValue(FrameworkElement.NameProperty, "dockSite");
             dockSite.SetValue(FrameworkElement.NameProperty, "dockSite");
             dockSite.SetValue(RegionManager.RegionNameProperty, "MainRegion");
@@ -156,6 +161,8 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             toolwindows.Title = "ViewA";
             toolwindows.Name = "ViewA" + "_" + Guid.NewGuid().ToString().Replace("-", "_"); // no name no deserialization, you could use toolwindows.Tag instead
             toolwindows.Content = ctrl;
+            toolwindows.CanAutoHide = true;
+            //toolwindows.DockHost.CloseAutoHidePopup(true, true);
             //toolwindows.Uid = Guid.NewGuid().ToString();
         }
         public void InitializeViewB(ToolWindow toolwindows)
@@ -176,7 +183,7 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             toolwindows.Title = "ViewB";
             toolwindows.Name = "ViewB"+"_"+ Guid.NewGuid().ToString().Replace("-","_");// no name no deserialization, you could use toolwindows.Tag instead
             //toolwindows.CanAttach = false;
-            //toolwindows.CanDock = false;
+            toolwindows.CanDock = false;
             toolwindows.Content = ctrl;
             //toolwindows.Uid = Guid.NewGuid().ToString();
 

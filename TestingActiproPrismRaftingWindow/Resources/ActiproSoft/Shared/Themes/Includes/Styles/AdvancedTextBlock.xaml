@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf"
+		>
+	
+	<!-- controls:AdvancedTextBlock -->
+	<Style x:Key="{x:Type controls:AdvancedTextBlock}" TargetType="controls:AdvancedTextBlock">
+		<Setter Property="Focusable" Value="False" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="ToolTipService.Placement" Value="Relative" />
+		<Setter Property="ToolTipService.HorizontalOffset" Value="-8" />
+		<Setter Property="ToolTipService.VerticalOffset" Value="-5" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:AdvancedTextBlock">
+					<TextBlock x:Name="PART_TextBlock" TextTrimming="{TemplateBinding TextTrimming}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

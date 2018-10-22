@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="Assets/MetroLight.xaml" />
+		<ResourceDictionary Source="Styles/WindowTitleBarButtonGlyphs.Metro.xaml" />
+		<ResourceDictionary Source="Styles/Native/StatusBarEmbeddedSlider.Metro.xaml" />
+		<ResourceDictionary Source="Styles/Native/ToggleButtonExpansion.AeroNormalColor.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

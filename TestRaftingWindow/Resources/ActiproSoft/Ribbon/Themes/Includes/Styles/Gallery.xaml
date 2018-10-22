@@ -1,0 +1,401 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"	
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"	
+    xmlns:productsRibbon="clr-namespace:ActiproSoftware.Products.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonInput="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Input;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+
+	<!-- ribbonControls:GalleryItem -->
+	<Style x:Key="{x:Type ribbonControls:GalleryItem}" TargetType="{x:Type ribbonControls:GalleryItem}">
+		<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemForegroundNormalBrushKey}}"/>
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ribbonControls:GalleryItem}">
+					<Grid>
+						<Border x:Name="OuterBorder" BorderThickness="1" BorderBrush="Transparent" Background="{TemplateBinding Background}">
+							<Border x:Name="InnerBorder" BorderThickness="1" BorderBrush="Transparent">
+								<ContentPresenter Margin="{TemplateBinding Padding}" />
+							</Border>						
+						</Border>
+						<Popup x:Name="ZoomedInPopup" AllowsTransparency="True" Placement="Center" IsHitTestVisible="False">
+							<AdornerDecorator SnapsToDevicePixels="True">
+								<shared:DropShadowChrome x:Name="DropShadow" Color="Transparent" SnapsToDevicePixels="True">
+									<Border Background="#FFFFFF" BorderThickness="1" SnapsToDevicePixels="True"
+										BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBorderNormalBrushKey}}">
+										<ContentPresenter x:Name="ZoomedInContent" />
+									</Border>
+								</shared:DropShadowChrome>
+							</AdornerDecorator>
+						</Popup>
+					</Grid>
+					
+					<ControlTemplate.Triggers>
+                        <Trigger SourceName="ZoomedInPopup" Property="HasDropShadow" Value="True">
+                            <Setter TargetName="DropShadow" Property="Margin" Value="0,0,5,5" />
+                            <Setter TargetName="DropShadow" Property="Color" Value="#40000000" />
+                        </Trigger>
+						<Trigger Property="CanZoomIn" Value="True">
+							<Setter TargetName="ZoomedInContent" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbonControlsPrimitives:GalleryBase}, Path=ZoomedInItemTemplate, FallbackValue={x:Null}}" />
+							<Setter TargetName="ZoomedInContent" Property="ContentTemplateSelector" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbonControlsPrimitives:GalleryBase}, Path=ZoomedInItemTemplateSelector, FallbackValue={x:Null}}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="CanZoomIn" Value="True" />
+								<Condition Property="IsMouseOverBounds" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="ZoomedInPopup" Property="IsOpen" Value="True" />
+						</MultiTrigger>
+						
+						<Trigger Property="IsKeyboardFocused" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="IsSelected" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundCheckedNormalBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderCheckedNormalBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderCheckedNormalBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsSelected" Value="True" />
+								<Condition Property="IsMouseOver" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundCheckedHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderCheckedHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderCheckedHoverBrushKey}}"/>
+						</MultiTrigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundPressedBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>								
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- RibbonGalleryRepeatButtonStyle -->
+	<Style x:Key="RibbonGalleryRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+		<Setter Property="Focusable" Value="False"/>
+		<Setter Property="IsTabStop" Value="False"/>
+		<Setter Property="SnapsToDevicePixels" Value="True"/>
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalCornerRadiusKey}}"/>
+		<Setter Property="Width" Value="15"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type RepeatButton}">
+					<Border x:Name="OuterBorder" BorderThickness="1" 
+						BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryButtonBorderNormalBrushKey}}" 
+						Background="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryButtonBackgroundNormalBrushKey}}" SnapsToDevicePixels="True">
+						<Border x:Name="InnerBorder" BorderThickness="1" 
+							BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryButtonInnerBorderNormalBrushKey}}" SnapsToDevicePixels="True">
+							<Canvas Width="7" Height="7" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True">
+								<Path x:Name="GlyphDark" StrokeThickness="1" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarDropDownGlyphBackgroundNormalBrushKey}}" 
+									  Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarDropDownGlyphBackgroundNormalBrushKey}}" SnapsToDevicePixels="True" />
+								<Path x:Name="GlyphLight" StrokeThickness="1" Stroke="#B0FFFFFF" SnapsToDevicePixels="True" />
+							</Canvas>
+						</Border>						
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="Command" Value="{x:Static ScrollBar.LineUpCommand}">
+							<Setter TargetName="OuterBorder" Property="CornerRadius" Value="0,2,0,0" />
+							<Setter TargetName="GlyphDark" Property="Data" Value="M 3.5,4.5 L 1.5,4.5 L 3.5,2.5 L 5.5,4.5 Z" />							
+							<Setter TargetName="GlyphLight" Property="Data" Value="M 0.5,4.5 L 3.5,1.5 L 6.5,4.5" />							
+						</Trigger>
+						<Trigger Property="Command" Value="{x:Static ScrollBar.LineDownCommand}">
+							<Setter TargetName="GlyphDark" Property="Data" Value="M 3.5,2.5 L 1.5,2.5 L 3.5,4.5 L 5.5,2.5 Z" />							
+							<Setter TargetName="GlyphLight" Property="Data" Value="M 0.5,2.5 L 3.5,5.5 L 6.5,2.5" />							
+						</Trigger>
+						<Trigger Property="themes:ThemeProperties.CornerRadius" Value="0">
+							<Setter TargetName="OuterBorder" Property="CornerRadius" Value="0" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundPressedBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryButtonBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryButtonBorderDisabledBrushKey}}"/>
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryButtonInnerBorderDisabledBrushKey}}"/>
+							<Setter TargetName="GlyphDark" Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundDisabledBrushKey}}"/>
+							<Setter TargetName="GlyphDark" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundDisabledBrushKey}}"/>
+							<Setter TargetName="GlyphLight" Property="Visibility" Value="Collapsed"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- RibbonGalleryCollapsedTemplate -->
+	<ControlTemplate x:Key="RibbonGalleryCollapsedTemplate" TargetType="{x:Type ribbonControls:RibbonGallery}">
+		<ribbonControls:PopupButton x:Name="PART_PopupButton" VariantSize="Large" Context="RibbonTabGroupItem"
+			Command="{TemplateBinding Command}" 
+			CommandParameter="{TemplateBinding CommandParameter}" 
+			ImageSourceLarge="{TemplateBinding ImageSourceLarge}" 
+			ImageSourceSmall="{TemplateBinding ImageSourceSmall}" 
+			IsPopupOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupOpen, Mode=TwoWay}" 
+			Label="{TemplateBinding Label}" 
+			ScreenTipDescription="{TemplateBinding ScreenTipDescription}" 
+			ScreenTipFooter="{TemplateBinding ScreenTipFooter}" 
+			ScreenTipHeader="{TemplateBinding ScreenTipHeader}" 
+			ScreenTipHelpUri="{TemplateBinding ScreenTipHelpUri}" 
+			ribbonUI:ScreenTipService.ScreenTipIsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonUI:ScreenTipService.ScreenTipIsEnabled)}" 
+			ScreenTipImageSource="{TemplateBinding ScreenTipImageSource}" 
+			PopupContent="{TemplateBinding PopupContent}"
+			PopupContentTemplate="{TemplateBinding PopupContentTemplate}"
+			PopupContentTemplateSelector="{TemplateBinding PopupContentTemplateSelector}"
+			PopupResizeMode="{TemplateBinding PopupResizeMode}"
+			/>
+	</ControlTemplate>
+	
+	<!-- RibbonGalleryExpandedTemplate -->
+	<ControlTemplate x:Key="RibbonGalleryExpandedTemplate" TargetType="{x:Type ribbonControls:RibbonGallery}">
+		<Grid x:Name="ContainerGrid" ClipToBounds="True" VerticalAlignment="Center"
+			MinHeight="{x:Static ribbonUI:RibbonMeasurements.RibbonGalleryHeight}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" MinHeight="20" />
+				<RowDefinition Height="*" MinHeight="20" />
+				<RowDefinition Height="*" MinHeight="20" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Border x:Name="Background" Grid.RowSpan="3" 
+					Background="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryBackgroundNormalBrushKey}}"
+					SnapsToDevicePixels="True" />
+			<ItemsPresenter x:Name="PART_ItemsHost" Grid.RowSpan="3" Margin="1,0" />
+			
+			<RepeatButton Grid.Row="0" Grid.Column="1" Command="{x:Static ScrollBar.LineUpCommand}" Style="{StaticResource RibbonGalleryRepeatButtonStyle}" />
+			<RepeatButton Grid.Row="1" Grid.Column="1" Command="{x:Static ScrollBar.LineDownCommand}" Style="{StaticResource RibbonGalleryRepeatButtonStyle}" />
+			<ribbonControlsPrimitives:RibbonGalleryPopupButton x:Name="PART_PopupButton" Grid.Row="2" Grid.Column="1" VariantSize="Small" MinWidth="15" Width="15" 
+				IsPopupOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupOpen, Mode=TwoWay}"
+				PopupContent="{TemplateBinding PopupContent}"
+				PopupContentTemplate="{TemplateBinding PopupContentTemplate}"
+				PopupContentTemplateSelector="{TemplateBinding PopupContentTemplateSelector}"
+				PopupResizeMode="{TemplateBinding PopupResizeMode}"
+				/>
+			
+			<Border x:Name="Border" Grid.RowSpan="3" Grid.ColumnSpan="2" BorderThickness="1"
+					BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryBorderNormalBrushKey}}"
+					SnapsToDevicePixels="True" />
+		</Grid>
+		
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsMouseOver" Value="True">
+				<Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryBorderHoverBrushKey}}" />
+				<Setter TargetName="Background" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarGalleryBackgroundHoverBrushKey}}" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<!-- ribbonControls:RibbonGallery (in-ribbon) -->
+	<Style x:Key="{x:Type ribbonControls:RibbonGallery}" TargetType="{x:Type ribbonControls:RibbonGallery}">
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundNormalBrushKey}}"/>
+		<Setter Property="MinHeight" Value="{x:Static ribbonUI:RibbonMeasurements.RibbonControlLargeHeight}"/>
+		<Setter Property="Margin" Value="0,0,3,0" />
+		<Setter Property="MinWidth" Value="50"/>
+		<Setter Property="Template" Value="{StaticResource RibbonGalleryExpandedTemplate}" />				
+		
+		<Style.Triggers>
+			<Trigger Property="IsCollapsed" Value="True">
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="MinWidth" Value="0" />
+				<Setter Property="Template" Value="{StaticResource RibbonGalleryCollapsedTemplate}" />				
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+	
+	<!-- ribbonControls:PopupGallery (in popup) -->
+	<Style x:Key="{x:Type ribbonControls:PopupGallery}" TargetType="{x:Type ribbonControls:PopupGallery}">
+		<Setter Property="CategoryTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<shared:PixelSnapper>
+						<Grid Background="{DynamicResource {x:Static themes:AssetResourceKeys.MenuHeadingBackgroundNormalBrushKey}}">
+							<Rectangle Margin="0,1,0,0" Height="1" VerticalAlignment="Top" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.MenuSeparatorHighlightNormalBrushKey}}" />
+							<TextBlock x:Name="Label" Margin="7,3,7,5" VerticalAlignment="Center" FontWeight="Bold" Text="{Binding Name}" 
+								Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemForegroundNormalBrushKey}}" />
+							<Rectangle Margin="0,0,0,1" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.MenuSeparatorBackgroundNormalBrushKey}}" />
+						</Grid>
+					</shared:PixelSnapper>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundNormalBrushKey}}"/>
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<WrapPanel />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ribbonControls:PopupGallery">
+					<ControlTemplate.Resources>
+						<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+						<shared:CoalesceConverter x:Key="CoalesceConverter" />
+					</ControlTemplate.Resources>
+
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+							
+						<ribbonControlsPrimitives:PopupGalleryFilterButton
+							Label="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilterCategory, Converter={StaticResource CoalesceConverter}, ConverterParameter={productsRibbon:SRExtension UIPopupGalleryFilterAllText}}"
+							Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CanFilter, Converter={StaticResource BooleanToVisibilityConverter}}" />
+						
+						<ScrollViewer x:Name="PART_ScrollViewer" Grid.Row="1" Focusable="False" 
+							VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" 
+							MinHeight="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MinViewportSize.Height}" 
+							MaxHeight="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MaxViewportSize.Height}" 
+							Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ViewportSize.Height}" 
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.ScrollViewerStyleKey}}">
+							<ribbonControlsPrimitives:ScrollViewerItemsPresenter FocusVisualStyle="{x:Null}" 
+								MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MinViewportSize.Width}" 
+								MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MaxViewportSize.Width}" 
+								Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ViewportSize.Width}" 
+								/>	
+						</ScrollViewer>
+					</Grid>
+					
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsCategorized" Value="True" />
+								<Condition Property="UseSingleColumn" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter Property="ItemsPanel">
+								<Setter.Value>
+									<ItemsPanelTemplate>
+										<WrapPanel Margin="-5,0,0,0" />
+									</ItemsPanelTemplate>
+								</Setter.Value>
+							</Setter>
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsCategorized" Value="False" />
+								<Condition Property="UseSingleColumn" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="ItemsPanel">
+								<Setter.Value>
+									<ItemsPanelTemplate>
+										<StackPanel />
+									</ItemsPanelTemplate>
+								</Setter.Value>
+							</Setter>
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsCategorized" Value="True" />
+								<Condition Property="UseSingleColumn" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="ItemsPanel">
+								<Setter.Value>
+									<ItemsPanelTemplate>
+										<StackPanel Margin="-5,0,0,0" />
+									</ItemsPanelTemplate>
+								</Setter.Value>
+							</Setter>
+						</MultiTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ribbonControls:ColorPickerGallery (in popup) -->
+	<Style x:Key="{x:Type ribbonControls:ColorPickerGallery}" TargetType="{x:Type ribbonControls:ColorPickerGallery}" BasedOn="{StaticResource {x:Type ribbonControls:PopupGallery}}">
+		<Setter Property="CommandParameter">
+			<Setter.Value>
+				<ribbonInput:BrushValueCommandParameter />
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemContainerStyle">
+			<Setter.Value>
+				<Style TargetType="ribbonControls:GalleryItem" BasedOn="{StaticResource {x:Type ribbonControls:GalleryItem}}">
+					<Setter Property="Margin" Value="2" />
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate TargetType="{x:Type ribbonControls:GalleryItem}">
+								<Grid>
+									<ContentPresenter Margin="{TemplateBinding Padding}" />
+									<Border x:Name="OuterBorder" BorderThickness="1" BorderBrush="Silver">
+										<Border x:Name="InnerBorder" BorderThickness="1" BorderBrush="Transparent" />
+									</Border>
+								</Grid>
+								
+								<ControlTemplate.Triggers>
+									<DataTrigger Binding="{Binding BindsDirectlyToSource=True, Path=(ribbonControls:ColorPickerGallery.LayoutBehavior)}" Value="GroupStart">
+										<Setter Property="Margin" Value="2,2,2,0" />	
+										<Setter TargetName="OuterBorder" Property="BorderThickness" Value="1,1,1,0" />
+									</DataTrigger>
+									<DataTrigger Binding="{Binding BindsDirectlyToSource=True, Path=(ribbonControls:ColorPickerGallery.LayoutBehavior)}" Value="GroupInner">
+										<Setter Property="Margin" Value="2,0,2,0" />										
+										<Setter TargetName="OuterBorder" Property="BorderThickness" Value="1,0,1,0" />
+									</DataTrigger>
+									<DataTrigger Binding="{Binding BindsDirectlyToSource=True, Path=(ribbonControls:ColorPickerGallery.LayoutBehavior)}" Value="GroupEnd">
+										<Setter Property="Margin" Value="2,0,2,2" />										
+										<Setter TargetName="OuterBorder" Property="BorderThickness" Value="1,0,1,1" />
+									</DataTrigger>
+									<Trigger Property="IsKeyboardFocused" Value="True">
+										<Setter TargetName="OuterBorder" Property="BorderThickness" Value="1" />
+										<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemGlyphBorderNormalBrushKey}}"/>
+										<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemGlyphBackgroundNormalBrushKey}}"/>
+									</Trigger>
+									<Trigger Property="IsSelected" Value="True">
+										<Setter TargetName="OuterBorder" Property="BorderThickness" Value="1" />
+										<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemGlyphBorderNormalBrushKey}}"/>
+										<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemGlyphBackgroundNormalBrushKey}}"/>
+									</Trigger>
+									<Trigger Property="IsMouseOver" Value="True">
+										<Setter TargetName="OuterBorder" Property="BorderThickness" Value="1" />
+										<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemGlyphBorderNormalBrushKey}}"/>
+										<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemGlyphBackgroundNormalBrushKey}}"/>
+									</Trigger>
+								</ControlTemplate.Triggers>								
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<Rectangle Fill="{Binding BindsDirectlyToSource=True}" Width="13" Height="13" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	
+</ResourceDictionary>

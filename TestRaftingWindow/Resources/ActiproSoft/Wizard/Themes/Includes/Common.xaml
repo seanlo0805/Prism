@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Wizard.Wpf">
+
+	<ResourceDictionary.MergedDictionaries>
+		<themes:WizardThemeCatalogRegistrar />
+		
+		<ResourceDictionary Source="Styles/CommandButton.xaml" />
+		<ResourceDictionary Source="Styles/AeroWizard.xaml" />
+		<ResourceDictionary Source="Styles/Wizard.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

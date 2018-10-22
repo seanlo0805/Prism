@@ -1,0 +1,60 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:charts="clr-namespace:ActiproSoftware.Products.Charts;assembly=ActiproSoftware.Charts.Wpf">
+
+	<!-- products:ChartsLogo -->
+	<Style TargetType="charts:ChartsLogo">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="charts:ChartsLogo">
+					<Canvas Width="512" Height="512" Canvas.Left="0" Canvas.Top="0">
+						<Rectangle x:Name="Rectangle" Width="16" Height="448" Canvas.Left="32" Canvas.Top="32" Stretch="Fill" Fill="#FF000000" />
+						<Rectangle x:Name="Rectangle_0" Width="496" Height="16" Canvas.Left="-9.53674e-007" Canvas.Top="432" Stretch="Fill" Fill="#FF000000" />
+						<Rectangle x:Name="Rectangle_1" Width="16" Height="32" Canvas.Left="144" Canvas.Top="448" Stretch="Fill" Fill="#FF000000" />
+						<Rectangle x:Name="Rectangle_2" Width="16" Height="32" Canvas.Left="256" Canvas.Top="448" Stretch="Fill" Fill="#FF000000" />
+						<Rectangle x:Name="Rectangle_3" Width="16" Height="32" Canvas.Left="368" Canvas.Top="448" Stretch="Fill" Fill="#FF000000" />
+						<Rectangle x:Name="Rectangle_4" Width="32" Height="16" Canvas.Left="0" Canvas.Top="336" Stretch="Fill" Fill="#FF000000" />
+						<Rectangle x:Name="Rectangle_5" Width="32" Height="16" Canvas.Left="0" Canvas.Top="144" Stretch="Fill" Fill="#FF000000" />
+						<Rectangle x:Name="Rectangle_6" Width="32" Height="16" Canvas.Left="0" Canvas.Top="240" Stretch="Fill" Fill="#FF000000" />
+						<Path x:Name="Chart_border" Width="448" Height="400" Canvas.Left="48" Canvas.Top="32" Stretch="Fill" Fill="#FFC6C6C6" Data="F1 M 480,432L 480,48.0001L 48,48L 48,32L 464,32.0001L 496,32.0001L 496,64L 496,432L 480,432 Z " />
+						<Rectangle x:Name="Chart_BG" Width="432" Height="384" Canvas.Left="48" Canvas.Top="47.9998" Stretch="Fill" Fill="#FFFFFFFF" />
+						<Rectangle x:Name="Lower_gray_stripe" Width="432" Height="96" Canvas.Left="48" Canvas.Top="336" Stretch="Fill" Fill="#FFE8E8E8" />
+						<Rectangle x:Name="Upper_gray_stripe" Width="432" Height="96" Canvas.Left="48" Canvas.Top="144" Stretch="Fill" Fill="#FFE8E8E8" />
+						<Rectangle x:Name="Rectangle_7" Width="112" Height="160" Canvas.Left="96.0001" Canvas.Top="272" Stretch="Fill">
+							<Rectangle.Fill>
+								<LinearGradientBrush StartPoint="0.496529,0.000386047" EndPoint="0.496529,1.00039">
+									<LinearGradientBrush.GradientStops>
+										<GradientStop Color="#FFFFDA22" Offset="0" />
+										<GradientStop Color="#FFEC8300" Offset="1" />
+									</LinearGradientBrush.GradientStops>
+								</LinearGradientBrush>
+							</Rectangle.Fill>
+						</Rectangle>
+						<Rectangle x:Name="Rectangle_8" Width="112" Height="256" Canvas.Left="320" Canvas.Top="176" Stretch="Fill">
+							<Rectangle.Fill>
+								<LinearGradientBrush StartPoint="0.579863,0.000267029" EndPoint="0.579863,1.00027">
+									<LinearGradientBrush.GradientStops>
+										<GradientStop Color="#FF4483F7" Offset="0" />
+										<GradientStop Color="#FF1743A5" Offset="1" />
+									</LinearGradientBrush.GradientStops>
+								</LinearGradientBrush>
+							</Rectangle.Fill>
+						</Rectangle>
+						<Rectangle x:Name="Rectangle_9" Width="112" Height="320" Canvas.Left="208" Canvas.Top="112" Stretch="Fill">
+							<Rectangle.Fill>
+								<LinearGradientBrush StartPoint="0.579863,0.000221539" EndPoint="0.579863,1.00022">
+									<LinearGradientBrush.GradientStops>
+										<GradientStop Color="#FFF10000" Offset="0" />
+										<GradientStop Color="#FFC10000" Offset="1" />
+									</LinearGradientBrush.GradientStops>
+								</LinearGradientBrush>
+							</Rectangle.Fill>
+						</Rectangle>
+					</Canvas>
+
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

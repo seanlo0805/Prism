@@ -1,0 +1,41 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+					xmlns:charts="clr-namespace:ActiproSoftware.Windows.Controls.Charts;assembly=ActiproSoftware.Charts.Wpf" 
+					xmlns:primitives="clr-namespace:ActiproSoftware.Windows.Controls.Charts.Primitives;assembly=ActiproSoftware.Charts.Wpf"
+					xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+					>
+
+	<!-- PieChart -->
+	<Style TargetType="charts:PieChart">
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartPieBorderNormalBrushKey}}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="charts:PieChart">
+					<Grid Background="{TemplateBinding Background}">
+						<Canvas x:Name="PART_DrawingSurface" Margin="{TemplateBinding Padding}" />
+						<Canvas x:Name="PART_LogicalSurface"/>
+						<Canvas x:Name="PART_LabelSurface" Margin="{TemplateBinding Padding}" />
+						<Canvas x:Name="PART_TetherSurface" Margin="{TemplateBinding Padding}" />
+						<Canvas x:Name="PART_LegendSurface" Margin="{TemplateBinding Padding}" />
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- PieSlice -->
+	<Style TargetType="primitives:PieSlice">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="primitives:PieSlice">
+					<Path x:Name="PART_Path" Data="{TemplateBinding PathData}" 
+						  Fill="{TemplateBinding Background}" 
+						  Stroke="{TemplateBinding BorderBrush}"
+						  StrokeThickness="{Binding Path=BorderThickness.Left, RelativeSource={RelativeSource TemplatedParent}}"/>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

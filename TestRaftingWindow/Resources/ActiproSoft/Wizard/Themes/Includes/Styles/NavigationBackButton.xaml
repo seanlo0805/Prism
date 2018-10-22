@@ -1,0 +1,171 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    xmlns:wizard="clr-namespace:ActiproSoftware.Windows.Controls.Wizard;assembly=ActiproSoftware.Wizard.Wpf"
+    >
+
+	<!-- 
+	
+		BRUSHES
+	
+	-->
+	
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationButtonBackgroundNormalBrushKey" StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                <GradientStop Color="#CCD4E9" Offset="0.1"/>
+                <GradientStop Color="#4881D2" Offset="0.47"/>
+                <GradientStop Color="#001A5A" Offset="0.47"/>
+                <GradientStop Color="#007BD6" Offset="0.70"/>
+                <GradientStop Color="#54DAFF" Offset="0.85"/>
+                <GradientStop Color="#86FFFF" Offset="0.95"/>
+                <GradientStop Color="#FFFFFF" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationButtonBackgroundHoverBrushKey" StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                <GradientStop Color="#DFEDF9" Offset="0.1"/>
+                <GradientStop Color="#3086E1" Offset="0.47"/>
+                <GradientStop Color="#003B91" Offset="0.47"/>
+                <GradientStop Color="#1793EF" Offset="0.70"/>
+                <GradientStop Color="#5AD4FF" Offset="0.85"/>
+                <GradientStop Color="#BDFFFF" Offset="0.95"/>
+                <GradientStop Color="#FFFFFF" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationButtonBackgroundPressedBrushKey" StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#C0D2F5" Offset="0.0"/>
+                <GradientStop Color="#5E7A9C" Offset="0.47"/>
+                <GradientStop Color="#00062D" Offset="0.47"/>
+                <GradientStop Color="#005F9F" Offset="0.70"/>
+                <GradientStop Color="#1FA4E2" Offset="0.85"/>
+                <GradientStop Color="#61DAFF" Offset="0.95"/>
+                <GradientStop Color="#48CFFF" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationButtonBackgroundDisabledBrushKey" StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0"/>
+                <GradientStop Color="#80EBEEF5" Offset="0.5"/>
+                <GradientStop Color="#D0D8DDEB" Offset="0.5"/>
+                <GradientStop Color="#40DFE2F0" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationButtonForegroundNormalBrushKey" StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#6C90C4" Offset="0"/>
+                <GradientStop Color="#315BB4" Offset="0.5"/>
+                <GradientStop Color="#002091" Offset="0.5"/>
+                <GradientStop Color="#08377C" Offset="1"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationButtonForegroundDisabledBrushKey" StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+				<GradientStop Offset="0" Color="#99A9B9" />
+				<GradientStop Offset="1" Color="#3E4251" />
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+	
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationArrowForegroundBrushKey" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#8AB1FB" Offset="0"/>
+            <GradientStop Color="#002874" Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationArrowBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                <GradientStop Color="#EEEEEE" Offset="0.5"/>
+                <GradientStop Color="#B0B0B0" Offset="1"/>
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="NavigationButtonShadowBrushKey" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#20A0A0A0" Offset="0"/>
+                <GradientStop Color="#10FFFFFF" Offset="1"/>
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+	<!-- 
+	
+		STYLES
+	
+	-->
+	
+	<!-- NavigationBackButtonStyle -->
+    <Style x:Key="NavigationBackButtonStyle" TargetType="{x:Type Button}">
+		<Setter Property="OverridesDefaultStyle" Value="true"/>
+		<Setter Property="Height" Value="28"/>
+		<Setter Property="Width" Value="28"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Grid Background="Transparent">
+						<Ellipse Fill="{StaticResource NavigationButtonShadowBrushKey}" />
+						
+						<Ellipse x:Name="Circle"
+								 Margin="2"
+                                 StrokeThickness="1"
+                                 Fill="{StaticResource NavigationButtonBackgroundNormalBrushKey}"
+                                 Stroke="{StaticResource NavigationButtonForegroundNormalBrushKey}" />
+
+						<Path x:Name="Arrow" 
+                              VerticalAlignment="Center" 
+                              HorizontalAlignment="Center" 
+                              StrokeThickness="0.75"
+                              Data="M0.37,7.69 L5.74,14.20 A1.5,1.5,0,1,0,10.26,12.27 L8.42,10.42 14.90,10.39 A1.5,1.5,0,1,0,14.92,5.87 L8.44,5.90 10.31,4.03 A1.5,1.5,0,1,0,5.79,1.77 z"
+                              Stroke="{StaticResource NavigationArrowForegroundBrushKey}"
+                              Fill="{StaticResource NavigationArrowBackgroundBrushKey}" />
+					</Grid>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="Circle" Property="Fill" Value="{StaticResource NavigationButtonBackgroundDisabledBrushKey}" />
+							<Setter TargetName="Circle" Property="Stroke" Value="{StaticResource NavigationButtonForegroundDisabledBrushKey}" />
+							<Setter TargetName="Arrow" Property="Stroke" Value="#B0B5BACE" />
+							<Setter TargetName="Arrow" Property="Fill" Value="#40FFFFFF" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="Circle" Property="Fill" Value="{StaticResource NavigationButtonBackgroundHoverBrushKey}" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocused" Value="true">
+							<Setter TargetName="Circle" Property="Fill" Value="{StaticResource NavigationButtonBackgroundHoverBrushKey}" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="Circle" Property="Fill" Value="{StaticResource NavigationButtonBackgroundPressedBrushKey}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

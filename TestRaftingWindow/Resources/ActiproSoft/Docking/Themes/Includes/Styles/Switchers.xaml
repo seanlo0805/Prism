@@ -1,0 +1,237 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:productsDocking="clr-namespace:ActiproSoftware.Products.Docking;assembly=ActiproSoftware.Docking.Wpf" 
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:docking="clr-namespace:ActiproSoftware.Windows.Controls.Docking;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:dockingSwitching="clr-namespace:ActiproSoftware.Windows.Controls.Docking.Switching;assembly=ActiproSoftware.Docking.Wpf"
+		>
+
+	<!-- Converters -->
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<shared:CoalesceConverter x:Key="CoalesceConverter" />
+	<shared:CornerRadiusConverter x:Key="CornerRadiusConverter" />
+
+	<!-- 
+	
+		STYLES
+	
+	-->
+
+	<!-- SwitcherListBoxItemTemplate -->
+	<DataTemplate x:Key="SwitcherListBoxItemTemplate" DataType="docking:DockingWindow">
+		<DockPanel LastChildFill="True">
+			<Image DockPanel.Dock="Left" Margin="0,0,7,0" Width="16" Height="16" Stretch="Uniform" Source="{Binding ImageSource}" VerticalAlignment="Center" />
+			<shared:PixelSnapper VerticalAlignment="Center">
+				<TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+			</shared:PixelSnapper>
+		</DockPanel>
+	</DataTemplate>
+
+	<!-- SwitcherListBoxItemStyle -->
+	<Style x:Key="SwitcherListBoxItemStyle" TargetType="{x:Type ListBoxItem}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ListBoxItemStyleKey}}">
+		<Setter Property="Cursor" Value="{x:Static Cursors.Hand}" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+		<!--<Setter Property="Margin" Value="0,0,0,1" />
+		<Setter Property="Padding" Value="1" />-->
+		<Setter Property="Width" Value="180" />
+
+		<!-- 6/2/2010 - Items should use Title for their automation name (316-139856EB-0CC1) -->
+		<Setter Property="AutomationProperties.Name"
+				Value="{Binding Content.Title, RelativeSource={RelativeSource Self}, Converter={StaticResource CoalesceConverter}, ConverterParameter=''}" />
+	</Style>
+
+	<!-- dockingSwitching:SwitcherListBox -->
+	<Style x:Key="{x:Type dockingSwitching:SwitcherListBox}" TargetType="{x:Type dockingSwitching:SwitcherListBox}">
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingSwitching:SwitcherListBox}">
+					<ItemsPresenter />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- SwitcherGridListBoxRepeaterButtonStyle -->
+	<Style x:Key="SwitcherGridListBoxRepeaterButtonStyle" TargetType="{x:Type ButtonBase}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ButtonBase}">
+					<Border Background="Transparent">
+						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- dockingSwitching:SwitcherGridListBox -->
+	<Style x:Key="{x:Type dockingSwitching:SwitcherGridListBox}" TargetType="{x:Type dockingSwitching:SwitcherGridListBox}"
+			BasedOn="{StaticResource {x:Type dockingSwitching:SwitcherListBox}}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingSwitching:SwitcherGridListBox}">
+					<Grid>
+						<ItemsPresenter />
+
+						<RepeatButton Width="{TemplateBinding ItemWidth}" Height="{TemplateBinding ItemHeight}" Command="ScrollBar.LineUpCommand"
+								Style="{StaticResource SwitcherGridListBoxRepeaterButtonStyle}"
+								Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CanScrollUp, Converter={StaticResource BooleanToVisibilityConverter}}"
+								VerticalAlignment="Top" HorizontalAlignment="Left">
+							<Path Width="9" Height="5" Data="M 0 5 L 4.5 0 L 9 5 Z" Fill="{TemplateBinding Foreground}" />
+						</RepeatButton>
+						<RepeatButton Width="{TemplateBinding ItemWidth}" Height="{TemplateBinding ItemHeight}" Command="ScrollBar.LineDownCommand"
+								Style="{StaticResource SwitcherGridListBoxRepeaterButtonStyle}"
+								Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CanScrollDown, Converter={StaticResource BooleanToVisibilityConverter}}"
+								VerticalAlignment="Bottom" HorizontalAlignment="Right">
+							<Path Width="9" Height="5" Data="M 0 0 L 4.5 5 L 9 0 Z" Fill="{TemplateBinding Foreground}" />
+						</RepeatButton>
+					</Grid>
+
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- dockingSwitching:StandardSwitcher -->
+	<Style x:Key="{x:Type dockingSwitching:StandardSwitcher}" TargetType="{x:Type dockingSwitching:StandardSwitcher}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerDarkBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarBorderNormalCornerRadiusKey}}" />
+		
+		<Setter Property="MinWidth" Value="600" />
+
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingSwitching:StandardSwitcher}">
+
+					<shared:DropShadowChrome x:Name="dropShadow" Margin="0,0,5,5">
+						<Border x:Name="outerBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True">
+							<DockPanel LastChildFill="True">
+
+								<Border x:Name="topBorder" DockPanel.Dock="Top"
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerLightBackgroundNormalBrushKey}}"
+										CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.CornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Top}">
+									<StackPanel Margin="15,7,15,7">
+										<DockPanel MinHeight="16" LastChildFill="True">
+											<Image x:Name="selectedWindowImage" DockPanel.Dock="Left" Margin="0,0,7,0" Stretch="None"
+													Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedWindow.ImageSource}" />
+											<shared:PixelSnapper>
+												<TextBlock FontWeight="Bold" Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}"
+														Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedWindow.Title}"
+														TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+											</shared:PixelSnapper>
+										</DockPanel>
+										<shared:PixelSnapper Margin="0,7,0,0">
+											<TextBlock Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" Opacity="0.9"
+													Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedWindow.Description}"
+													TextTrimming="CharacterEllipsis" />
+										</shared:PixelSnapper>
+									</StackPanel>
+								</Border>
+
+								<Border x:Name="bottomBorder" DockPanel.Dock="Bottom" 
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumStartBackgroundNormalBrushKey}}"
+										CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.CornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Bottom}">
+									<shared:PixelSnapper Margin="15,7,15,7">
+										<TextBlock x:Name="fileNameTextBlock" TextTrimming="CharacterEllipsis"
+												Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}"
+												Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedWindow.(docking:DocumentWindow.FileName)}" />
+									</shared:PixelSnapper>
+								</Border>
+
+								<Border Background="{TemplateBinding Background}">
+									<Grid Margin="15">
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="7" />
+											<RowDefinition Height="Auto" />
+										</Grid.RowDefinitions>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition x:Name="toolWindowsMargin" Width="15" />
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition x:Name="documentsMargin" Width="15" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+
+										<shared:PixelSnapper x:Name="toolWindowsTitle" Grid.Row="0" Grid.Column="0">
+											<TextBlock FontWeight="Bold" Text="{productsDocking:SRExtension UIStandardSwitcherToolWindowsText}" />
+										</shared:PixelSnapper>
+
+										<shared:PixelSnapper x:Name="documentsTitle" Grid.Row="0" Grid.Column="2">
+											<TextBlock FontWeight="Bold" Text="{productsDocking:SRExtension UIStandardSwitcherDocumentsText}" />
+										</shared:PixelSnapper>
+
+										<dockingSwitching:SwitcherGridListBox x:Name="PART_ToolWindows" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top"
+												SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedWindow, Mode=TwoWay}"
+												ItemContainerStyle="{StaticResource SwitcherListBoxItemStyle}"
+												ItemTemplate="{StaticResource SwitcherListBoxItemTemplate}"
+												ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ToolWindows}" />
+
+										<dockingSwitching:SwitcherGridListBox x:Name="PART_Documents" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"
+												MaxColumns="{TemplateBinding MaxDocumentsColumns}"
+												SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedWindow, Mode=TwoWay}"
+												ItemContainerStyle="{StaticResource SwitcherListBoxItemStyle}"
+												ItemTemplate="{StaticResource SwitcherListBoxItemTemplate}"
+												ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Documents}" />
+
+										<Border Grid.Row="2" Grid.Column="4" Width="200" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top">
+											<shared:DropShadowChrome Color="#71404040" HorizontalAlignment="Right" VerticalAlignment="Top">
+												<Viewbox MaxWidth="200" MaxHeight="200" Stretch="UniformToFill" StretchDirection="DownOnly">
+													<Border Background="#ffffff" BorderBrush="Silver" BorderThickness="1">
+														<docking:DockingWindowPreview DockingWindow="{TemplateBinding SelectedWindow}" />
+													</Border>
+												</Viewbox>
+											</shared:DropShadowChrome>
+										</Border>
+									</Grid>
+								</Border>
+
+							</DockPanel>
+						</Border>
+					</shared:DropShadowChrome>
+
+					<ControlTemplate.Triggers>
+						<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedWindow.ImageSource}" Value="{x:Null}">
+							<Setter TargetName="selectedWindowImage" Property="Visibility" Value="Collapsed" />
+						</DataTrigger>
+						
+						<Trigger Property="IsBrowserHosted" Value="True">
+							<Setter TargetName="dropShadow" Property="Color" Value="Transparent" />
+							<Setter TargetName="dropShadow" Property="Margin" Value="0" />
+							<Setter TargetName="outerBorder" Property="CornerRadius" Value="0" />
+							<Setter TargetName="topBorder" Property="CornerRadius" Value="0" />
+							<Setter TargetName="bottomBorder" Property="CornerRadius" Value="0" />
+						</Trigger>
+
+						<Trigger Property="AreDocumentsVisible" Value="False">
+							<Setter Property="MinWidth" Value="425" />
+							<Setter TargetName="documentsMargin" Property="Width" Value="0" />
+							<Setter TargetName="documentsTitle" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_Documents" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+
+						<Trigger Property="AreToolWindowsVisible" Value="False">
+							<Setter Property="MinWidth" Value="425" />
+							<Setter TargetName="toolWindowsMargin" Property="Width" Value="0" />
+							<Setter TargetName="toolWindowsTitle" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_ToolWindows" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

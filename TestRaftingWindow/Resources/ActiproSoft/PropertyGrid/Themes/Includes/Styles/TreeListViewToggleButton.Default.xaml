@@ -1,0 +1,90 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:propgrid="clr-namespace:ActiproSoftware.Windows.Controls.PropertyGrid;assembly=ActiproSoftware.PropertyGrid.Wpf"
+		xmlns:propgridPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.PropertyGrid.Primitives;assembly=ActiproSoftware.PropertyGrid.Wpf"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		>
+
+	<!-- Converters -->
+	<shared:ThicknessConverter x:Key="ThicknessConverter" />
+
+	<!-- propgridPrimitives:TreeListViewToggleButton -->
+	<Style x:Key="{x:Type propgridPrimitives:TreeListViewToggleButton}" TargetType="{x:Type propgridPrimitives:TreeListViewToggleButton}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionForegroundNormalBrushKey}}" />
+		<Setter Property="CategoryBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumEndBackgroundNormalBrushKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBorderNormalCornerRadiusKey}}" />
+
+		<Setter Property="Focusable" Value="False" />
+
+		<!-- Bind IsChecked to the IsExanded of the parent item -->
+		<Setter Property="IsChecked"
+				Value="{Binding Path=IsExpanded, RelativeSource={RelativeSource AncestorType={x:Type propgrid:TreeListViewItem}}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type propgridPrimitives:TreeListViewToggleButton}">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Border x:Name="categoryBorder" Width="0" Background="{TemplateBinding CategoryBackground}" />
+						<Border Grid.Column="1" Width="{TemplateBinding IndentationIncrement}" HorizontalAlignment="Left"
+								Background="{TemplateBinding CategoryBackground}" />
+						<Border x:Name="border" Grid.Column="1" Width="{TemplateBinding IndentationIncrement}" HorizontalAlignment="Right"
+								Background="Transparent" SnapsToDevicePixels="true">
+							<Border x:Name="pathBorder" Width="9" Height="9" Background="{TemplateBinding Background}"
+									BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+									CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="true">
+								<Path x:Name="path" Margin="1,1,1,1" Fill="{TemplateBinding Foreground}"
+										Data="M 0 2 L 0 3 L 2 3 L 2 5 L 3 5 L 3 3 L 5 3 L 5 2 L 3 2 L 3 0 L 2 0 L 2 2 Z" />
+							</Border>
+						</Border>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBackgroundHoverBrushKey}}" />
+							<Setter Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBorderHoverBrushKey}}" />
+							<Setter Property="Foreground"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsChecked" Value="True">
+							<Setter TargetName="path" Property="Data" Value="M 0 2 L 0 3 L 5 3 L 5 2 Z" />
+							<Setter Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBackgroundCheckedBrushKey}}" />
+							<Setter Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionBorderCheckedBrushKey}}" />
+							<Setter Property="Foreground"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListToggleButtonExpansionForegroundCheckedBrushKey}}" />
+						</Trigger>
+
+						<!-- Indent the TreeListViewToggleButton based on the indentation width of its parent TreeListViewItem -->
+						<Trigger Property="IsAutoIndentationEnabled" Value="True">
+							<Setter TargetName="categoryBorder" Property="Width"
+									Value="{Binding CategoryIndentationWidth, RelativeSource={RelativeSource AncestorType={x:Type propgrid:TreeListViewItem}}}" />
+							<Setter TargetName="border" Property="Margin"
+									Value="{Binding IndentationWidth, RelativeSource={RelativeSource AncestorType={x:Type propgrid:TreeListViewItem}}, Converter={StaticResource ThicknessConverter}, ConverterParameter=Left}" />
+						</Trigger>
+
+						<!-- Hide the control if the parent item does not have any items -->
+						<DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource AncestorType={x:Type propgrid:TreeListViewItem}}}"
+								Value="False">
+							<Setter TargetName="pathBorder" Property="Visibility" Value="Hidden" />
+						</DataTrigger>
+
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

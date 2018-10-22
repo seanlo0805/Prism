@@ -1,0 +1,449 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:docking="clr-namespace:ActiproSoftware.Windows.Controls.Docking;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:dockingPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Docking.Primitives;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:productsDocking="clr-namespace:ActiproSoftware.Products.Docking;assembly=ActiproSoftware.Docking.Wpf" 
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		>
+
+	<!-- Converters -->
+	<shared:CornerRadiusConverter x:Key="CornerRadiusConverter" />
+	<shared:CoalesceConverter x:Key="CoalesceConverter" />
+	<shared:IsNullOrTransparentBrushConverter x:Key="IsNullOrTransparentBrushConverter" />
+	<shared:ThicknessConverter x:Key="ThicknessConverter" />
+	<dockingPrimitives:TitleConverter x:Key="DocumentTitleConverter" Prefix="20" Suffix="15" Patch="..." />
+
+	<!--
+	
+		DATA TEMPLATES
+	
+	-->
+
+	<DataTemplate x:Key="StandardMdiDocumentContextContentTemplate">
+		<Image AutomationProperties.Name="Context Image" Stretch="None" Source="{Binding}" VerticalAlignment="Center"
+				SnapsToDevicePixels="True" />
+	</DataTemplate>
+
+	<!--
+	
+	CONTROL TEMPLATES
+	
+	-->
+
+	<!-- DockingWindowDefaultTemplateKey -->
+	<ControlTemplate x:Key="DockingWindowDefaultTemplateKey" TargetType="{x:Type docking:DockingWindow}">
+		<ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+	</ControlTemplate>
+
+	<!-- DockingWindowStandardMdiDocumentTemplateKey -->
+	<ControlTemplate x:Key="DockingWindowStandardMdiDocumentTemplateKey" TargetType="{x:Type docking:DockingWindow}">
+
+		<dockingPrimitives:StandardMdiWindowControl x:Name="PART_MagneticWindow" Background="{TemplateBinding Background}" Title="{TemplateBinding Title}"
+				Icon="{TemplateBinding ImageSource}" Content="{TemplateBinding Content}" ContextContent="{TemplateBinding ContextImageSource}"
+				ContextContentTemplate="{StaticResource StandardMdiDocumentContextContentTemplate}" CanClose="{TemplateBinding CanCloseResolved}"
+				Left="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(docking:StandardMdiHost.StandardMdiLeft), Mode=TwoWay}"
+				Top="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(docking:StandardMdiHost.StandardMdiTop), Mode=TwoWay}"
+				Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(docking:StandardMdiHost.StandardMdiWidth), Mode=TwoWay}"
+				Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(docking:StandardMdiHost.StandardMdiHeight), Mode=TwoWay}"
+				RestoreBounds="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(docking:StandardMdiHost.StandardMdiRestoreBounds), Mode=TwoWay}"
+				HasMaximizeButton="{TemplateBinding CanStandardMdiMaximizeResolved}" HasMinimizeButton="{TemplateBinding CanStandardMdiMinimizeResolved}"
+				IsMaximizedFrameVisible="{Binding RelativeSource={RelativeSource AncestorType={x:Type docking:StandardMdiHost}}, Path=AreMaximizedWindowFramesVisible}"
+				WindowState="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(docking:StandardMdiHost.StandardMdiWindowState), Mode=TwoWay}" />
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsSelected" Value="True">
+				<Setter Property="Panel.ZIndex" Value="1" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- DockingWindowTabbedMdiDocumentTemplateKey -->
+	<ControlTemplate x:Key="DockingWindowTabbedMdiDocumentTemplateKey" TargetType="{x:Type docking:DockingWindow}">
+		<shared:PixelSnapper>
+			<Grid Background="Transparent" ToolTip="{TemplateBinding ToolTip}">
+				<shared:TintableBorder x:Name="border" Background="{TemplateBinding TabBackground}" BorderBrush="{TemplateBinding TabBorderBrush}"
+						BorderThickness="{TemplateBinding TabBorderThickness, Converter={StaticResource ThicknessConverter}, ConverterParameter='Left,Top,Right'}"
+						CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius, Converter={StaticResource CornerRadiusConverter}, ConverterParameter='Top'}" RenderTransformOrigin="0.5,0.5"
+						TintColor="{TemplateBinding TabTintColor}" />
+
+				<DockPanel Margin="{Binding ElementName=border, Path=BorderThickness}">
+					<StackPanel x:Name="buttonContainer" DockPanel.Dock="Right" Margin="1,-1,2,1" Orientation="Horizontal" VerticalAlignment="Center" TextElement.Foreground="Transparent">
+						<Button x:Name="closeButton" Focusable="False"
+								Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+								ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.CloseGlyphTemplateKey}}"
+								Command="{x:Static docking:DockingCommands.CloseWindow}" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+								ToolTip="{productsDocking:SRExtension UITabbedMdiContainerCloseButtonToolTip}" Visibility="Collapsed"
+								AutomationProperties.Name="Close" />
+					</StackPanel>
+
+					<Image x:Name="contextImage" DockPanel.Dock="Right" Margin="1,-1,2,2" AutomationProperties.Name="Context Image" Stretch="None"
+							Source="{TemplateBinding ContextImageSource}" VerticalAlignment="Center" SnapsToDevicePixels="True" />
+
+					<shared:PixelSnapper x:Name="contentContainer" Margin="0,-1,0,1" TextElement.Foreground="{TemplateBinding TabForeground}">
+						<DockPanel Margin="{TemplateBinding Padding}">
+							<Image x:Name="image" DockPanel.Dock="Left" AutomationProperties.Name="Image" Margin="0,0,4,1" Width="16" Height="16" Source="{TemplateBinding ImageSource}"
+									VerticalAlignment="Center" SnapsToDevicePixels="True" Visibility="Collapsed" />
+							<shared:PixelSnapper VerticalRoundMode="CeilingToEven">
+								<Grid>
+									<Grid x:Name="header">
+										<TextBlock x:Name="title" AutomationProperties.Name="Title" TextTrimming="CharacterEllipsis"
+												Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, Converter={StaticResource DocumentTitleConverter}}"
+												VerticalAlignment="Center" Visibility="Collapsed" />
+										<ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"
+												ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" VerticalAlignment="Center" />
+									</Grid>
+									<TextBox x:Name="PART_TitleTextBox" AutomationProperties.Name="Inplace Editor" MinWidth="50" Visibility="Collapsed" BorderThickness="0" Background="Transparent"
+											Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+											Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, Mode=OneWay}" />
+								</Grid>
+							</shared:PixelSnapper>
+						</DockPanel>
+					</shared:PixelSnapper>
+				</DockPanel>
+			</Grid>
+		</shared:PixelSnapper>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="docking:TabbedMdiHost.TabPlacement" Value="Bottom">
+				<Setter TargetName="border" Property="RenderTransform">
+					<Setter.Value>
+						<ScaleTransform ScaleY="-1" />
+					</Setter.Value>
+				</Setter>
+				<Setter TargetName="buttonContainer" Property="Margin" Value="1,0,2,0" />
+				<Setter TargetName="contextImage" Property="Margin" Value="1,1,2,0" />
+				<Setter TargetName="contentContainer" Property="Margin" Value="0" />
+				<Setter TargetName="image" Property="RenderTransform">
+					<Setter.Value>
+						<TranslateTransform Y="1" />
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="docking:TabbedMdiHost.IsImageOnTab" Value="True">
+				<Setter TargetName="image" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<Trigger Property="ImageSource" Value="{x:Null}">
+				<Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="ContextImageSource" Value="{x:Null}">
+				<Setter TargetName="contextImage" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter TargetName="contentContainer" Property="Opacity" Value="0.4" />
+				<Setter TargetName="contextImage" Property="Opacity" Value="0.4" />
+			</Trigger>
+			<Trigger Property="IsMouseOver" Value="True">
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBackgroundHoverBrushKey}}" /> 
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBorderHoverBrushKey}}" /> 
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemForegroundHoverBrushKey}}" />
+				<Setter TargetName="buttonContainer" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemGlyphBackgroundHoverBrushKey}}" />
+			</Trigger>
+			<Trigger Property="IsSelected" Value="True">
+				<Setter Property="Panel.ZIndex" Value="1" />
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBackgroundInactiveSelectedBrushKey}}" /> 
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBorderInactiveSelectedBrushKey}}" /> 
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemForegroundInactiveSelectedBrushKey}}" />
+				<Setter TargetName="buttonContainer" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemGlyphBackgroundInactiveSelectedBrushKey}}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsSelected" Value="True" />
+					<Condition Property="docking:Workspace.IsActive" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBackgroundActiveSelectedBrushKey}}" /> 
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBorderActiveSelectedBrushKey}}" /> 
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemForegroundActiveSelectedBrushKey}}" />
+				<Setter TargetName="buttonContainer" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemGlyphBackgroundActiveSelectedBrushKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsSelected" Value="True" />
+					<Condition Property="docking:DockingWindowContainer.IsActive" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBackgroundActiveFocusedBrushKey}}" /> 
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBorderActiveFocusedBrushKey}}" /> 
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemForegroundActiveFocusedBrushKey}}" />
+				<Setter TargetName="buttonContainer" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemGlyphBackgroundActiveFocusedBrushKey}}" />
+			</MultiTrigger>
+			<Trigger Property="IsEditingTitle" Value="True">
+				<Setter TargetName="header" Property="Visibility" Value="Hidden" />
+				<Setter TargetName="PART_TitleTextBox" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="Header" Value="{x:Null}" />
+					<Condition Property="HeaderTemplate" Value="{x:Null}" />
+					<Condition Property="HeaderTemplateSelector" Value="{x:Null}" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="contentPresenter" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="title" Property="Visibility" Value="Visible" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="CanCloseResolved" Value="True" />
+					<Condition Property="docking:TabbedMdiHost.IsCloseButtonOnTab" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="closeButton" Property="Visibility" Value="Visible" />
+			</MultiTrigger>
+
+			<!-- Ensure the tab's background and border a visible when tinting -->
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabTintColor, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="False" />
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabBackground, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="border" Property="Background" Value="#44AAAAAA" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabTintColor, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="False" />
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabBorderBrush, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="border" Property="BorderBrush" Value="#AAAAAAAA" />
+			</MultiDataTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- ToolWindowDockedTemplateKey -->
+	<ControlTemplate x:Key="ToolWindowDockedTemplateKey" TargetType="{x:Type docking:ToolWindow}">
+		<shared:TintableBorder x:Name="border" Background="{TemplateBinding TabBackground}" BorderBrush="{TemplateBinding TabBorderBrush}"
+				BorderThickness="{TemplateBinding TabBorderThickness, Converter={StaticResource ThicknessConverter}, ConverterParameter='Left,Right,Bottom'}"
+				CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius, Converter={StaticResource CornerRadiusConverter}, ConverterParameter='Bottom'}"
+				TextElement.Foreground="{TemplateBinding TabForeground}" Padding="{TemplateBinding Padding}" ClipToBounds="True" SnapsToDevicePixels="True" TintColor="{TemplateBinding TabTintColor}"
+				ToolTip="{TemplateBinding ToolTip}">
+			<shared:PixelSnapper>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Image x:Name="image" AutomationProperties.Name="Image" Grid.Column="0" Margin="0,2,4,-1" Source="{TemplateBinding ImageSource}"
+							Width="16" Height="16" Stretch="Uniform" VerticalAlignment="Center" SnapsToDevicePixels="True" />
+
+					<dockingPrimitives:TruncationDecorator x:Name="truncationDecorator" Grid.Column="1"
+							IsTruncated="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTitleTruncated, Mode=OneWayToSource}"
+							Visibility="Collapsed">
+						<TextBlock x:Name="title" AutomationProperties.Name="Title" Margin="0,0,0,1" TextTrimming="CharacterEllipsis"
+								Text="{TemplateBinding Title}" VerticalAlignment="Center" SnapsToDevicePixels="True" />
+					</dockingPrimitives:TruncationDecorator>
+					<ContentPresenter x:Name="contentPresenter" Grid.Column="1" Margin="0,0,0,1" Content="{TemplateBinding Header}"
+							ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+							VerticalAlignment="Center" />
+				</Grid>
+			</shared:PixelSnapper>
+		</shared:TintableBorder>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="docking:DockSite.ToolWindowsTabPlacement" Value="Top">
+				<Setter TargetName="border" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TabBorderThickness, Converter={StaticResource ThicknessConverter}, ConverterParameter='Left,Top,Right'}" />
+				<Setter TargetName="border" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.CornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter='Top'}" />
+				<Setter TargetName="image" Property="Margin" Value="0,-1,4,2" />
+			</Trigger>
+			<Trigger Property="docking:DockSite.ToolWindowsHaveImagesOnTabs" Value="False">
+				<Setter TargetName="image" Property="Margin" Value="0" />
+				<Setter TargetName="image" Property="Visibility" Value="Hidden" />
+				<Setter TargetName="image" Property="Width" Value="0" />
+			</Trigger>
+			<Trigger Property="ImageSource" Value="{x:Null}">
+				<Setter TargetName="image" Property="Margin" Value="0" />
+				<Setter TargetName="image" Property="Visibility" Value="Hidden" />
+				<Setter TargetName="image" Property="Width" Value="0" />
+			</Trigger>
+			<Trigger Property="IsMouseOver" Value="True">
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBackgroundHoverBrushKey}}" />
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderHoverBrushKey}}" />
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemForegroundHoverBrushKey}}" />
+			</Trigger>
+			<Trigger Property="IsSelected" Value="True">
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBackgroundSelectedBrushKey}}" />
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderSelectedBrushKey}}" />
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemForegroundSelectedBrushKey}}" />
+			</Trigger>
+			<Trigger Property="IsTitleTruncated" Value="True">
+				<Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Title}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="Header" Value="{x:Null}" />
+					<Condition Property="HeaderTemplate" Value="{x:Null}" />
+					<Condition Property="HeaderTemplateSelector" Value="{x:Null}" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="contentPresenter" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="truncationDecorator" Property="Visibility" Value="Visible" />
+			</MultiTrigger>
+
+			<!-- Ensure the tab's background and border a visible when tinting -->
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabTintColor, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="False" />
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabBackground, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="border" Property="Background" Value="#44AAAAAA" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabTintColor, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="False" />
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabBorderBrush, Converter={StaticResource IsNullOrTransparentBrushConverter}}" Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="border" Property="BorderBrush" Value="#AAAAAAAA" />
+			</MultiDataTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!--
+	
+	STYLES
+	
+	-->
+
+	<!-- docking:DockingWindow -->
+	<Style x:Key="{x:Type docking:DockingWindow}" TargetType="{x:Type docking:DockingWindow}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+		
+		<!-- 10/28/2009 - Added CoalesceConverter below because AutomationProperties.Name doesn't allow null values and this can result in binding errors. -->
+		<Setter Property="AutomationProperties.Name"
+				Value="{Binding Title, RelativeSource={RelativeSource Self}, Converter={StaticResource CoalesceConverter}, ConverterParameter=''}" />
+		
+		<Setter Property="Template" Value="{StaticResource DockingWindowDefaultTemplateKey}" />
+
+		<Style.Triggers>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Document" />
+					<Condition Property="docking:Workspace.MdiTypeKey" Value="{x:Static docking:TabbedMdiHost.MdiTypeKey}" />
+				</MultiTrigger.Conditions>
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBackgroundNormalBrushKey}}" />
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBorderNormalBrushKey}}" />
+				<Setter Property="TabBorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBorderNormalThicknessKey}}" />
+				<!-- 9/11/2015 - Changed CornerRadius to use this new asset resource since other CornerRadius asset resource values are changing for Docking vNext -->
+				<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBorderHighlightedCornerRadiusKey}}" />
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemForegroundNormalBrushKey}}" />
+
+				<Setter Property="Padding" Value="4,2" />
+				<Setter Property="MinHeight" Value="22" />
+				
+				<Setter Property="Template" Value="{StaticResource DockingWindowTabbedMdiDocumentTemplateKey}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Document" />
+					<Condition Property="docking:Workspace.MdiTypeKey" Value="{x:Static docking:TabbedMdiHost.MdiTypeKey}" />
+					<Condition Property="IsSelected" Value="False" />
+					<Condition Property="docking:TabbedMdiHost.TabPlacement" Value="Bottom" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBottomMarginNormalThicknessKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Document" />
+					<Condition Property="docking:Workspace.MdiTypeKey" Value="{x:Static docking:TabbedMdiHost.MdiTypeKey}" />
+					<Condition Property="IsSelected" Value="False" />
+					<Condition Property="docking:TabbedMdiHost.TabPlacement" Value="Top" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemTopMarginNormalThicknessKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Document" />
+					<Condition Property="docking:Workspace.MdiTypeKey" Value="{x:Static docking:StandardMdiHost.MdiTypeKey}" />
+				</MultiTrigger.Conditions>
+				<!-- 2/12/2010 - Added Background setter and binding in StandardMdiWindowControl below (10D-1307587D-9962) -->
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBackgroundNormalBrushKey}}" />
+				<Setter Property="Height" Value="Auto" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Width" Value="Auto" />
+
+				<Setter Property="Template" Value="{StaticResource DockingWindowStandardMdiDocumentTemplateKey}" />
+			</MultiTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- docking:DocumentWindow -->
+	<Style x:Key="{x:Type docking:DocumentWindow}" TargetType="{x:Type docking:DocumentWindow}" BasedOn="{StaticResource {x:Type docking:DockingWindow}}">
+		<Setter Property="ReadOnlyContextImageSource"
+				Value="pack://application:,,,/ActiproSoftware.Docking.Wpf;component/Products/Docking/Images/ReadOnly8.png" />
+		<Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=FileName}" />
+
+		<Style.Triggers>
+			<Trigger Property="IsReadOnly" Value="True">
+				<Setter Property="ContextImageSource" Value="{Binding RelativeSource={RelativeSource Self}, Path=ReadOnlyContextImageSource}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- docking:ToolWindow -->
+	<Style x:Key="{x:Type docking:ToolWindow}" TargetType="{x:Type docking:ToolWindow}" BasedOn="{StaticResource {x:Type docking:DockingWindow}}">
+
+		<Style.Triggers>
+			<Trigger Property="State" Value="AutoHide">
+				<Setter Property="Padding" Value="4,1" />
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBackgroundNormalBrushKey}}" />
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderNormalBrushKey}}" />
+				<Setter Property="TabBorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderNormalThicknessKey}}" />
+				<!-- 9/11/2015 - Changed CornerRadius to use this new asset resource since other CornerRadius asset resource values are changing for Docking vNext -->
+				<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBorderHighlightedCornerRadiusKey}}" />
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemForegroundNormalBrushKey}}" />
+
+				<Setter Property="Template" Value="{StaticResource ToolWindowDockedTemplateKey}" />
+			</Trigger>
+			<Trigger Property="State" Value="Docked">
+				<Setter Property="Padding" Value="4,1" />
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBackgroundNormalBrushKey}}" />
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderNormalBrushKey}}" />
+				<Setter Property="TabBorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderNormalThicknessKey}}" />
+				<!-- 9/11/2015 - Changed CornerRadius to use this new asset resource since other CornerRadius asset resource values are changing for Docking vNext -->
+				<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBorderHighlightedCornerRadiusKey}}" />
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemForegroundNormalBrushKey}}" />
+
+				<Setter Property="Template" Value="{StaticResource ToolWindowDockedTemplateKey}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Docked" />
+					<Condition Property="IsSelected" Value="False" />
+					<Condition Property="docking:DockSite.ToolWindowsTabPlacement" Value="Bottom" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBottomMarginNormalThicknessKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Docked" />
+					<Condition Property="IsSelected" Value="False" />
+					<Condition Property="docking:DockSite.ToolWindowsTabPlacement" Value="Top" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemTopMarginNormalThicknessKey}}" />
+			</MultiTrigger>
+			<Trigger Property="State" Value="Floating">
+				<Setter Property="Padding" Value="4,1" />
+				<Setter Property="TabBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBackgroundNormalBrushKey}}" />
+				<Setter Property="TabBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderNormalBrushKey}}" />
+				<Setter Property="TabBorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderNormalThicknessKey}}" />
+				<!-- 9/11/2015 - Changed CornerRadius to use this new asset resource since other CornerRadius asset resource values are changing for Docking vNext -->
+				<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBorderHighlightedCornerRadiusKey}}" />
+				<Setter Property="TabForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemForegroundNormalBrushKey}}" />
+
+				<Setter Property="Template" Value="{StaticResource ToolWindowDockedTemplateKey}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Floating" />
+					<Condition Property="IsSelected" Value="False" />
+					<Condition Property="docking:DockSite.ToolWindowsTabPlacement" Value="Bottom" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBottomMarginNormalThicknessKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="State" Value="Floating" />
+					<Condition Property="IsSelected" Value="False" />
+					<Condition Property="docking:DockSite.ToolWindowsTabPlacement" Value="Top" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemTopMarginNormalThicknessKey}}" />
+			</MultiTrigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

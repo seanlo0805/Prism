@@ -1,0 +1,154 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    xmlns:media="clr-namespace:System.Windows.Media;assembly=PresentationCore"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+	
+	<!-- ribbonControls:Tab -->
+	<Style x:Key="{x:Type ribbonControls:Tab}" TargetType="{x:Type ribbonControls:Tab}">
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontWeight" Value="Normal" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemForegroundNormalBrushKey}}" />
+		<Setter Property="Padding" Value="12,4,12,4" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ribbonControls:Tab">
+					<ControlTemplate.Resources>
+
+						<ribbonControlsPrimitives:KeyTipToAccessTextConverter x:Key="KeyTipToAccessTextConverter" />
+
+					</ControlTemplate.Resources>
+						
+					<Grid MinHeight="23" Background="Transparent">
+						
+						<Rectangle x:Name="separator" Margin="0,0,-1,1" Width="1" HorizontalAlignment="Right" 
+								   Fill="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabSeparatorBackgroundNormalBrushKey}}" 
+								   Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SeparatorOpacity}" />
+						
+						<!-- 12/13/2011 - This outer Grid must have ClipToBounds otherwise the tab selection will not work correctly in the Visual Studio designer  --> 
+						<Grid ClipToBounds="True">
+							
+							<Grid x:Name="normalUI" Visibility="Hidden">
+							
+								<!-- Left/top/right outer/inner borders -->
+								<Border x:Name="outerBorder" Margin="2,0,2,1" BorderThickness="1,1,1,0" 
+										BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBorderSelectedBrushKey}}" CornerRadius="3,3,0,0" 
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBackgroundSelectedBrushKey}}" SnapsToDevicePixels="True">
+									<Border x:Name="innerBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent" CornerRadius="2,2,0,0" SnapsToDevicePixels="True" />
+								</Border>
+
+								<!-- Bottom line of background (only show the top line of it) -->
+								<Rectangle x:Name="bottomLine" Margin="2,0,2,-19" Height="20" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}" 
+										   VerticalAlignment="Bottom" Visibility="Hidden" SnapsToDevicePixels="True" />
+						
+								<Grid x:Name="outwardCurls" Visibility="Hidden">
+									<!-- Bottom outward outer border curls -->
+									<Border BorderThickness="0,0,1,1" Width="3" Height="3" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBorderSelectedBrushKey}}" 
+										CornerRadius="0,0,3,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" SnapsToDevicePixels="True" />
+									<Border BorderThickness="1,0,0,1" Width="3" Height="3" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBorderSelectedBrushKey}}" 
+										CornerRadius="0,0,0,3" HorizontalAlignment="Right" VerticalAlignment="Bottom" SnapsToDevicePixels="True" />
+								</Grid>
+
+							</Grid>
+							
+							<Grid x:Name="tintUI" Visibility="Collapsed" Opacity="0.5">
+							
+								<!-- Left/top/right outer/inner borders -->
+								<Border x:Name="tintOuterBorder" Margin="2,0,2,1" BorderThickness="1,1,1,0" BorderBrush="{TemplateBinding TintedSelectedOuterBorderBrush}" CornerRadius="3,3,0,0" SnapsToDevicePixels="True">
+									<Border x:Name="tintInnerBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent" CornerRadius="2,2,0,0" SnapsToDevicePixels="True" />
+								</Border>
+
+							</Grid>
+							
+							<!-- 5/5/2010 - Moved AccessText element below TextBlock as it causes problems with JAWS when the Tab is contextual (http://www.actiprosoftware.com/Support/Forums/ViewForumTopic.aspx?ForumTopicID=4838) -->
+							<TextBlock x:Name="PART_Label" Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" 
+								Text="{TemplateBinding Label}" Foreground="{TemplateBinding Foreground}" />
+
+							<AccessText Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=KeyTipAccessText, Converter={StaticResource KeyTipToAccessTextConverter}}" Foreground="Transparent" IsHitTestVisible="False" />
+					
+						</Grid>
+
+					</Grid>
+						
+					<ControlTemplate.Triggers>
+						<Trigger Property="Selector.IsSelected" Value="True">
+							<Setter Property="IsSelected" Value="True" />
+						</Trigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:Ribbon}, Path=IsMinimized}" Value="True" />
+								<Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:Ribbon}, Path=IsMinimizedPopupOpen}" Value="False" />
+							</MultiDataTrigger.Conditions>
+							<Setter Property="IsSelected" Value="False" />
+						</MultiDataTrigger>
+						<Trigger Property="IsTextTruncated" Value="True">
+							<Setter TargetName="PART_Label" Property="HorizontalAlignment" Value="Left" />
+						</Trigger>
+						<Trigger Property="IsSelected" Value="True">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemForegroundSelectedBrushKey}}" />
+							<Setter TargetName="normalUI" Property="Visibility" Value="Visible" />
+							<Setter TargetName="outerBorder" Property="Margin" Value="2,0,2,0" />
+							<Setter TargetName="outwardCurls" Property="Visibility" Value="Visible" />
+							<Setter TargetName="bottomLine" Property="Visibility" Value="Visible" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsSelected" Value="True" />
+								<Condition Property="IsTinted" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="tintUI" Property="Visibility" Value="Visible" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsSelected" Value="False" />
+								<Condition Property="IsMouseOverTab" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemForegroundHoverBrushKey}}" />
+							<Setter TargetName="normalUI" Property="Visibility" Value="Visible" />
+							<Setter TargetName="outerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBackgroundHoverBrushKey}}" />
+							<Setter TargetName="outerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBorderHoverBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemInnerBorderHoverBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsSelected" Value="False" />
+								<Condition Property="IsMouseOverTab" Value="True" />
+								<Condition Property="IsTinted" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="outerBorder" Property="Background" Value="Transparent" />
+							<Setter TargetName="tintUI" Property="Visibility" Value="Visible" />
+							<Setter TargetName="tintUI" Property="Opacity" Value="1.0" />
+							<Setter TargetName="tintInnerBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TintedSelectedInnerBorderBrush}" />
+						</MultiTrigger>
+						<Trigger Property="IsKeyboardFocused" Value="True">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemForegroundSelectedBrushKey}}" />
+							<Setter TargetName="outerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBackgroundFocusedBrushKey}}" />
+							<Setter TargetName="outerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemBorderFocusedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabItemInnerBorderFocusedBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundDisabledBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="themes:ThemeProperties.CornerRadius" Value="0">
+							<Setter TargetName="outerBorder" Property="CornerRadius" Value="0" />
+							<Setter TargetName="outerBorder" Property="Margin" Value="2,0,2,0" />
+							<Setter TargetName="innerBorder" Property="CornerRadius" Value="0" />
+							<Setter TargetName="bottomLine" Property="Margin" Value="3,0,3,-19" />
+							<Setter TargetName="outwardCurls" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="tintOuterBorder" Property="CornerRadius" Value="0" />
+							<Setter TargetName="tintOuterBorder" Property="Margin" Value="2,0,2,0" />
+							<Setter TargetName="tintInnerBorder" Property="CornerRadius" Value="0" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+					
+				</ControlTemplate>				
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

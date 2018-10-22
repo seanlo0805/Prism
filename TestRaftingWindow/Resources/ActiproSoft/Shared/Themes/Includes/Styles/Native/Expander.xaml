@@ -1,0 +1,289 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:controlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Primitives;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:data="clr-namespace:ActiproSoftware.Windows.Data;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf">
+
+	<!-- Converters -->
+	<data:ConditionalConverter x:Key="ConditionalConverter" />
+	<data:CornerRadiusConverter x:Key="CornerRadiusConverter" />
+
+	<!-- ExpanderHeaderFocusVisual -->
+	<Style x:Key="ExpanderHeaderFocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Border>
+						<Rectangle Margin="0" StrokeThickness="1" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" StrokeDashArray="1 2" SnapsToDevicePixels="true" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ExpanderAboveHeaderStyle -->
+	<Style x:Key="ExpanderAboveHeaderStyle" TargetType="{x:Type ToggleButton}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderForegroundNormalBrushKey}}" />
+
+		<Setter Property="ContextMenu" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderContextMenu)}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderCornerRadius)}" />
+		<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderFontSize)}" />
+		<Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderPadding)}" />
+
+		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+		<Setter Property="VerticalContentAlignment" Value="Stretch" />
+		<Setter Property="Margin" Value="0" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ToggleButton}">
+					<controlsPrimitives:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+							BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBackgroundHoverBrushKey}}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBorderHoverBrushKey}}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderInnerBorderNormalBrushKey}}"
+							InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderInnerBorderHoverBrushKey}}"
+							InnerBorderThickness="1" 
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderElementChromeBorderStyleKey}}"
+							CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+							SnapsToDevicePixels="true">
+						<Grid Background="Transparent" SnapsToDevicePixels="False" Margin="{TemplateBinding Padding}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="19" />
+							</Grid.ColumnDefinitions>
+							<ContentPresenter Margin="5,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="True"
+									RecognizesAccessKey="True" />
+							<Ellipse x:Name="outerCircle" Grid.Column="1" Width="19" Height="19" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBorderNormalBrushKey}}" StrokeThickness="1"
+									Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphInnerBorderNormalBrushKey}}" />
+							<Ellipse x:Name="innerCircle" Grid.Column="1" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBackgroundNormalBrushKey}}" />
+							<Path x:Name="outerArrow" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphHighlightNormalBrushKey}}"
+									StrokeThickness="4" SnapsToDevicePixels="false" Data="M 1,1.5  L 4.5,5  L 8,1.5" />
+							<Path x:Name="innerArrow" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphForegroundNormalBrushKey}}"
+									StrokeThickness="2" SnapsToDevicePixels="false" Data="{Binding Data, ElementName=outerArrow}" />
+						</Grid>
+					</controlsPrimitives:ElementChrome>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsChecked" Value="true">
+							<Setter TargetName="outerArrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="outerCircle" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBorderHoverBrushKey}}" />
+							<Setter TargetName="outerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphInnerBorderHoverBrushKey}}" />
+							<Setter TargetName="innerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBackgroundHoverBrushKey}}" />
+							<Setter TargetName="outerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphHighlightHoverBrushKey}}" />
+							<Setter TargetName="innerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="outerCircle" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBorderPressedBrushKey}}" />
+							<Setter TargetName="outerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphInnerBorderPressedBrushKey}}" />
+							<Setter TargetName="innerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBackgroundPressedBrushKey}}" />
+							<Setter TargetName="innerCircle" Property="Width" Value="17" />
+							<Setter TargetName="innerCircle" Property="Height" Value="17" />
+							<Setter TargetName="outerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphHighlightPressedBrushKey}}" />
+							<Setter TargetName="innerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphForegroundPressedBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ExpanderBelowHeaderStyle -->
+	<Style x:Key="ExpanderBelowHeaderStyle" TargetType="{x:Type ToggleButton}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderForegroundNormalBrushKey}}" />
+
+		<Setter Property="ContextMenu" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderContextMenu)}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderCornerRadius)}" />
+		<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderFontSize)}" />
+		<Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderPadding)}" />
+
+		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+		<Setter Property="VerticalContentAlignment" Value="Stretch" />
+		<Setter Property="Margin" Value="0" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ToggleButton}">
+					<controlsPrimitives:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+							BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBackgroundHoverBrushKey}}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBorderHoverBrushKey}}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderInnerBorderNormalBrushKey}}"
+							InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderInnerBorderHoverBrushKey}}"
+							InnerBorderThickness="1" 
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderElementChromeBorderStyleKey}}"
+							CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+							SnapsToDevicePixels="true">
+						<Grid Background="Transparent" SnapsToDevicePixels="False" Margin="{TemplateBinding Padding}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="19" />
+							</Grid.ColumnDefinitions>
+							<ContentPresenter Margin="0,0,3,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="True"
+									RecognizesAccessKey="True" />
+							<Ellipse x:Name="outerCircle" Grid.Column="1" Width="19" Height="19" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBorderNormalBrushKey}}" StrokeThickness="1"
+									Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphInnerBorderNormalBrushKey}}" />
+							<Ellipse x:Name="innerCircle" Grid.Column="1" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBackgroundNormalBrushKey}}" />
+							<Path x:Name="outerArrow" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphHighlightNormalBrushKey}}" StrokeThickness="4"
+									SnapsToDevicePixels="false" Data="M 1,4.5  L 4.5,1  L 8,4.5" />
+							<Path x:Name="innerArrow" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphForegroundNormalBrushKey}}" StrokeThickness="2"
+									SnapsToDevicePixels="false" Data="{Binding Data, ElementName=outerArrow}" />
+						</Grid>
+					</controlsPrimitives:ElementChrome>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsChecked" Value="true">
+							<Setter TargetName="outerArrow" Property="Data" Value="M 1,1.5  L 4.5,5  L 8,1.5" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="outerCircle" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBorderHoverBrushKey}}" />
+							<Setter TargetName="outerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphInnerBorderHoverBrushKey}}" />
+							<Setter TargetName="innerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBackgroundHoverBrushKey}}" />
+							<Setter TargetName="outerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphHighlightHoverBrushKey}}" />
+							<Setter TargetName="innerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="outerCircle" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBorderPressedBrushKey}}" />
+							<Setter TargetName="outerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphInnerBorderPressedBrushKey}}" />
+							<Setter TargetName="innerCircle" Property="Fill"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphBackgroundPressedBrushKey}}" />
+							<Setter TargetName="innerCircle" Property="Width" Value="17" />
+							<Setter TargetName="innerCircle" Property="Height" Value="17" />
+							<Setter TargetName="outerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphHighlightPressedBrushKey}}" />
+							<Setter TargetName="innerArrow" Property="Stroke"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderGlyphForegroundPressedBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- themes:SharedResourceKeys.ExpanderStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.ExpanderStyleKey}" TargetType="{x:Type Expander}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+		<Setter Property="VerticalContentAlignment" Value="Stretch" />
+		<Setter Property="Margin" Value="0" />
+		<Setter Property="Padding" Value="0" />
+
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderCornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderFontSize" Value="15" />
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderPadding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExpanderHeaderPaddingNormalThicknessKey}}" />
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderStyle" Value="{StaticResource ExpanderAboveHeaderStyle}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius"
+				Value="{Binding RelativeSource={RelativeSource Self}, Path=(themes:HeaderedControlThemeProperties.HeaderCornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Top}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Expander}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+							Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="true">
+						<DockPanel>
+							<!-- 5/25/2010 - Added support for HeaderContextMenu (http://www.actiprosoftware.com/Support/Forums/ViewForumTopic.aspx?ForumTopicID=4926) -->
+							<ToggleButton x:Name="header" DockPanel.Dock="Top" MinWidth="0" MinHeight="0"
+									Style="{TemplateBinding themes:HeaderedControlThemeProperties.HeaderStyle}"
+									FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+									IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+									Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"
+									ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" />
+							<controls:AnimatedExpanderDecorator x:Name="content" DockPanel.Dock="Bottom" ExpandDirection="{TemplateBinding ExpandDirection}"
+									CollapseDuration="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ExpanderThemeProperties.CollapseDuration)}"
+									ExpandDuration="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ExpanderThemeProperties.ExpandDuration)}">
+								<controls:AnimatedExpanderDecorator.CollapsedVisibility>
+									<MultiBinding Converter="{StaticResource ConditionalConverter}">
+										<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="(themes:ExpanderThemeProperties.CanMeasureCollapsedContent)" />
+										<Binding Source="{x:Static Visibility.Hidden}" />
+										<Binding Source="{x:Static Visibility.Collapsed}" />
+									</MultiBinding>
+								</controls:AnimatedExpanderDecorator.CollapsedVisibility>
+								<ContentPresenter Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" />
+							</controls:AnimatedExpanderDecorator>
+						</DockPanel>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsExpanded" Value="True">
+							<Setter TargetName="content" Property="IsExpanded" Value="True" />
+						</Trigger>
+						<Trigger Property="ExpandDirection" Value="Left">
+							<Setter Property="themes:HeaderedControlThemeProperties.HeaderStyle" Value="{StaticResource ExpanderBelowHeaderStyle}" />
+							<Setter Property="themes:ThemeProperties.CornerRadius"
+									Value="{Binding RelativeSource={RelativeSource Self}, Path=(themes:HeaderedControlThemeProperties.HeaderCornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Right}" />
+							<Setter TargetName="content" Property="DockPanel.Dock" Value="Left" />
+							<Setter TargetName="header" Property="DockPanel.Dock" Value="Right" />
+							<Setter TargetName="header" Property="LayoutTransform">
+								<Setter.Value>
+									<RotateTransform Angle="-90" />
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+						<Trigger Property="ExpandDirection" Value="Up">
+							<Setter Property="themes:HeaderedControlThemeProperties.HeaderStyle" Value="{StaticResource ExpanderBelowHeaderStyle}" />
+							<Setter Property="themes:ThemeProperties.CornerRadius"
+									Value="{Binding RelativeSource={RelativeSource Self}, Path=(themes:HeaderedControlThemeProperties.HeaderCornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Bottom}" />
+							<Setter TargetName="content" Property="DockPanel.Dock" Value="Top" />
+							<Setter TargetName="header" Property="DockPanel.Dock" Value="Bottom" />
+						</Trigger>
+						<Trigger Property="ExpandDirection" Value="Right">
+							<Setter Property="themes:ThemeProperties.CornerRadius"
+									Value="{Binding RelativeSource={RelativeSource Self}, Path=(themes:HeaderedControlThemeProperties.HeaderCornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Left}" />
+							<Setter TargetName="content" Property="DockPanel.Dock" Value="Right" />
+							<Setter TargetName="header" Property="DockPanel.Dock" Value="Left" />
+							<Setter TargetName="header" Property="LayoutTransform">
+								<Setter.Value>
+									<RotateTransform Angle="-90" />
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

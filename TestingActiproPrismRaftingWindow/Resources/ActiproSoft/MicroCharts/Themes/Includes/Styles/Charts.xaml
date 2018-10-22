@@ -1,0 +1,38 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:microCharts="clr-namespace:ActiproSoftware.Windows.Controls.MicroCharts;assembly=ActiproSoftware.MicroCharts.Wpf"
+					xmlns:microChartsPalettes="clr-namespace:ActiproSoftware.Windows.Controls.MicroCharts.Palettes;assembly=ActiproSoftware.MicroCharts.Wpf"
+					xmlns:microChartsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.MicroCharts.Primitives;assembly=ActiproSoftware.MicroCharts.Wpf"
+					xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+					>
+
+	<!-- microCharts:MicroXYChart -->
+	<Style x:Key="{x:Type microCharts:MicroXYChart}" TargetType="{x:Type microCharts:MicroXYChart}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartBackgroundNormalBrushKey}}" />
+
+		<Setter Property="AxisBaselineStyle">
+			<Setter.Value>
+				<Style TargetType="Shape">
+					<Setter Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartAxisBaselineForegroundNormalBrushKey}}" />
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="SeriesStyleSelector">
+			<Setter.Value>
+				<microChartsPalettes:MicroSeriesPaletteStyleSelector />
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="microCharts:MicroXYChart">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+						<microChartsPrimitives:MicroChartCanvas x:Name="PART_Canvas" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

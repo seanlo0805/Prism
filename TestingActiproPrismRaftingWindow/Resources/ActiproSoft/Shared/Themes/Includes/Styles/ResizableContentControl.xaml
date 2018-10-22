@@ -1,0 +1,135 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:system="clr-namespace:System;assembly=mscorlib"
+	    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf">
+
+	<!-- BothResizeGripperStyle -->
+	<Style x:Key="BothResizeGripperStyle" TargetType="Thumb">
+		<Setter Property="Cursor" Value="SizeNWSE" />
+		<Setter Property="HorizontalAlignment" Value="Right" />
+		<Setter Property="MinHeight" Value="{x:Static SystemParameters.HorizontalScrollBarHeight}" />
+		<Setter Property="MinWidth" Value="{x:Static SystemParameters.VerticalScrollBarWidth}" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="VerticalAlignment" Value="Bottom" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Thumb">	
+					<Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+						<Path HorizontalAlignment="Right" 
+							  VerticalAlignment="Bottom" 
+							  Fill="{DynamicResource {x:Static themes:AssetResourceKeys.GripperHighlightNormalBrushKey}}"
+							  Margin="0,0,3,3" 
+							  Data="M 8,0 L 10,0 L 10,2 L 8,2 Z M 4,4 L 6,4 L 6,6 L 4,6 Z M 8,4 L 10,4 L 10,6 L 8,6 Z M 0,8 L 2,8 L 2,10 L 0,10 Z M 4,8 L 6,8 L 6,10 L 4,10 Z M 8,8 L 10,8 L 10,10 L 8,10 Z" />
+
+						<Path HorizontalAlignment="Right" 
+							  VerticalAlignment="Bottom" 
+							  Fill="{TemplateBinding Foreground}"
+							  Margin="0,0,4,4"
+							  Data="M 8,0 L 10,0 L 10,2 L 8,2 Z M 4,4 L 6,4 L 6,6 L 4,6 Z M 8,4 L 10,4 L 10,6 L 8,6 Z M 0,8 L 2,8 L 2,10 L 0,10 Z M 4,8 L 6,8 L 6,10 L 4,10 Z M 8,8 L 10,8 L 10,10 L 8,10 Z" />
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="FlowDirection" Value="RightToLeft">
+				<Setter Property="Cursor" Value="SizeNESW" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+	
+	<!-- HorizontalResizeGripperStyle -->
+	<Style x:Key="HorizontalResizeGripperStyle" TargetType="Thumb">
+		<Setter Property="HorizontalAlignment" Value="Right" />
+		<Setter Property="Cursor" Value="SizeWE" />
+		<Setter Property="MinHeight" Value="28" />
+		<Setter Property="MinWidth" Value="5" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Thumb">	
+					<Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+						<Path HorizontalAlignment="Center" 
+							  VerticalAlignment="Center" 
+							  Fill="{DynamicResource {x:Static themes:AssetResourceKeys.GripperHighlightNormalBrushKey}}"
+							  Margin="1,1,0,0"
+							  Data="M 0,0 L 0,2 L 2,2 L 2,0 Z M 0,5 L 0,7 L 2,7 L 2,5 Z M 0,10 L 0,12 L 2,12 L 2,10 Z M 0,15 L 0,17 L 2,17 L 2,15 Z" />
+
+						<Path HorizontalAlignment="Center" 
+							  VerticalAlignment="Center" 
+							  Fill="{TemplateBinding Foreground}"
+							  Margin="0,0,1,1"
+							  Data="M 0,0 L 0,2 L 2,2 L 2,0 Z M 0,5 L 0,7 L 2,7 L 2,5 Z M 0,10 L 0,12 L 2,12 L 2,10 Z M 0,15 L 0,17 L 2,17 L 2,15 Z" />
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+		
+	<!-- VerticalResizeGripperStyle -->
+	<Style x:Key="VerticalResizeGripperStyle" TargetType="Thumb">
+		<Setter Property="Cursor" Value="SizeNS" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+		<Setter Property="MinHeight" Value="5" />
+		<Setter Property="MinWidth" Value="28" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="VerticalAlignment" Value="Bottom" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Thumb">	
+					<Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+						<Path HorizontalAlignment="Center" 
+							  VerticalAlignment="Center" 
+							  Fill="{DynamicResource {x:Static themes:AssetResourceKeys.GripperHighlightNormalBrushKey}}"
+							  Margin="1,1,0,0"
+							  Data="M 0,0 L 2,0 L 2,2 L 0,2 Z M 5,0 L 7,0 L 7,2 L 5,2 Z M 10,0 L 12,0 L 12,2 L 10,2 Z M 15,0 L 17,0 L 17,2 L 15,2 Z" />
+
+						<Path HorizontalAlignment="Center" 
+							  VerticalAlignment="Center" 
+							  Fill="{TemplateBinding Foreground}"
+							  Margin="0,0,1,1"
+							  Data="M 0,0 L 2,0 L 2,2 L 0,2 Z M 5,0 L 7,0 L 7,2 L 5,2 Z M 10,0 L 12,0 L 12,2 L 10,2 Z M 15,0 L 17,0 L 17,2 L 15,2 Z" />
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- controls:ResizableContentControl -->
+	<Style x:Key="{x:Type controls:ResizableContentControl}" TargetType="{x:Type controls:ResizableContentControl}">
+		<Setter Property="GripperForeground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.GripperForegroundNormalBrushKey}}"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:ResizableContentControl">
+					
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+						Background="{TemplateBinding Background}">
+						<Grid>
+							<ContentPresenter x:Name="PART_Presenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+								ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Margin="{TemplateBinding Padding}" />
+							
+							<Thumb x:Name="PART_Gripper" Background="{TemplateBinding GripperBackground}" Foreground="{TemplateBinding GripperForeground}"
+								Style="{StaticResource BothResizeGripperStyle}" />
+						</Grid>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="ResizeMode" Value="None">
+							<Setter TargetName="PART_Gripper" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="ResizeMode" Value="Horizontal">
+							<Setter TargetName="PART_Gripper" Property="Style" Value="{StaticResource HorizontalResizeGripperStyle}" />
+						</Trigger>
+						<Trigger Property="ResizeMode" Value="Vertical">
+							<Setter TargetName="PART_Gripper" Property="Style" Value="{StaticResource VerticalResizeGripperStyle}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+</ResourceDictionary>

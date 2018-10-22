@@ -1,0 +1,229 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:editors="clr-namespace:ActiproSoftware.Windows.Controls.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Editors.Primitives;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsThemes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<!--Converters -->
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<shared:BrushOpacityConverter x:Key="BrushOpacityConverter" />
+	<editorsPrimitives:CaretBrushConverter x:Key="CaretBrushConverter" />
+	<shared:IsNullOrTransparentBrushConverter x:Key="IsNullOrTransparentBrushConverter" />
+	
+	<!-- editorsPrimitives:TextBoxBase -->
+	<!-- NOTE: Style adapted from themes:SharedResourceKeys.TextBoxStyleKey -->
+	<Style x:Key="TextBoxBaseStyle" TargetType="{x:Type editorsPrimitives:TextBoxBase}">
+		<Setter Property="AllowDrop" Value="true" />
+		<Setter Property="editorsPrimitives:CaretLayer.CaretBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditCaretBackgroundNormalBrushKey}}" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+		<Style.Triggers>
+			<DataTrigger
+					Binding="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrTransparentBrushConverter}}"
+					Value="false">
+				<Setter Property="editorsPrimitives:CaretLayer.CaretBrush"
+						Value="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource CaretBrushConverter}}" />
+			</DataTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editorsPrimitives:TextBoxBase (normal template) -->
+	<Style x:Key="TextBoxBaseNormalStyle" TargetType="{x:Type editorsPrimitives:TextBoxBase}"
+			BasedOn="{StaticResource TextBoxBaseStyle}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBoxEditPaddingNormalThicknessKey}}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalCornerRadiusKey}}" />
+
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditIsAnimationEnabledBooleanKey}}" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitives:TextBoxBase}">
+					<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+							BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}"
+							BackgroundFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundFocusedBrushKey}}"
+							BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundHoverBrushKey}}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderDisabledBrushKey}}"
+							BorderBrushFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderFocusedBrushKey}}"
+							BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderHoverBrushKey}}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.EditElementChromeBorderStyleKey}}" 
+							CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+							SnapsToDevicePixels="true">
+						<ScrollViewer x:Name="PART_ScrollViewer" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+								Padding="3,0,2,0">
+							<Grid Cursor="IBeam" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+								<TextBlock x:Name="heightRequirement" Text="Gg" Margin="0,1" Visibility="Hidden" />
+								<editorsPrimitives:SelectionLayer SelectionBrush="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionBackgroundFocusedBrushKey}}"
+										SelectionFirstIndex="{TemplateBinding SelectionFirstIndex}" SelectionLength="{TemplateBinding SelectionLength}" TextView="{TemplateBinding TextView}"
+										Visibility="{Binding IsSelectionVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+								<editorsPrimitives:CaretLayer x:Name="caretLayer" Margin="0,1" CaretIndex="{TemplateBinding CaretIndex}"
+										TextView="{TemplateBinding TextView}" Visibility="Hidden" />
+								<editorsPrimitives:TextViewLayer x:Name="PART_TextViewLayer" Margin="0,1" TextView="{TemplateBinding TextView}" />
+								<ContentPresenter x:Name="hint" VerticalAlignment="Center" IsHitTestVisible="False" Content="{TemplateBinding Hint}" ContentTemplate="{TemplateBinding HintTemplate}"
+										ContentTemplateSelector="{TemplateBinding HintTemplateSelector}" Opacity="0.67" Visibility="Collapsed"
+										TextBlock.Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							</Grid>
+						</ScrollViewer>
+					</shared:ElementChrome>
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.UseBackgroundStates" Value="false">
+							<Setter TargetName="chrome" Property="BackgroundFocused" Value="{x:Null}" />
+							<Setter TargetName="chrome" Property="BackgroundHover" Value="{x:Null}" />
+						</Trigger>
+						<Trigger Property="themes:ThemeProperties.UseBorderStates" Value="false">
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{x:Null}" />
+							<Setter TargetName="chrome" Property="BorderBrushFocused" Value="{x:Null}" />
+							<Setter TargetName="chrome" Property="BorderBrushHover" Value="{x:Null}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="themes:ThemeProperties.UseBorderStates" Value="false" />
+								<Condition Property="BorderBrush" Value="Transparent" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="chrome" Property="BorderStyle" Value="Default" />
+						</MultiTrigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocused" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Focused" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+						<Trigger Property="IsCaretVisible" Value="True">
+							<Setter TargetName="caretLayer" Property="Visibility" Value="Visible" />
+						</Trigger>
+
+						<!-- Hint related triggers -->
+						<Trigger Property="shared:HintProperties.HasHint" Value="True">
+							<Setter TargetName="hint" Property="Visibility" Value="Visible" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="HasContent" Value="False" />
+								<Condition Property="IsKeyboardFocusWithin" Value="True" />
+							</MultiTrigger.Conditions>
+							<MultiTrigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" To=".33" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</MultiTrigger.EnterActions>
+							<MultiTrigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" />
+									</Storyboard>
+								</BeginStoryboard>
+							</MultiTrigger.ExitActions>
+						</MultiTrigger>
+						<Trigger Property="HasContent" Value="True">
+							<Trigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.EnterActions>
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsPrimitives:TextBoxBase (inline template) -->
+	<Style x:Key="TextBoxBaseInlineStyle" TargetType="{x:Type editorsPrimitives:TextBoxBase}"
+			BasedOn="{StaticResource TextBoxBaseStyle}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+		<Setter Property="BorderThickness" Value="0" />
+
+		<Setter Property="ClipToBounds" Value="False" />
+		<Setter Property="IsAutoSelectAllEnabled" Value="True" />
+		<Setter Property="MinHeight" Value="0" />
+		<Setter Property="Padding" Value="0" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitives:TextBoxBase}">
+					<Grid Background="{TemplateBinding Background}" Cursor="IBeam" Margin="{TemplateBinding Padding}">
+						<editorsPrimitives:SelectionLayer SelectionBrush="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionBackgroundFocusedBrushKey}}"
+								SelectionFirstIndex="{TemplateBinding SelectionFirstIndex}" SelectionLength="{TemplateBinding SelectionLength}" TextView="{TemplateBinding TextView}"
+								Visibility="{Binding IsSelectionVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+						<editorsPrimitives:CaretLayer x:Name="caretLayer" CaretIndex="{TemplateBinding CaretIndex}"
+								TextView="{TemplateBinding TextView}" Visibility="Hidden" />
+						<editorsPrimitives:TextViewLayer x:Name="PART_TextViewLayer" TextView="{TemplateBinding TextView}" />
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsCaretVisible" Value="True">
+							<Setter TargetName="caretLayer" Property="Visibility" Value="Visible" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editors:MaskedTextBox (normal template) -->
+	<Style x:Key="{x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxStyleKey}"
+			TargetType="{x:Type editors:MaskedTextBox}" BasedOn="{StaticResource TextBoxBaseNormalStyle}">
+		<Setter Property="PromptBrush"
+				Value="{Binding Foreground, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushOpacityConverter}, ConverterParameter=0.3}" />
+	</Style>
+
+	<Style x:Key="{x:Type editors:MaskedTextBox}" TargetType="{x:Type editors:MaskedTextBox}"
+			BasedOn="{StaticResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxStyleKey}}" />
+
+	<!-- editors:MaskedTextBox (inline template) -->
+	<Style x:Key="{x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}"
+			TargetType="{x:Type editors:MaskedTextBox}" BasedOn="{StaticResource TextBoxBaseInlineStyle}">
+		<Setter Property="OverridesDefaultStyle" Value="True" />
+		<Setter Property="PromptBrush"
+				Value="{Binding Foreground, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushOpacityConverter}, ConverterParameter=0.3}" />
+	</Style>
+
+	<!-- editors:PasswordBox -->
+	<Style x:Key="{x:Static editorsThemes:EditorsResourceKeys.PasswordBoxStyleKey}" TargetType="{x:Type editors:PasswordBox}"
+			BasedOn="{StaticResource TextBoxBaseNormalStyle}" />
+
+	<Style x:Key="{x:Type editors:PasswordBox}" TargetType="{x:Type editors:PasswordBox}"
+			BasedOn="{StaticResource {x:Static editorsThemes:EditorsResourceKeys.PasswordBoxStyleKey}}" />
+
+	<!-- editors:TextBox (normal template) -->
+	<Style x:Key="{x:Static editorsThemes:EditorsResourceKeys.TextBoxStyleKey}" TargetType="{x:Type editors:TextBox}"
+			BasedOn="{StaticResource TextBoxBaseNormalStyle}" />
+
+	<Style x:Key="{x:Type editors:TextBox}" TargetType="{x:Type editors:TextBox}"
+			BasedOn="{StaticResource {x:Static editorsThemes:EditorsResourceKeys.TextBoxStyleKey}}" />
+
+	<!-- editors:TextBox (inline template) -->
+	<Style x:Key="{x:Static editorsThemes:EditorsResourceKeys.TextBoxEmbeddedStyleKey}" TargetType="{x:Type editors:TextBox}"
+			BasedOn="{StaticResource TextBoxBaseInlineStyle}">
+		<Setter Property="OverridesDefaultStyle" Value="True" />
+	</Style>
+
+</ResourceDictionary>

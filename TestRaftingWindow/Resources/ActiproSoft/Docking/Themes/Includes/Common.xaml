@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:dockingThemes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<ResourceDictionary.MergedDictionaries>
+		<dockingThemes:DockingThemeCatalogRegistrar />
+
+		<ResourceDictionary Source="Styles/AutoHide.xaml" />
+		<ResourceDictionary Source="Styles/Containers.xaml" />
+		<ResourceDictionary Source="Styles/DockingWindow.xaml" />
+		<ResourceDictionary Source="Styles/Hosts.xaml" />
+		<ResourceDictionary Source="Styles/Preview.xaml" />
+		<ResourceDictionary Source="Styles/Splitters.xaml" />
+		<ResourceDictionary Source="Styles/Switchers.xaml" />
+		
+		<themes:FullTrustResourceDictionary Source="Styles/RaftingWindow.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

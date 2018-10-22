@@ -1,0 +1,42 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:barCode="clr-namespace:ActiproSoftware.Windows.Controls.BarCode;assembly=ActiproSoftware.BarCode.Wpf" 
+    >
+	
+	<!-- barCode:BarCode -->
+	<Style x:Key="{x:Type barCode:BarCode}" TargetType="{x:Type barCode:BarCode}">
+		<Setter Property="Background" Value="White" />
+		<Setter Property="BorderBrush" Value="Black" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Foreground" Value="Black" />
+		<Setter Property="Padding" Value="5" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="barCode:BarCode">
+					
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+						CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+						<StackPanel>
+							<TextBlock x:Name="caption" Margin="0" Text="{TemplateBinding Caption}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" />
+							<ContentPresenter x:Name="content" Content="{TemplateBinding Symbology}" HorizontalAlignment="Center" />
+						</StackPanel>
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="Caption" Value="{x:Null}">
+							<Setter TargetName="caption" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="Caption" Value="">
+							<Setter TargetName="caption" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="Symbology" Value="{x:Null}">
+							<Setter Property="Foreground" Value="Red" />
+							<Setter TargetName="content" Property="Content" Value="Please set the Symbology property" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

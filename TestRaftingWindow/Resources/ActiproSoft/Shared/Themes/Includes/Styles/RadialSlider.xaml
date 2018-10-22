@@ -1,0 +1,87 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf"
+    xmlns:controlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Primitives;assembly=ActiproSoftware.Shared.Wpf"
+	xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf"
+    >
+	
+	<!-- controls:RadialSlider -->
+    <Style TargetType="controls:RadialSlider">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="LargeChange" Value="6" />
+		<Setter Property="Minimum" Value="0" />
+		<Setter Property="Maximum" Value="360" />
+		<Setter Property="SmallChange" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:RadialSlider">
+                    <Grid>
+						<Ellipse Fill="{TemplateBinding Background}" />
+						<controlsPrimitives:CircularThumb x:Name="PART_Thumb" Style="{TemplateBinding ThumbStyle}" ArrowAngle="{TemplateBinding ThumbArrowAngle}"
+														  Background="{TemplateBinding ThumbBackground}" PressedBackground="{TemplateBinding ThumbPressedBackground}"
+														  HorizontalAlignment="Center" VerticalAlignment="Top" />
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>		
+	</Style>
+	
+	<!-- controlsPrimitives:CircularThumb -->
+    <Style TargetType="controlsPrimitives:CircularThumb">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Height" Value="49" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="PressedBackground" Value="Transparent" />
+        <Setter Property="Width" Value="49" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controlsPrimitives:CircularThumb">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver"/>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+										<DoubleAnimation Storyboard.TargetName="SemiTransparentBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+										<DoubleAnimation Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+										<DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="Opacity" To="0" Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+							<VisualStateGroup x:Name="FocusStates">
+								<VisualState x:Name="Focused">
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="FocusVisualWhite" Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+										<DoubleAnimation Storyboard.TargetName="FocusVisualBlack" Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Unfocused" />
+							</VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+						
+						<Ellipse x:Name="FocusVisualWhite" Margin="1" IsHitTestVisible="False" Stroke="#ffffff" 
+								   StrokeEndLineCap="Square" StrokeDashArray="1,1" Opacity="0" StrokeDashOffset="1.5"/>
+						<Ellipse x:Name="FocusVisualBlack" Margin="1" IsHitTestVisible="False" Stroke="#000000" 
+								   StrokeEndLineCap="Square" StrokeDashArray="1,1" Opacity="0" StrokeDashOffset="0.5"/>
+												
+						<Grid Margin="{TemplateBinding Padding}">
+							<Ellipse x:Name="SemiTransparentBackground" Margin="1" Fill="{TemplateBinding BorderBrush}" Opacity="0.05" />
+							<Ellipse x:Name="PressedBackground" Margin="1" Fill="{TemplateBinding PressedBackground}" Opacity="0" />
+							<Ellipse x:Name="Background" Margin="1" Fill="{TemplateBinding Background}" />
+							<Ellipse x:Name="Border" StrokeThickness="2" Stroke="{TemplateBinding BorderBrush}" />
+						</Grid>
+						
+						<Path x:Name="PART_Arrow" Data="M 5.5,0 L 0,5.5 L 11,5.5 Z" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

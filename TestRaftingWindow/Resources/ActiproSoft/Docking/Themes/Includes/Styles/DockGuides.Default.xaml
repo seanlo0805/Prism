@@ -1,0 +1,388 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:dockingPreview="clr-namespace:ActiproSoftware.Windows.Controls.Docking.Preview;assembly=ActiproSoftware.Docking.Wpf"
+		>
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="DockGuides.Brushes.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+	<!-- 
+	
+		STYLES
+	
+	-->
+
+	<!-- dockingPreview:DockGuideBottom -->
+	<Style x:Key="{x:Type dockingPreview:DockGuideBottom}" TargetType="{x:Type dockingPreview:DockGuideBottom}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumEndBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1" />
+		
+		<Setter Property="Margin" Value="0,0,0,15" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+		<Setter Property="VerticalAlignment" Value="Bottom" />
+
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingPreview:DockGuideBottom}">
+					<Grid>
+						<Border Width="40" Height="40" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								SnapsToDevicePixels="True" />
+						<Border x:Name="PART_HitMask" Width="32" Height="32" HorizontalAlignment="Center"
+								VerticalAlignment="Center" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle IsHitTestVisible="False" Width="21" Height="20" HorizontalAlignment="Center"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideBottomBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="SelectedDirection" Value="Bottom">
+							<Setter TargetName="PART_HitMask" Property="Opacity" Value="1.0" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- dockingPreview:DockGuideCross -->
+	<Style x:Key="{x:Type dockingPreview:DockGuideCross}" TargetType="{x:Type dockingPreview:DockGuideCross}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumEndBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1" />
+		
+		<Setter Property="HorizontalAlignment" Value="Center" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingPreview:DockGuideCross}">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="3" />
+							<ColumnDefinition x:Name="OuterLeftColumn" Width="36" />
+							<ColumnDefinition x:Name="InnerLeftColumn" Width="36" />
+							<ColumnDefinition x:Name="MiddleColumn" Width="35" />
+							<ColumnDefinition x:Name="InnerRightColumn" Width="36" />
+							<ColumnDefinition x:Name="OuterRightColumn" Width="36" />
+							<ColumnDefinition Width="3" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="3" />
+							<RowDefinition x:Name="OuterTopRow" Height="36" />
+							<RowDefinition x:Name="InnerTopRow" Height="36" />
+							<RowDefinition x:Name="MiddleRow" Height="35" />
+							<RowDefinition x:Name="InnerBottomRow" Height="36" />
+							<RowDefinition x:Name="OuterBottomRow" Height="36" />
+							<RowDefinition Height="3" />
+						</Grid.RowDefinitions>
+
+						<Path x:Name="partialCross" Grid.RowSpan="7" Grid.ColumnSpan="7" Width="112" Height="112"
+								HorizontalAlignment="Center" VerticalAlignment="Center"
+								Data="M 0.5,36.5 L 25.5,36.5 L 36.5,25.5 L 36.5,0.5 L 75.5,0.5 L 75.5,25.5 L 86.5,36.5 L 111.5,36.5 L 111.5,75.5 L 86.5,75.5 L 75.5,86.5 L 75.5,111.5 L 36.5,111.5 L 36.5,86.5 L 25.5,75.5 L 0.5,75.5 Z"
+								Opacity="0.75" Stroke="{TemplateBinding BorderBrush}"
+								StrokeThickness="{TemplateBinding BorderThickness}" Fill="{TemplateBinding Background}"
+								SnapsToDevicePixels="True" Visibility="Collapsed" />
+						<Path x:Name="fullCross" Grid.RowSpan="7" Grid.ColumnSpan="7" Width="184" Height="184"
+								HorizontalAlignment="Center" VerticalAlignment="Center"
+								Data="M 0.5,72.5 L 61.5,72.5 L 72.5,61.5 L 72.5,0.5 L 111.5,0.5 L 111.5,61.5 L 122.5,72.5 L 183.5,72.5 L 183.5,111.5 L 122.5,111.5 L 111.5,122.5 L 111.5,183.5 L 72.5,183.5 L 72.5,122.5 L 61.5,111.5 L 0.5,111.5 Z"
+								Opacity="0.75" Stroke="{TemplateBinding BorderBrush}"
+								StrokeThickness="{TemplateBinding BorderThickness}" Fill="{TemplateBinding Background}"
+								SnapsToDevicePixels="True" />
+
+						<Border x:Name="PART_HitMaskContent" Grid.Row="3" Grid.Column="3" Width="32" Height="32" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Width="23" Height="23" HorizontalAlignment="Center" VerticalAlignment="Center"
+									Fill="{StaticResource DockGuideContentBrush}" SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskLeft" Grid.Row="3" Grid.Column="1" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="6,0,0,0" Width="20" Height="21" HorizontalAlignment="Left"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideLeftBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskContentLeft" Grid.Row="3" Grid.Column="2" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="5,0,0,0" Width="22" Height="21" HorizontalAlignment="Left"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideContentLeftBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskTop" Grid.Row="1" Grid.Column="3" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="0,6,0,0" Width="21" Height="20" HorizontalAlignment="Center"
+									VerticalAlignment="Top" Fill="{StaticResource DockGuideTopBrush}" SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskContentTop" Grid.Row="2" Grid.Column="3" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="0,5,0,0" Width="21" Height="22" HorizontalAlignment="Center"
+									VerticalAlignment="Top" Fill="{StaticResource DockGuideContentTopBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskRight" Grid.Row="3" Grid.Column="5" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="0,0,6,0" Width="20" Height="21" HorizontalAlignment="Right"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideRightBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskContentRight" Grid.Row="3" Grid.Column="4" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="0,0,5,0" Width="22" Height="21" HorizontalAlignment="Right"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideContentRightBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskBottom" Grid.Row="5" Grid.Column="3" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="0,0,0,6" Width="21" Height="20" HorizontalAlignment="Center"
+									VerticalAlignment="Bottom" Fill="{StaticResource DockGuideBottomBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+
+						<Border x:Name="PART_HitMaskContentBottom" Grid.Row="4" Grid.Column="3" Width="32" Height="32"
+								HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.75"
+								Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle Margin="0,0,0,5" Width="21" Height="22" HorizontalAlignment="Center"
+									VerticalAlignment="Bottom" Fill="{StaticResource DockGuideContentBottomBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsBottomVisible" Value="False">
+							<Setter TargetName="PART_HitMaskBottom" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsContentVisible" Value="False">
+							<Setter TargetName="PART_HitMaskContent" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsContentBottomVisible" Value="False">
+							<Setter TargetName="PART_HitMaskContentBottom" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsContentLeftVisible" Value="False">
+							<Setter TargetName="PART_HitMaskContentLeft" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsContentRightVisible" Value="False">
+							<Setter TargetName="PART_HitMaskContentRight" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsContentTopVisible" Value="False">
+							<Setter TargetName="PART_HitMaskContentTop" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsLeftVisible" Value="False">
+							<Setter TargetName="PART_HitMaskLeft" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsRightVisible" Value="False">
+							<Setter TargetName="PART_HitMaskRight" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsTopVisible" Value="False">
+							<Setter TargetName="PART_HitMaskTop" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsContentBottomVisible" Value="False" />
+								<Condition Property="IsContentLeftVisible" Value="False" />
+								<Condition Property="IsContentRightVisible" Value="False" />
+								<Condition Property="IsContentTopVisible" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="partialCross" Property="Visibility" Value="Visible" />
+							<Setter TargetName="fullCross" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="InnerLeftColumn" Property="Width" Value="0" />
+							<Setter TargetName="InnerRightColumn" Property="Width" Value="0" />
+							<Setter TargetName="InnerBottomRow" Property="Height" Value="0" />
+							<Setter TargetName="InnerTopRow" Property="Height" Value="0" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsBottomVisible" Value="False" />
+								<Condition Property="IsLeftVisible" Value="False" />
+								<Condition Property="IsRightVisible" Value="False" />
+								<Condition Property="IsTopVisible" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="partialCross" Property="Visibility" Value="Visible" />
+							<Setter TargetName="fullCross" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="OuterLeftColumn" Property="Width" Value="0" />
+							<Setter TargetName="OuterRightColumn" Property="Width" Value="0" />
+							<Setter TargetName="OuterBottomRow" Property="Height" Value="0" />
+							<Setter TargetName="OuterTopRow" Property="Height" Value="0" />
+						</MultiTrigger>
+						<Trigger Property="SelectedDirection" Value="Left">
+							<Setter TargetName="PART_HitMaskLeft" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="Top">
+							<Setter TargetName="PART_HitMaskTop" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="Right">
+							<Setter TargetName="PART_HitMaskRight" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="Bottom">
+							<Setter TargetName="PART_HitMaskBottom" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="Content">
+							<Setter TargetName="PART_HitMaskContent" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="ContentLeft">
+							<Setter TargetName="PART_HitMaskContentLeft" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="ContentTop">
+							<Setter TargetName="PART_HitMaskContentTop" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="ContentRight">
+							<Setter TargetName="PART_HitMaskContentRight" Property="Opacity" Value="1.0" />
+						</Trigger>
+						<Trigger Property="SelectedDirection" Value="ContentBottom">
+							<Setter TargetName="PART_HitMaskContentBottom" Property="Opacity" Value="1.0" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- dockingPreview:DockGuideLeft -->
+	<Style x:Key="{x:Type dockingPreview:DockGuideLeft}" TargetType="{x:Type dockingPreview:DockGuideLeft}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumEndBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1" />
+		
+		<Setter Property="Margin" Value="15,0,0,0" />
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingPreview:DockGuideLeft}">
+					<Grid>
+						<Border Width="40" Height="40" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								SnapsToDevicePixels="True" />
+						<Border x:Name="PART_HitMask" Width="32" Height="32" HorizontalAlignment="Center"
+								VerticalAlignment="Center" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle IsHitTestVisible="False" Width="20" Height="21" HorizontalAlignment="Center"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideLeftBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="SelectedDirection" Value="Left">
+							<Setter TargetName="PART_HitMask" Property="Opacity" Value="1.0" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- dockingPreview:DockGuideRight -->
+	<Style x:Key="{x:Type dockingPreview:DockGuideRight}" TargetType="{x:Type dockingPreview:DockGuideRight}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumEndBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1" />
+		
+		<Setter Property="Margin" Value="0,0,15,0" />
+		<Setter Property="HorizontalAlignment" Value="Right" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingPreview:DockGuideRight}">
+					<Grid>
+						<Border Width="40" Height="40" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								SnapsToDevicePixels="True" />
+						<Border x:Name="PART_HitMask" Width="32" Height="32" HorizontalAlignment="Center"
+								VerticalAlignment="Center" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle IsHitTestVisible="False" Width="20" Height="21" HorizontalAlignment="Center"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideRightBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="SelectedDirection" Value="Right">
+							<Setter TargetName="PART_HitMask" Property="Opacity" Value="1.0" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- dockingPreview:DockGuideTop -->
+	<Style x:Key="{x:Type dockingPreview:DockGuideTop}" TargetType="{x:Type dockingPreview:DockGuideTop}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumEndBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1" />
+		
+		<Setter Property="Margin" Value="0,15,0,0" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+		<Setter Property="VerticalAlignment" Value="Top" />
+
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingPreview:DockGuideTop}">
+					<Grid>
+						<Border Width="40" Height="40" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								SnapsToDevicePixels="True" />
+						<Border x:Name="PART_HitMask" Width="32" Height="32" HorizontalAlignment="Center"
+								VerticalAlignment="Center" Opacity="0.75" Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								CornerRadius="2" SnapsToDevicePixels="True">
+							<Rectangle IsHitTestVisible="False" Width="21" Height="20" HorizontalAlignment="Center"
+									VerticalAlignment="Center" Fill="{StaticResource DockGuideTopBrush}"
+									SnapsToDevicePixels="True" />
+						</Border>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="SelectedDirection" Value="Top">
+							<Setter TargetName="PART_HitMask" Property="Opacity" Value="1.0" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Navigation.Wpf">
+
+	<ResourceDictionary.MergedDictionaries>
+		<themes:NavigationThemeCatalogRegistrar />
+
+		<ResourceDictionary Source="Styles/Breadcrumb.xaml" />
+		<ResourceDictionary Source="Styles/ExplorerBar.xaml" />
+		<ResourceDictionary Source="Styles/NavigationBar.xaml" />
+		<ResourceDictionary Source="Styles/ZoomContentControl.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

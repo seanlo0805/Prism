@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:editorsThemes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<ResourceDictionary.MergedDictionaries>
+		<editorsThemes:EditorsThemeCatalogRegistrar />
+
+		<ResourceDictionary Source="/ActiproSoftware.Editors.Wpf;component/Themes/Includes/Styles/Editors.xaml" />
+		
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

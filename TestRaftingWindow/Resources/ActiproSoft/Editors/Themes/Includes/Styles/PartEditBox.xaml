@@ -1,0 +1,2135 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+		xmlns:editors="clr-namespace:ActiproSoftware.Windows.Controls.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsParts="clr-namespace:ActiproSoftware.Windows.Controls.Editors.Parts;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsPartsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Editors.Parts.Primitives;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Editors.Primitives;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsThemes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:productsEditors="clr-namespace:ActiproSoftware.Products.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+	<!--Converters -->
+	<shared:BooleanAndConverter x:Key="BooleanAndConverter" />
+	<shared:BooleanNotConverter x:Key="BooleanNotConverter" />
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<editorsPrimitives:CaretBrushConverter x:Key="CaretBrushConverter" />
+	<shared:CoalesceConverter x:Key="CoalesceConverter" />
+	<editorsPrimitives:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+	<editorsPrimitives:IntegerToDoubleConverter x:Key="IntegerToDoubleConverter" />
+	<shared:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter" />
+	<shared:IsNullOrTransparentBrushConverter x:Key="IsNullOrTransparentBrushConverter" />
+	<shared:IsTypeConverter x:Key="IsTypeConverter" />
+	<shared:NoOpConverter x:Key="NoOpConverter" />
+
+	<!--Brushes -->
+	<DrawingBrush x:Key="NewGuidBrushKey" PresentationOptions:Freeze="True" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing
+							Geometry="F1 M 256.755,11.5001C 392.065,11.5001 501.755,121.19 501.755,256.5C 501.755,391.81 392.065,501.5 256.755,501.5C 121.446,501.5 11.7554,391.81 11.7554,256.5C 11.7554,121.19 121.446,11.5001 256.755,11.5001 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="20" MiterLimit="2.75" Brush="#FF062C0A" />
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.5" RadiusY="0.5" Center="0.5,0.5" GradientOrigin="0.3,0.3">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FF64EB5F" Offset="0.552511" />
+									<GradientStop Color="#FF2A9835" Offset="0.868644" />
+									<GradientStop Color="#FF064E2A" Offset="1" />
+								</RadialGradientBrush.GradientStops>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FFE2FAE4"
+							Geometry="F1 M 202.558,106.5L 310.952,106.5L 310.952,202.303L 406.755,202.303L 406.755,310.697L 310.952,310.697L 310.952,406.5L 202.558,406.5L 202.558,310.697L 106.755,310.697L 106.755,202.303L 202.558,202.303L 202.558,106.5 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="20" MiterLimit="2.75" Brush="#FF062C0A" />
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- GENERAL -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:PartEditBox -->
+	<Style x:Key="{x:Type editors:PartEditBox}" TargetType="{x:Type editors:PartEditBox}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBoxEditPaddingNormalThicknessKey}}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalCornerRadiusKey}}" />
+
+		<Setter Property="BackgroundEditable" Value="Transparent" />
+		<Setter Property="BackgroundNonEditable" Value="Transparent" />
+		<Setter Property="ForegroundNonEditable" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIPartEditBoxHint}" />
+		<Setter Property="editorsPrimitives:CaretLayer.CaretBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditCaretBackgroundNormalBrushKey}}" />
+
+		<Setter Property="AllowDrop" Value="true" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+		<Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
+		<Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
+
+		<Setter Property="PromptIndicatorVisibility" Value="Always" />
+
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditIsAnimationEnabledBooleanKey}}" />
+		
+		<Setter Property="CheckBoxTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<CheckBox VerticalAlignment="Center" Margin="0,0,0,1" Padding="0" Style="{DynamicResource {x:Static themes:SharedResourceKeys.CheckBoxStyleKey}}"
+							IsChecked="{Binding IsChecked, RelativeSource={x:Static editors:PartEditBox.RelativeSource}}"
+							IsEnabled="{Binding IsReadOnly, RelativeSource={x:Static editors:PartEditBox.RelativeSource}, Converter={StaticResource BooleanNotConverter}}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="DropDownButtonMargin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownMarginNormalThicknessKey}}" />
+		<Setter Property="DropDownButtonTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editorsPrimitives:DropDownButton IsChecked="{Binding IsDropDownOpen, RelativeSource={x:Static editors:PartEditBox.RelativeSource}}"
+							IsEnabled="{Binding IsReadOnly, RelativeSource={x:Static editors:PartEditBox.RelativeSource}, Converter={StaticResource BooleanNotConverter}}"
+							IsTransparencyModeEnabled="{Binding IsDropDownButtonTransparencyModeEnabled, RelativeSource={x:Static editors:PartEditBox.RelativeSource}}" Margin="0,-1,-1,-1" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="SpinnerMargin" Value="1,-1,-1,-1" />
+		<Setter Property="SpinnerTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editorsPrimitives:Spinner CommandTarget="{Binding RelativeSource={x:Static editors:PartEditBox.RelativeSource}}"
+							IsEnabled="{Binding IsReadOnly, RelativeSource={x:Static editors:PartEditBox.RelativeSource}, Converter={StaticResource BooleanNotConverter}}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editors:PartEditBox}">
+					<Grid x:Name="grid" SnapsToDevicePixels="true">
+						<Border x:Name="popupPlacementTarget" />
+						<Popup x:Name="PART_Popup" AllowsTransparency="true" Placement="Bottom" Focusable="False"
+								IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+								PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+								StaysOpen="{TemplateBinding DropDownStaysOpen}" TextElement.FontWeight="Normal" TextElement.FontStyle="Normal">
+							<shared:DropShadowChrome x:Name="dropShadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}"
+									MaxWidth="{TemplateBinding MaxDropDownWidth}" MinHeight="{TemplateBinding MinDropDownHeight}"
+									MinWidth="{TemplateBinding MinDropDownWidth}">
+								<Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static themes:AssetResourceKeys.PopupBackgroundNormalBrushKey}}"
+										BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.PopupBorderNormalBrushKey}}"
+										BorderThickness="{DynamicResource {x:Static themes:AssetResourceKeys.PopupBorderNormalThicknessKey}}">
+									<ContentPresenter Content="{TemplateBinding DropDownContent}" ContentTemplate="{TemplateBinding DropDownContentTemplate}"
+											ContentTemplateSelector="{TemplateBinding DropDownContentTemplateSelector}" />
+								</Border>
+							</shared:DropShadowChrome>
+						</Popup>
+
+						<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}"
+								BackgroundFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundFocusedBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundHoverBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderDisabledBrushKey}}"
+								BorderBrushFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderFocusedBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderHoverBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"
+								IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.EditElementChromeBorderStyleKey}}" 
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+								SnapsToDevicePixels="true">
+							<editorsPrimitives:SlottedItemsPresenter x:Name="PART_ItemsPresenter" />
+						</shared:ElementChrome>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.UseBackgroundStates" Value="false">
+							<Setter TargetName="chrome" Property="BackgroundFocused" Value="{x:Null}" />
+							<Setter TargetName="chrome" Property="BackgroundHover" Value="{x:Null}" />
+						</Trigger>
+						<Trigger Property="themes:ThemeProperties.UseBorderStates" Value="false">
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{x:Null}" />
+							<Setter TargetName="chrome" Property="BorderBrushFocused" Value="{x:Null}" />
+							<Setter TargetName="chrome" Property="BorderBrushHover" Value="{x:Null}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="themes:ThemeProperties.UseBorderStates" Value="false" />
+								<Condition Property="BorderBrush" Value="Transparent" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="chrome" Property="BorderStyle" Value="Default" />
+						</MultiTrigger>
+
+						<!-- Popup related triggers -->
+						<Trigger Property="DropDownHorizontalAlignment" Value="Center">
+							<Setter TargetName="popupPlacementTarget" Property="HorizontalAlignment" Value="Center" />
+							<Setter TargetName="popupPlacementTarget" Property="Width" Value="{Binding ActualWidth, ElementName=dropShadow}" />
+							<Setter TargetName="PART_Popup" Property="PlacementTarget" Value="{Binding ElementName=popupPlacementTarget}" />
+						</Trigger>
+						<Trigger Property="DropDownHorizontalAlignment" Value="Left">
+							<Setter TargetName="popupPlacementTarget" Property="HorizontalAlignment" Value="Left" />
+							<Setter TargetName="popupPlacementTarget" Property="Width" Value="{Binding ActualWidth, ElementName=dropShadow}" />
+							<Setter TargetName="PART_Popup" Property="PlacementTarget" Value="{Binding ElementName=popupPlacementTarget}" />
+						</Trigger>
+						<Trigger Property="DropDownHorizontalAlignment" Value="Right">
+							<Setter TargetName="popupPlacementTarget" Property="HorizontalAlignment" Value="Right" />
+							<Setter TargetName="popupPlacementTarget" Property="Width" Value="{Binding ActualWidth, ElementName=dropShadow}" />
+							<Setter TargetName="PART_Popup" Property="PlacementTarget" Value="{Binding ElementName=popupPlacementTarget}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="DropDownHorizontalAlignment" Value="Stretch" />
+								<Condition Property="MinDropDownWidth" Value="{x:Static system:Double.NaN}" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="dropShadow" Property="MinWidth" Value="{Binding ActualWidth, ElementName=grid}" />
+						</MultiTrigger>
+						<Trigger Property="HasDropDownContent" Value="False">
+							<Setter TargetName="dropDownBorder" Property="Height" Value="95" />
+						</Trigger>
+						<Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow" Value="True">
+							<Setter TargetName="dropShadow" Property="Margin" Value="0,0,5,5" />
+							<Setter TargetName="dropShadow" Property="Color" Value="#71000000" />
+						</Trigger>
+
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsDropDownOpen" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Focused" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocusWithin" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Focused" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Resources>
+			<Style x:Key="{x:Type shared:PopupButton}" TargetType="{x:Type shared:PopupButton}"
+					BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.EmbeddedPopupButtonStyleKey}}" />
+		</Style.Resources>
+
+		<Style.Triggers>
+			<DataTrigger Binding="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrTransparentBrushConverter}}"
+					Value="false">
+				<Setter Property="editorsPrimitives:CaretLayer.CaretBrush"
+						Value="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource CaretBrushConverter}}" />
+			</DataTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editors:PartGroup -->
+	<Style x:Key="{x:Type editors:PartGroup}" TargetType="{x:Type editors:PartGroup}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="BorderThickness" Value="0" />
+
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="Padding" Value="0,1,1,1" />
+
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="editorsPrimitives:CaretLayer.CaretBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditCaretBackgroundNormalBrushKey}}" />
+		<Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
+
+		<!-- Inherited properties -->
+		<Setter Property="BackgroundEditable" Value="{Binding ParentEditBox.BackgroundEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="BackgroundNonEditable" Value="{Binding ParentEditBox.BackgroundNonEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ForegroundEditable" Value="{Binding ParentEditBox.ForegroundEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ForegroundNonEditable" Value="{Binding ParentEditBox.ForegroundNonEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsChecked" Value="{Binding ParentEditBox.IsChecked, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsDisabledWhenUnchecked" Value="{Binding ParentEditBox.ArePartGroupsDisabledWhenUnchecked, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsFocusMovedOnTerminalMatches" Value="{Binding ParentEditBox.IsFocusMovedOnTerminalMatches, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsHintTransitioningEnabled"
+				Value="{Binding ParentEditBox.IsHintTransitioningEnabled, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsHintVisible" Value="{Binding ParentEditBox.IsHintVisible, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsReadOnly" Value="{Binding ParentEditBox.IsReadOnly, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsSelectable" Value="{Binding ParentEditBox.ArePartGroupsSelectable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Hint" Value="{Binding ParentEditBox.Hint, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="HintTemplate" Value="{Binding ParentEditBox.HintTemplate, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="HintTemplateSelector" Value="{Binding ParentEditBox.HintTemplateSelector, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="SpinBehavior" Value="{Binding ParentEditBox.SpinBehavior, RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editors:PartGroup}">
+					<Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<shared:ToggleTransitionPresenter x:Name="transitionPresenter" AlternateContent="{TemplateBinding Hint}"
+								AlternateContentTemplate="{TemplateBinding HintTemplate}"
+								AlternateContentTemplateSelector="{TemplateBinding HintTemplateSelector}"
+								IsTransitioningEnabled="{TemplateBinding IsHintTransitioningEnabled}">
+							<shared:ToggleTransitionPresenter.IsAlternateContentVisible>
+								<MultiBinding Converter="{StaticResource BooleanAndConverter}">
+									<Binding Path="IsHintAllowed" RelativeSource="{x:Static RelativeSource.TemplatedParent}" />
+									<Binding Path="IsHintVisible" RelativeSource="{x:Static RelativeSource.TemplatedParent}" />
+								</MultiBinding>
+							</shared:ToggleTransitionPresenter.IsAlternateContentVisible>
+							<shared:ToggleTransitionPresenter.Transition>
+								<shared:FadeTransition Mode="Out" Duration="0:0:0.2" />
+							</shared:ToggleTransitionPresenter.Transition>
+							<Grid>
+								<editorsPrimitives:SelectionLayer x:Name="selectionLayer" SelectionBrush="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionBackgroundFocusedBrushKey}}"
+										Visibility="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+								<editorsPrimitives:SlottedItemsPresenter x:Name="PART_ItemsPresenter" />
+							</Grid>
+						</shared:ToggleTransitionPresenter>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsKeyboardFocusWithin" Value="True">
+							<Setter TargetName="transitionPresenter" Property="IsPostTransitionFocusEnabled" Value="True" />
+						</Trigger>
+						<Trigger SourceName="transitionPresenter" Property="IsAlternateContentVisible" Value="True">
+							<Setter TargetName="selectionLayer" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<!-- This trigger will ensure that the part group is not a tab-stop when it has keyboard focus. This allows
+			     the part group to be focusable and forward focus to first part, but then not have to forward focus when
+			     tabbing out. -->
+			<Trigger Property="IsKeyboardFocusWithin" Value="True">
+				<Setter Property="IsTabStop" Value="False" />
+			</Trigger>
+
+			<!-- This trigger will set the CaretBrush, if this control has a non-transparent/null background. -->
+			<DataTrigger Binding="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrTransparentBrushConverter}}"
+					Value="false">
+				<Setter Property="editorsPrimitives:CaretLayer.CaretBrush"
+						Value="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource CaretBrushConverter}}" />
+			</DataTrigger>
+
+			<!-- This trigger will set a default value for HintTemplate, if Hint is a string -->
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Hint, RelativeSource={RelativeSource Self}, Converter={StaticResource IsTypeConverter}, ConverterParameter={x:Type system:String}}" Value="True" />
+					<Condition Binding="{Binding HintTemplateSelector, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True" />
+					<Condition Binding="{Binding Path=ParentEditBox.HintTemplate, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="HintTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" IsHitTestVisible="False" Opacity="0.67"
+									Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+			</MultiDataTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editors:Part -->
+	<Style x:Key="{x:Type editors:Part}" TargetType="{x:Type editors:Part}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+		<Setter Property="editorsPrimitives:CaretLayer.CaretBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditCaretBackgroundNormalBrushKey}}" />
+		<Setter Property="IsHitTestVisible" Value="{Binding IsEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
+
+		<!-- Inherited properties -->
+		<Setter Property="BackgroundEditable" Value="{Binding ParentGroup.BackgroundEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="BackgroundNonEditable" Value="{Binding ParentGroup.BackgroundNonEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ForegroundEditable" Value="{Binding ParentGroup.ForegroundEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ForegroundNonEditable" Value="{Binding ParentGroup.ForegroundNonEditable, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsFocusMovedOnTerminalMatches" Value="{Binding ParentGroup.IsFocusMovedOnTerminalMatches, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsReadOnly" Value="{Binding ParentGroup.IsReadOnly, RelativeSource={RelativeSource Self}}" />
+		<Setter Property="SpinBehavior" Value="{Binding ParentGroup.SpinBehavior, RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editors:Part}">
+					<Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<ContentPresenter />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<!-- This trigger will set the CaretBrush, if this control has a non-transparent/null background. -->
+			<DataTrigger Binding="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrTransparentBrushConverter}}"
+					Value="false">
+				<Setter Property="editorsPrimitives:CaretLayer.CaretBrush"
+						Value="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource CaretBrushConverter}}" />
+			</DataTrigger>
+
+			<!-- These triggers update the background based on whether this part is editable. -->
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource Self}}" Value="true" />
+					<Condition Binding="{Binding BackgroundEditable, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="false" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="Background" Value="{Binding BackgroundEditable, RelativeSource={RelativeSource Self}}" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource Self}}" Value="false" />
+					<Condition
+							Binding="{Binding BackgroundNonEditable, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="false" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="Background" Value="{Binding BackgroundNonEditable, RelativeSource={RelativeSource Self}}" />
+			</MultiDataTrigger>
+
+			<!-- These triggers update the foreground based on whether this part is editable. -->
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource Self}}" Value="true" />
+					<Condition Binding="{Binding ForegroundEditable, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="false" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="Foreground" Value="{Binding ForegroundEditable, RelativeSource={RelativeSource Self}}" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource Self}}" Value="false" />
+					<Condition
+							Binding="{Binding ForegroundNonEditable, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="false" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="Foreground" Value="{Binding ForegroundNonEditable, RelativeSource={RelativeSource Self}}" />
+			</MultiDataTrigger>
+
+		</Style.Triggers>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- BRUSH EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:BrushEditBox -->
+	<Style x:Key="{x:Type editors:BrushEditBox}" TargetType="{x:Type editors:BrushEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="MinDropDownHeight" Value="150" />
+		<Setter Property="MinDropDownWidth" Value="250" />
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIBrushEditBoxHint}" />
+
+		<Setter Property="BrushPreviewTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editorsPrimitives:BrushPreviewControl Width="16" Height="16"
+							Foreground="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:BrushEditBox}}}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding DropDownContent, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="True" />
+					<Condition
+							Binding="{Binding DropDownContentTemplateSelector, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="DropDownContentTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<editorsPrimitives:BrushEditor BorderThickness="0" Margin="2" Focusable="True"
+									AllowGradientBrushes="{Binding AllowGradientBrushes, RelativeSource={RelativeSource AncestorType={x:Type editors:BrushEditBox}}}"
+									IsAlphaComponentEditable="{Binding IsAlphaComponentEditable, RelativeSource={RelativeSource AncestorType={x:Type editors:BrushEditBox}}}"
+									IsAlphaComponentVisible="{Binding IsAlphaComponentVisible, RelativeSource={RelativeSource AncestorType={x:Type editors:BrushEditBox}}}"
+									IsCloseButtonVisible="True"
+									Brush="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:BrushEditBox}}}"
+									Style="{Binding BrushEditorStyle, RelativeSource={RelativeSource AncestorType={x:Type editors:BrushEditBox}}}"
+									editorsPrimitives:DropDownBehavior.CloseOnEscapeKey="True" editorsPrimitives:DropDownBehavior.FocusOnOpen="True" />
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+			</MultiDataTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editorsParts:BrushPartGroup -->
+	<Style x:Key="{x:Type editorsParts:BrushPartGroup}" TargetType="{x:Type editorsParts:BrushPartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="IsAlphaComponentEditable"
+				Value="{Binding Path=ParentEditBox.(editors:BrushEditBox.IsAlphaComponentEditable), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsAlphaComponentVisible"
+				Value="{Binding Path=ParentEditBox.(editors:BrushEditBox.IsAlphaComponentVisible), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:BrushEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:BrushEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:BrushEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:BrushEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:BrushEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsParts:BrushPart -->
+	<Style x:Key="{x:Type editorsParts:BrushPart}" TargetType="{x:Type editorsParts:BrushPart}" BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<Setter Property="AutomationProperties.Name" Value="Value" />
+
+		<!-- Inherited properties -->
+		<Setter Property="IsAlphaComponentEditable"
+				Value="{Binding Path=ParentGroup.(editorsParts:BrushPartGroup.IsAlphaComponentEditable), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsAlphaComponentVisible"
+				Value="{Binding Path=ParentGroup.(editorsParts:BrushPartGroup.IsAlphaComponentVisible), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:BrushPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:BrushPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:BrushPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:BrushPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:BrushPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- COLOR EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:ColorEditBox -->
+	<Style x:Key="{x:Type editors:ColorEditBox}" TargetType="{x:Type editors:ColorEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="MinDropDownHeight" Value="150" />
+		<Setter Property="MinDropDownWidth" Value="250" />
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIColorEditBoxHint}" />
+		<Setter Property="ColorPreviewTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editorsPrimitives:BrushPreviewControl Width="16" Height="16"
+							Foreground="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:ColorEditBox}}, Converter={StaticResource ColorToBrushConverter}}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding DropDownContent, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="True" />
+					<Condition
+							Binding="{Binding DropDownContentTemplateSelector, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="DropDownContentTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<editorsPrimitives:ColorEditor BorderThickness="0" Margin="2" Focusable="True"
+									EditableParts="{Binding EditableParts, RelativeSource={RelativeSource AncestorType={x:Type editors:ColorEditBox}}}"
+									IsAlphaComponentVisible="{Binding IsAlphaComponentVisible, RelativeSource={RelativeSource AncestorType={x:Type editors:ColorEditBox}}}"
+									IsCloseButtonVisible="True"
+									Color="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:ColorEditBox}}}"
+									Style="{Binding ColorEditorStyle, RelativeSource={RelativeSource AncestorType={x:Type editors:ColorEditBox}}}"
+									editorsPrimitives:DropDownBehavior.CloseOnEscapeKey="True" editorsPrimitives:DropDownBehavior.FocusOnOpen="True" />
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+			</MultiDataTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editorsParts:ColorPartGroup -->
+	<Style x:Key="{x:Type editorsParts:ColorPartGroup}" TargetType="{x:Type editorsParts:ColorPartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsAlphaComponentVisible"
+				Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.IsAlphaComponentVisible), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:ColorEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:ColorComponentPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:ColorComponentPartBase}" TargetType="{x:Type editorsPartsPrimitives:ColorComponentPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:ColorComponentPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:ColorAlphaPart -->
+	<Style x:Key="{x:Type editorsParts:ColorAlphaPart}" TargetType="{x:Type editorsParts:ColorAlphaPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ColorComponentPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Alpha" />
+	</Style>
+
+	<!-- editorsParts:ColorRedPart -->
+	<Style x:Key="{x:Type editorsParts:ColorRedPart}" TargetType="{x:Type editorsParts:ColorRedPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ColorComponentPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Red" />
+	</Style>
+
+	<!-- editorsParts:ColorGreenPart -->
+	<Style x:Key="{x:Type editorsParts:ColorGreenPart}" TargetType="{x:Type editorsParts:ColorGreenPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ColorComponentPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Green" />
+	</Style>
+
+	<!-- editorsParts:ColorBluePart -->
+	<Style x:Key="{x:Type editorsParts:ColorBluePart}" TargetType="{x:Type editorsParts:ColorBluePart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ColorComponentPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Blue" />
+	</Style>
+
+	<!-- editorsParts:ColorPart -->
+	<Style x:Key="{x:Type editorsParts:ColorPart}" TargetType="{x:Type editorsParts:ColorPart}" BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<Setter Property="AutomationProperties.Name" Value="Value" />
+
+		<!-- Inherited properties -->
+		<Setter Property="EditableParts" Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsAlphaComponentVisible"
+				Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.IsAlphaComponentVisible), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:ColorPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:ColorPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- CORNERRADIUS EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:CornerRadiusEditBox -->
+	<Style x:Key="{x:Type editors:CornerRadiusEditBox}" TargetType="{x:Type editors:CornerRadiusEditBox}"
+			BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UICornerRadiusEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:CornerRadiusPartGroup -->
+	<Style x:Key="{x:Type editorsParts:CornerRadiusPartGroup}" TargetType="{x:Type editorsParts:CornerRadiusPartGroup}"
+			BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:CornerRadiusEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:CornerRadiusPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:CornerRadiusPartBase}" TargetType="{x:Type editorsPartsPrimitives:CornerRadiusPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity"
+				Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed"
+				Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:CornerRadiusPartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:CornerRadiusPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:CornerRadiusBottomLeftPart -->
+	<Style x:Key="{x:Type editorsParts:CornerRadiusBottomLeftPart}" TargetType="{x:Type editorsParts:CornerRadiusBottomLeftPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:CornerRadiusPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="BottomLeft" />
+	</Style>
+
+	<!-- editorsParts:CornerRadiusBottomRightPart -->
+	<Style x:Key="{x:Type editorsParts:CornerRadiusBottomRightPart}" TargetType="{x:Type editorsParts:CornerRadiusBottomRightPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:CornerRadiusPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="BottomRight" />
+	</Style>
+
+	<!-- editorsParts:CornerRadiusTopLeftPart -->
+	<Style x:Key="{x:Type editorsParts:CornerRadiusTopLeftPart}" TargetType="{x:Type editorsParts:CornerRadiusTopLeftPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:CornerRadiusPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="TopLeft" />
+	</Style>
+
+	<!-- editorsParts:CornerRadiusTopRightPart -->
+	<Style x:Key="{x:Type editorsParts:CornerRadiusTopRightPart}" TargetType="{x:Type editorsParts:CornerRadiusTopRightPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:CornerRadiusPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="TopRight" />
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- DATETIME EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:DateTimeEditBox -->
+	<Style x:Key="{x:Type editors:DateTimeEditBox}" TargetType="{x:Type editors:DateTimeEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="MinDropDownHeight" Value="200" />
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIDateTimeEditBoxHint}" />
+
+		<Style.Triggers>
+			<Trigger Property="DefaultDropDownContentType" Value="DateTimeEditor">
+				<Setter Property="MinDropDownWidth" Value="305" />
+				<Setter Property="DropDownContentTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<editorsPrimitives:DateTimeEditor
+									Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									EditableParts="{Binding EditableParts, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									TimeFormat="{Binding Format, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									IsCloseButtonVisible="True"
+									AnalogClockStyle="{Binding AnalogClockStyle, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									MonthCalendarStyle="{Binding MonthCalendarStyle, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									editorsPrimitives:DropDownBehavior.CloseOnEscapeKey="True" />
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="DefaultDropDownContentType" Value="TimeEditor">
+				<Setter Property="DropDownContentTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<editorsPrimitives:TimeEditor Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									EditableParts="{Binding EditableParts, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									TimeFormat="{Binding Format, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									IsCloseButtonVisible="True"
+									AnalogClockStyle="{Binding AnalogClockStyle, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									editorsPrimitives:DropDownBehavior.CloseOnEscapeKey="True" Margin="5" />
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+				<Setter Property="MaxDropDownHeight" Value="200" />
+			</Trigger>
+			<Trigger Property="DefaultDropDownContentType" Value="MonthCalendar">
+				<Setter Property="DropDownContentTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<editors:MonthCalendar BorderThickness="0" ViewResetMode="FirstSelected"
+									SelectedDate="{Binding DateValue, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									themes:ThemeProperties.UseAlternateStyle="True"
+									Style="{Binding MonthCalendarStyle, RelativeSource={RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}}"
+									editorsPrimitives:MonthCalendarDropDownBehavior.CloseOnClearSelection="True"
+									editorsPrimitives:MonthCalendarDropDownBehavior.CloseOnEscapeKey="True"
+									editorsPrimitives:MonthCalendarDropDownBehavior.CloseOnSingleSelection="True">
+								<editors:MonthCalendar.MaxDate>
+									<MultiBinding Converter="{StaticResource CoalesceConverter}">
+										<Binding Path="Maximum" RelativeSource="{RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}" />
+										<Binding Source="{x:Static editorsPrimitives:DateTimeHelper.DefaultMaxDateTime}" />
+									</MultiBinding>
+								</editors:MonthCalendar.MaxDate>
+								<editors:MonthCalendar.MinDate>
+									<MultiBinding Converter="{StaticResource CoalesceConverter}">
+										<Binding Path="Minimum" RelativeSource="{RelativeSource AncestorType={x:Type editors:DateTimeEditBox}}" />
+										<Binding Source="{x:Static editorsPrimitives:DateTimeHelper.DefaultMinDateTime}" />
+									</MultiBinding>
+								</editors:MonthCalendar.MinDate>
+							</editors:MonthCalendar>
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editorsParts:DateTimePartGroup -->
+	<Style x:Key="{x:Type editorsParts:DateTimePartGroup}" TargetType="{x:Type editorsParts:DateTimePartGroup}"
+			BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:DateTimeEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:DateTimePartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:DateTimePartBase}" TargetType="{x:Type editorsPartsPrimitives:DateTimePartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:DateTimePartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:DateTimePartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:DateTimePartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:DateTimePartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:DateTimePartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:DateTimePartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsParts:DateTimeAMPMDesignatorPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeAMPMDesignatorPart}" TargetType="{x:Type editorsParts:DateTimeAMPMDesignatorPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="AMPMDesignator" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeAMPMDesignatorPart}">
+					<editorsPrimitives:InlineComboBox x:Name="inlineComboBox"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" IsReadOnly="{TemplateBinding IsEditable}"
+							Margin="{TemplateBinding Padding}"
+							SelectedItem="{Binding StringValue, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NoOpConverter}}"
+							TextSearch.TextPath="." />
+					<ControlTemplate.Triggers>
+						<Trigger Property="Format" Value="%t">
+							<Setter TargetName="inlineComboBox" Property="ItemsSource"
+									Value="{Binding AbbreviatedDesignators, RelativeSource={RelativeSource TemplatedParent}}" />
+						</Trigger>
+						<Trigger Property="Format" Value="tt">
+							<Setter TargetName="inlineComboBox" Property="ItemsSource"
+									Value="{Binding Designators, RelativeSource={RelativeSource TemplatedParent}}" />
+						</Trigger>
+						<Trigger Property="IsReadOnly" Value="true">
+							<Setter TargetName="inlineComboBox" Property="IsReadOnly" Value="true" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeDayPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeDayPart}" TargetType="{x:Type editorsParts:DateTimeDayPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Day" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeDayPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeDayOfWeekPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeDayOfWeekPart}" TargetType="{x:Type editorsParts:DateTimeDayOfWeekPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="DayOfWeek" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeDayOfWeekPart}">
+					<editorsPrimitives:InlineComboBox x:Name="inlineComboBox"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" IsReadOnly="{TemplateBinding IsEditable}"
+							Margin="{TemplateBinding Padding}"
+							SelectedItem="{Binding StringValue, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NoOpConverter}}"
+							TextSearch.TextPath="." />
+					<ControlTemplate.Triggers>
+						<Trigger Property="Format" Value="ddd">
+							<Setter TargetName="inlineComboBox" Property="ItemsSource"
+									Value="{Binding AbbreviatedDayNames, RelativeSource={RelativeSource TemplatedParent}}" />
+						</Trigger>
+						<Trigger Property="Format" Value="dddd">
+							<Setter TargetName="inlineComboBox" Property="ItemsSource"
+									Value="{Binding DayNames, RelativeSource={RelativeSource TemplatedParent}}" />
+						</Trigger>
+						<Trigger Property="IsReadOnly" Value="true">
+							<Setter TargetName="inlineComboBox" Property="IsReadOnly" Value="true" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeEraPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeEraPart}" TargetType="{x:Type editorsParts:DateTimeEraPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Era" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeEraPart}">
+					<editors:TextBox Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.TextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Focusable="False" IsReadOnly="True" Margin="0"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeHourPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeHourPart}" TargetType="{x:Type editorsParts:DateTimeHourPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Hour" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeHourPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeMinutePart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeMinutePart}" TargetType="{x:Type editorsParts:DateTimeMinutePart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Minute" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeMinutePart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeMonthPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeMonthPart}" TargetType="{x:Type editorsParts:DateTimeMonthPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Month" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeMonthPart}">
+					<Grid Background="{TemplateBinding Background}" Margin="{TemplateBinding Padding}">
+						<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+								Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+								AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+								Focusable="{TemplateBinding IsEditable}" Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+								Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+						<editorsPrimitives:InlineComboBox x:Name="inlineComboBox"
+								AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+								Foreground="{TemplateBinding Foreground}" IsReadOnly="{TemplateBinding IsEditable}"
+								SelectedItem="{Binding StringValue, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NoOpConverter}}"
+								TextSearch.TextPath="." Visibility="Collapsed" />
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="Format" Value="MMM">
+							<Setter TargetName="PART_MaskedTextBox" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="inlineComboBox" Property="Visibility" Value="Visible" />
+							<Setter TargetName="inlineComboBox" Property="ItemsSource"
+									Value="{Binding AbbreviatedMonthNames, RelativeSource={RelativeSource TemplatedParent}}" />
+						</Trigger>
+						<Trigger Property="Format" Value="MMMM">
+							<Setter TargetName="PART_MaskedTextBox" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="inlineComboBox" Property="Visibility" Value="Visible" />
+							<Setter TargetName="inlineComboBox" Property="ItemsSource"
+									Value="{Binding MonthNames, RelativeSource={RelativeSource TemplatedParent}}" />
+						</Trigger>
+						<Trigger Property="IsReadOnly" Value="true">
+							<Setter TargetName="inlineComboBox" Property="IsReadOnly" Value="true" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeSecondPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeSecondPart}" TargetType="{x:Type editorsParts:DateTimeSecondPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Second" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeSecondPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeTicksPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeTicksPart}" TargetType="{x:Type editorsParts:DateTimeTicksPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Ticks" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeTicksPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeTimeZonePart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeTimeZonePart}" TargetType="{x:Type editorsParts:DateTimeTimeZonePart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="TimeZone" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeTimeZonePart}">
+					<editors:TextBox Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.TextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Focusable="False" IsReadOnly="True" Margin="0"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DateTimeYearPart -->
+	<Style x:Key="{x:Type editorsParts:DateTimeYearPart}" TargetType="{x:Type editorsParts:DateTimeYearPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:DateTimePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Year" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DateTimeYearPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- DOUBLE EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:DoubleEditBox -->
+	<Style x:Key="{x:Type editors:DoubleEditBox}" TargetType="{x:Type editors:DoubleEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIDoubleEditBoxHint}" />
+		<Setter Property="DropDownHorizontalAlignment" Value="Right" />
+		<Setter Property="MinDropDownHeight" Value="150" />
+		<Setter Property="MinDropDownWidth" Value="150" />
+		<Setter Property="DropDownContentTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editors:Calculator DisplayMode="Minimal" BorderThickness="0">
+						<editors:Calculator.Value>
+							<Binding Path="Value" Mode="TwoWay" RelativeSource="{RelativeSource AncestorType={x:Type editors:DoubleEditBox}}"
+									Converter="{StaticResource CoalesceConverter}">
+								<Binding.ConverterParameter>
+									<system:Double>0.0</system:Double>
+								</Binding.ConverterParameter>
+							</Binding>
+						</editors:Calculator.Value>
+					</editors:Calculator>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:DoublePartGroup -->
+	<Style x:Key="{x:Type editorsParts:DoublePartGroup}" TargetType="{x:Type editorsParts:DoublePartGroup}"
+			BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:DoubleEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsParts:DoublePart -->
+	<Style x:Key="{x:Type editorsParts:DoublePart}" TargetType="{x:Type editorsParts:DoublePart}" BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<Setter Property="AutomationProperties.Name" Value="Value" />
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:DoublePartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:DoublePart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- ENUM EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:EnumEditBox -->
+	<Style x:Key="{x:Type editors:EnumEditBox}" TargetType="{x:Type editors:EnumEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="MinDropDownHeight" Value="150" />
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIEnumEditBoxHint}" />
+
+		<Style.Triggers>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding DropDownContent, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="True" />
+					<Condition
+							Binding="{Binding DropDownContentTemplateSelector, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullOrEmptyConverter}}"
+							Value="True" />
+				</MultiDataTrigger.Conditions>
+				<Setter Property="DropDownContentTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<editors:EnumListBox BorderThickness="0"
+									EnumValue="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:EnumEditBox}}}"
+									EnumSortComparer="{Binding EnumSortComparer, RelativeSource={RelativeSource AncestorType={x:Type editors:EnumEditBox}}}"
+									EnumType="{Binding EnumType, RelativeSource={RelativeSource AncestorType={x:Type editors:EnumEditBox}}}"
+									UseDescriptionAttributes="{Binding UseDescriptionAttributes, RelativeSource={RelativeSource AncestorType={x:Type editors:EnumEditBox}}}"
+									Style="{Binding EnumListBoxStyle, RelativeSource={RelativeSource AncestorType={x:Type editors:EnumEditBox}}}"
+									editorsPrimitives:EnumListBoxDropDownBehavior.CloseOnEscapeKey="True"
+									editorsPrimitives:EnumListBoxDropDownBehavior.CloseOnSingleSelection="False" />
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+			</MultiDataTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editorsParts:EnumPartGroup -->
+	<Style x:Key="{x:Type editorsParts:EnumPartGroup}" TargetType="{x:Type editorsParts:EnumPartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="EnumType" Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.EnumType), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsEditable" Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.IsEditable), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="UseDescriptionAttributes"
+				Value="{Binding Path=ParentEditBox.(editors:EnumEditBox.UseDescriptionAttributes), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsParts:EnumPart -->
+	<Style x:Key="{x:Type editorsParts:EnumPart}" TargetType="{x:Type editorsParts:EnumPart}" BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<Setter Property="AutomationProperties.Name" Value="Value" />
+
+		<!-- Inherited properties -->
+		<Setter Property="EnumType" Value="{Binding Path=ParentGroup.(editorsParts:EnumPartGroup.EnumType), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsEditable" Value="{Binding Path=ParentGroup.(editorsParts:EnumPartGroup.IsEditable), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:EnumPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:EnumPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:EnumPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:EnumPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="UseDescriptionAttributes"
+				Value="{Binding Path=ParentGroup.(editorsParts:EnumPartGroup.UseDescriptionAttributes), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:EnumPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- GUID EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:GuidEditBox -->
+	<Style x:Key="{x:Type editors:GuidEditBox}" TargetType="{x:Type editors:GuidEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIGuidEditBoxHint}" />
+
+		<Setter Property="NewGuidButtonTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<Button Command="{x:Static editors:GuidEditBox.SetValueToNewGuid}" Padding="1"
+							IsEnabled="{Binding IsReadOnly, RelativeSource={x:Static editors:PartEditBox.RelativeSource}, Converter={StaticResource BooleanNotConverter}}"
+							ToolTip="{productsEditors:SRExtension UICommandSetValueToNewGuid}"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseStyleKey}}">
+						<Rectangle Width="16" Height="16" Fill="{StaticResource NewGuidBrushKey}" />
+					</Button>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:GuidPartGroup -->
+	<Style x:Key="{x:Type editorsParts:GuidPartGroup}" TargetType="{x:Type editorsParts:GuidPartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:GuidEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:GuidEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:GuidEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:GuidEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:GuidEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsParts:GuidPart -->
+	<Style x:Key="{x:Type editorsParts:GuidPart}" TargetType="{x:Type editorsParts:GuidPart}" BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<Setter Property="AutomationProperties.Name" Value="Value" />
+
+		<!-- Inherited properties -->
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:GuidPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:GuidPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:GuidPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:GuidPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:GuidPart}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- INT32 EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:Int32EditBox -->
+	<Style x:Key="{x:Type editors:Int32EditBox}" TargetType="{x:Type editors:Int32EditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIInt32EditBoxHint}" />
+		<Setter Property="DropDownHorizontalAlignment" Value="Right" />
+		<Setter Property="MinDropDownHeight" Value="150" />
+		<Setter Property="MinDropDownWidth" Value="150" />
+		<Setter Property="DropDownContentTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editors:Calculator DisplayMode="Standard" BorderThickness="0"
+							Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:Int32EditBox}}, Mode=TwoWay, Converter={StaticResource IntegerToDoubleConverter}}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:Int32PartGroup -->
+	<Style x:Key="{x:Type editorsParts:Int32PartGroup}" TargetType="{x:Type editorsParts:Int32PartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:Int32EditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsParts:Int32Part -->
+	<Style x:Key="{x:Type editorsParts:Int32Part}" TargetType="{x:Type editorsParts:Int32Part}" BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<Setter Property="AutomationProperties.Name" Value="Value" />
+
+		<!-- Inherited properties -->
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:Int32PartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:Int32Part}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- INT32RECT EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:Int32RectEditBox -->
+	<Style x:Key="{x:Type editors:Int32RectEditBox}" TargetType="{x:Type editors:Int32RectEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIInt32RectEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:Int32RectPartGroup -->
+	<Style x:Key="{x:Type editorsParts:Int32RectPartGroup}" TargetType="{x:Type editorsParts:Int32RectPartGroup}"
+			BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:Int32RectEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:Int32RectPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:Int32RectPartBase}" TargetType="{x:Type editorsPartsPrimitives:Int32RectPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:Int32RectPartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:Int32RectPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:Int32RectHeightPart -->
+	<Style x:Key="{x:Type editorsParts:Int32RectHeightPart}" TargetType="{x:Type editorsParts:Int32RectHeightPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:Int32RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Height" />
+	</Style>
+
+	<!-- editorsParts:Int32RectWidthPart -->
+	<Style x:Key="{x:Type editorsParts:Int32RectWidthPart}" TargetType="{x:Type editorsParts:Int32RectWidthPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:Int32RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Width" />
+	</Style>
+
+	<!-- editorsParts:Int32RectXPart -->
+	<Style x:Key="{x:Type editorsParts:Int32RectXPart}" TargetType="{x:Type editorsParts:Int32RectXPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:Int32RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="X" />
+	</Style>
+
+	<!-- editorsParts:Int32RectYPart -->
+	<Style x:Key="{x:Type editorsParts:Int32RectYPart}" TargetType="{x:Type editorsParts:Int32RectYPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:Int32RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Y" />
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- INT64 EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:Int64EditBox -->
+	<Style x:Key="{x:Type editors:Int64EditBox}" TargetType="{x:Type editors:Int64EditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIInt64EditBoxHint}" />
+		<Setter Property="DropDownHorizontalAlignment" Value="Right" />
+		<Setter Property="MinDropDownHeight" Value="150" />
+		<Setter Property="MinDropDownWidth" Value="150" />
+		<Setter Property="DropDownContentTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editors:Calculator DisplayMode="Standard" BorderThickness="0"
+							Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type editors:Int64EditBox}}, Mode=TwoWay, Converter={StaticResource IntegerToDoubleConverter}}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:Int64PartGroup -->
+	<Style x:Key="{x:Type editorsParts:Int64PartGroup}" TargetType="{x:Type editorsParts:Int64PartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:Int64EditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsParts:Int64Part -->
+	<Style x:Key="{x:Type editorsParts:Int64Part}" TargetType="{x:Type editorsParts:Int64Part}" BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<Setter Property="AutomationProperties.Name" Value="Value" />
+
+		<!-- Inherited properties -->
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:Int64PartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:Int64Part}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- POINT EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:PointEditBox -->
+	<Style x:Key="{x:Type editors:PointEditBox}" TargetType="{x:Type editors:PointEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIPointEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:PointPartGroup -->
+	<Style x:Key="{x:Type editorsParts:PointPartGroup}" TargetType="{x:Type editorsParts:PointPartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:PointEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:PointEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:PointEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:PointEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:PointEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:PointPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:PointPartBase}" TargetType="{x:Type editorsPartsPrimitives:PointPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:PointPartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:PointPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:PointXPart -->
+	<Style x:Key="{x:Type editorsParts:PointXPart}" TargetType="{x:Type editorsParts:PointXPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:PointPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="X" />
+	</Style>
+
+	<!-- editorsParts:PointYPart -->
+	<Style x:Key="{x:Type editorsParts:PointYPart}" TargetType="{x:Type editorsParts:PointYPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:PointPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Y" />
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- RECT EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:RectEditBox -->
+	<Style x:Key="{x:Type editors:RectEditBox}" TargetType="{x:Type editors:RectEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIRectEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:RectPartGroup -->
+	<Style x:Key="{x:Type editorsParts:RectPartGroup}" TargetType="{x:Type editorsParts:RectPartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:RectEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:RectEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:RectEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:RectEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:RectEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:RectPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:RectPartBase}" TargetType="{x:Type editorsPartsPrimitives:RectPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:RectPartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:RectPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:RectHeightPart -->
+	<Style x:Key="{x:Type editorsParts:RectHeightPart}" TargetType="{x:Type editorsParts:RectHeightPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Height" />
+	</Style>
+
+	<!-- editorsParts:RectWidthPart -->
+	<Style x:Key="{x:Type editorsParts:RectWidthPart}" TargetType="{x:Type editorsParts:RectWidthPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Width" />
+	</Style>
+
+	<!-- editorsParts:RectXPart -->
+	<Style x:Key="{x:Type editorsParts:RectXPart}" TargetType="{x:Type editorsParts:RectXPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="X" />
+	</Style>
+
+	<!-- editorsParts:RectYPart -->
+	<Style x:Key="{x:Type editorsParts:RectYPart}" TargetType="{x:Type editorsParts:RectYPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:RectPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Y" />
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- SIZE EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:SizeEditBox -->
+	<Style x:Key="{x:Type editors:SizeEditBox}" TargetType="{x:Type editors:SizeEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UISizeEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:SizePartGroup -->
+	<Style x:Key="{x:Type editorsParts:SizePartGroup}" TargetType="{x:Type editorsParts:SizePartGroup}" BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:SizeEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:SizePartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:SizePartBase}" TargetType="{x:Type editorsPartsPrimitives:SizePartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:SizePartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:SizePartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:SizeHeightPart -->
+	<Style x:Key="{x:Type editorsParts:SizeHeightPart}" TargetType="{x:Type editorsParts:SizeHeightPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:SizePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Height" />
+	</Style>
+
+	<!-- editorsParts:SizeWidthPart -->
+	<Style x:Key="{x:Type editorsParts:SizeWidthPart}" TargetType="{x:Type editorsParts:SizeWidthPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:SizePartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Width" />
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- THICKNESS EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:ThicknessEditBox -->
+	<Style x:Key="{x:Type editors:ThicknessEditBox}" TargetType="{x:Type editors:ThicknessEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIThicknessEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:ThicknessPartGroup -->
+	<Style x:Key="{x:Type editorsParts:ThicknessPartGroup}" TargetType="{x:Type editorsParts:ThicknessPartGroup}"
+			BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:ThicknessEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:ThicknessPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:ThicknessPartBase}" TargetType="{x:Type editorsPartsPrimitives:ThicknessPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity"
+				Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed"
+				Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:ThicknessPartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:ThicknessPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:ThicknessBottomPart -->
+	<Style x:Key="{x:Type editorsParts:ThicknessBottomPart}" TargetType="{x:Type editorsParts:ThicknessBottomPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ThicknessPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Bottom" />
+	</Style>
+
+	<!-- editorsParts:ThicknessLeftPart -->
+	<Style x:Key="{x:Type editorsParts:ThicknessLeftPart}" TargetType="{x:Type editorsParts:ThicknessLeftPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ThicknessPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Left" />
+	</Style>
+
+	<!-- editorsParts:ThicknessRightPart -->
+	<Style x:Key="{x:Type editorsParts:ThicknessRightPart}" TargetType="{x:Type editorsParts:ThicknessRightPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ThicknessPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Right" />
+	</Style>
+
+	<!-- editorsParts:ThicknessTopPart -->
+	<Style x:Key="{x:Type editorsParts:ThicknessTopPart}" TargetType="{x:Type editorsParts:ThicknessTopPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:ThicknessPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Top" />
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- TIMESPAN EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:TimeSpanEditBox -->
+	<Style x:Key="{x:Type editors:TimeSpanEditBox}" TargetType="{x:Type editors:TimeSpanEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UITimeSpanEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:TimeSpanPartGroup -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanPartGroup}" TargetType="{x:Type editorsParts:TimeSpanPartGroup}"
+			BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:TimeSpanEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:TimeSpanPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:TimeSpanPartBase}" TargetType="{x:Type editorsPartsPrimitives:TimeSpanPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:TimeSpanPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:TimeSpanPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:TimeSpanPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:TimeSpanPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:TimeSpanPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:TimeSpanPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:TimeSpanPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:TimeSpanDaysPart -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanDaysPart}" TargetType="{x:Type editorsParts:TimeSpanDaysPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:TimeSpanPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Days" />
+	</Style>
+
+	<!-- editorsParts:TimeSpanHoursPart -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanHoursPart}" TargetType="{x:Type editorsParts:TimeSpanHoursPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:TimeSpanPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Hours" />
+	</Style>
+
+	<!-- editorsParts:TimeSpanMillisecondsPart -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanMillisecondsPart}" TargetType="{x:Type editorsParts:TimeSpanMillisecondsPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:TimeSpanPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Milliseconds" />
+	</Style>
+
+	<!-- editorsParts:TimeSpanMinutesPart -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanMinutesPart}" TargetType="{x:Type editorsParts:TimeSpanMinutesPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:TimeSpanPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Minutes" />
+	</Style>
+
+	<!-- editorsParts:TimeSpanSecondsPart -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanSecondsPart}" TargetType="{x:Type editorsParts:TimeSpanSecondsPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:TimeSpanPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Seconds" />
+	</Style>
+
+	<!-- editorsParts:TimeSpanSignPart -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanSignPart}" TargetType="{x:Type editorsParts:TimeSpanSignPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:TimeSpanPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Sign" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsParts:TimeSpanSignPart}">
+					<editorsPrimitives:InlineComboBox x:Name="inlineComboBox"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" IsReadOnly="{TemplateBinding IsEditable}"
+							ItemsSource="{Binding Signs, RelativeSource={RelativeSource TemplatedParent}}" Margin="{TemplateBinding Padding}"
+							SelectedItem="{Binding StringValue, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NoOpConverter}}"
+							TextSearch.TextPath="." />
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsReadOnly" Value="true">
+							<Setter TargetName="inlineComboBox" Property="IsReadOnly" Value="true" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:TimeSpanTicksPart -->
+	<Style x:Key="{x:Type editorsParts:TimeSpanTicksPart}" TargetType="{x:Type editorsParts:TimeSpanTicksPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:TimeSpanPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Ticks" />
+	</Style>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- VECTOR EDITBOX -->
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- editors:VectorEditBox -->
+	<Style x:Key="{x:Type editors:VectorEditBox}" TargetType="{x:Type editors:VectorEditBox}" BasedOn="{StaticResource {x:Type editors:PartEditBox}}">
+		<Setter Property="Hint" Value="{productsEditors:SRExtension UIVectorEditBoxHint}" />
+	</Style>
+
+	<!-- editorsParts:VectorPartGroup -->
+	<Style x:Key="{x:Type editorsParts:VectorPartGroup}" TargetType="{x:Type editorsParts:VectorPartGroup}"
+			BasedOn="{StaticResource {x:Type editors:PartGroup}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="EditableParts" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.EditableParts), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ExportFormat" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.ExportFormat), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.StepValue), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StringValueConverter"
+				Value="{Binding Path=ParentEditBox.(editors:VectorEditBox.StringValueConverter), RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPartsPrimitives:VectorPartBase -->
+	<Style x:Key="{x:Type editorsPartsPrimitives:VectorPartBase}" TargetType="{x:Type editorsPartsPrimitives:VectorPartBase}"
+			BasedOn="{StaticResource {x:Type editors:Part}}">
+
+		<!-- Inherited properties -->
+		<Setter Property="AllowInfinity" Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.AllowInfinity), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="AllowNaN" Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.AllowNaN), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Format" Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.Format), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsInitialValueAutoUpdated"
+				Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.IsInitialValueAutoUpdated), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="IsNullAllowed" Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.IsNullAllowed), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Maximum" Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.Maximum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="Minimum" Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.Minimum), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCancelTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.PartValueCancelTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="PartValueCommitTriggers"
+				Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.PartValueCommitTriggers), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="StepValue" Value="{Binding Path=ParentGroup.(editorsParts:VectorPartGroup.StepValue), RelativeSource={RelativeSource Self}}" />
+
+		<!-- Control template -->
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPartsPrimitives:VectorPartBase}">
+					<editors:MaskedTextBox x:Name="PART_MaskedTextBox"
+							Style="{DynamicResource {x:Static editorsThemes:EditorsResourceKeys.MaskedTextBoxEmbeddedStyleKey}}"
+							AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+							Background="{TemplateBinding Background}" Focusable="{TemplateBinding IsEditable}" Margin="{TemplateBinding Padding}"
+							Mask="{TemplateBinding Mask}" IsReadOnly="{TemplateBinding IsReadOnly}"
+							Text="{editorsPrimitives:SyncBinding StringValue, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsParts:VectorXPart -->
+	<Style x:Key="{x:Type editorsParts:VectorXPart}" TargetType="{x:Type editorsParts:VectorXPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:VectorPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="X" />
+	</Style>
+
+	<!-- editorsParts:VectorYPart -->
+	<Style x:Key="{x:Type editorsParts:VectorYPart}" TargetType="{x:Type editorsParts:VectorYPart}"
+			BasedOn="{StaticResource {x:Type editorsPartsPrimitives:VectorPartBase}}">
+		<Setter Property="AutomationProperties.Name" Value="Y" />
+	</Style>
+
+</ResourceDictionary>

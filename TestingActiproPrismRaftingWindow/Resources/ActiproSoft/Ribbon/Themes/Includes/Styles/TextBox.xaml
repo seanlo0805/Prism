@@ -1,0 +1,142 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonInput="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Input;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+	
+	<!-- ribbonControls:TextBox -->
+	<Style x:Key="{x:Type ribbonControls:TextBox}" TargetType="TextBox">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditForegroundNormalBrushKey}}" />
+		
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="MinHeight" Value="{x:Static ribbonUI:RibbonMeasurements.RibbonControlSmallHeight}"/>
+		<Setter Property="Padding" Value="0" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBorderNormalCornerRadiusKey}}" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="TextBox">
+					<ControlTemplate.Resources>
+						<shared:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter" />
+					</ControlTemplate.Resources>
+					
+					<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+						BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True">
+						<Grid>
+							<ScrollViewer x:Name="PART_ContentHost" Background="Transparent" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="True"
+								Style="{DynamicResource {x:Static themes:SharedResourceKeys.ScrollViewerStyleKey}}" />
+							<ContentPresenter x:Name="hint" Margin="2,0" VerticalAlignment="Center" IsHitTestVisible="False"
+									Content="{TemplateBinding shared:HintProperties.Hint}"
+									ContentTemplate="{TemplateBinding shared:HintProperties.HintTemplate}"
+									ContentTemplateSelector="{TemplateBinding shared:HintProperties.HintTemplateSelector}" Opacity="0.67" Visibility="Collapsed"
+									TextBlock.Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Grid>
+					</Border>
+				
+					<ControlTemplate.Triggers>
+						<Trigger Property="AcceptsReturn" Value="True">
+							<Setter Property="VerticalContentAlignment" Value="Stretch" />
+							<Setter TargetName="hint" Property="VerticalAlignment" Value="Top" />
+						</Trigger>
+						<Trigger Property="ribbonUI:RibbonControlService.Context" Value="MenuItem">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuEditBackgroundNormalBrushKey}}" />
+						</Trigger>
+						<Trigger Property="ribbonUI:RibbonControlService.Context" Value="MiniToolBarItem">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuEditBackgroundNormalBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBackgroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocusWithin" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBackgroundHoverBrushKey}}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="ribbonUI:RibbonControlService.Context" Value="MenuItem" />
+								<Condition Property="IsMouseOver" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuEditBackgroundHoverBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="ribbonUI:RibbonControlService.Context" Value="MenuItem" />
+								<Condition Property="IsKeyboardFocusWithin" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuEditBackgroundHoverBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="ribbonUI:RibbonControlService.Context" Value="MiniToolBarItem" />
+								<Condition Property="IsMouseOver" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuEditBackgroundHoverBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="ribbonUI:RibbonControlService.Context" Value="MiniToolBarItem" />
+								<Condition Property="IsKeyboardFocusWithin" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuEditBackgroundHoverBrushKey}}" />
+						</MultiTrigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBorderDisabledBrushKey}}" />
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBackgroundDisabledBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundDisabledBrushKey}}"/>							
+						</Trigger>
+
+						<!-- Hint related triggers -->
+						<Trigger Property="shared:HintProperties.HasHint" Value="True">
+							<Setter TargetName="hint" Property="Visibility" Value="Visible" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="shared:HintProperties.HasContent" Value="False" />
+								<Condition Property="IsKeyboardFocusWithin" Value="True" />
+							</MultiTrigger.Conditions>
+							<MultiTrigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" To=".33" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</MultiTrigger.EnterActions>
+							<MultiTrigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" />
+									</Storyboard>
+								</BeginStoryboard>
+							</MultiTrigger.ExitActions>
+						</MultiTrigger>
+						<Trigger Property="shared:HintProperties.HasContent" Value="True">
+							<Trigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.EnterActions>
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="hint" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

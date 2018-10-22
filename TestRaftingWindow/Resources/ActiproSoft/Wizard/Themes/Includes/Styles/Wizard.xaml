@@ -1,0 +1,186 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    xmlns:wizard="clr-namespace:ActiproSoftware.Windows.Controls.Wizard;assembly=ActiproSoftware.Wizard.Wpf"
+    >
+
+	<!-- 
+	
+		TEMPLATES
+	
+	-->
+	
+	<!-- WizardPageBlankTemplate -->
+	<ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type wizard:Wizard},ResourceId=WizardPageBlankTemplate}" TargetType="wizard:WizardPage">
+		<Border Background="{TemplateBinding Background}"
+				BorderBrush="{TemplateBinding BorderBrush}"
+				BorderThickness="{TemplateBinding BorderThickness}"
+				Padding="{TemplateBinding Padding}"
+				SnapsToDevicePixels="True">
+			<ContentPresenter Content="{TemplateBinding Content}"
+				ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+		</Border>
+	</ControlTemplate>
+
+	<!-- WizardPageExteriorTemplate -->
+	<ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type wizard:Wizard},ResourceId=WizardPageExteriorTemplate}" TargetType="wizard:WizardPage">
+		<DockPanel>
+			<Border DockPanel.Dock="Left"
+					Background="{TemplateBinding HeaderBackground}"
+					BorderBrush="{TemplateBinding BorderBrush}"
+					BorderThickness="{TemplateBinding BorderThickness}"
+					MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=(wizard:Wizard.ExteriorPageWatermarkMinWidth)}" 
+					SnapsToDevicePixels="True">
+				<Image Margin="18" Source="{TemplateBinding HeaderImage}" Stretch="None" HorizontalAlignment="Right" VerticalAlignment="Top" />
+			</Border>
+			
+			<Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+				<DockPanel>
+					<TextBlock x:Name="captionTextBlock" DockPanel.Dock="Top" TextWrapping="Wrap" Margin="0,0,0,14" FontSize="16" FontWeight="Bold" Text="{TemplateBinding Caption}" />
+					<TextBlock x:Name="descriptionTextBlock" DockPanel.Dock="Top" TextWrapping="Wrap" Margin="0,0,0,14" Text="{TemplateBinding Description}" />
+					<ContentPresenter Content="{TemplateBinding Content}" 
+									  ContentTemplate="{TemplateBinding ContentTemplate}" 
+									  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+				</DockPanel>
+			</Border>
+		</DockPanel>
+		
+		<ControlTemplate.Triggers>
+			<Trigger Property="Caption" Value="{x:Null}">
+				<Setter TargetName="captionTextBlock" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="Description" Value="{x:Null}">
+				<Setter TargetName="descriptionTextBlock" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- WizardPageInteriorTemplate -->
+	<ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type wizard:Wizard},ResourceId=WizardPageInteriorTemplate}" TargetType="wizard:WizardPage">
+		<DockPanel>
+			<DockPanel x:Name="PART_Header" DockPanel.Dock="Top"
+				MinHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=(wizard:Wizard.InteriorPageHeaderMinHeight)}" 
+				Background="{TemplateBinding HeaderBackground}">
+				<Image DockPanel.Dock="Right" Margin="4" Source="{TemplateBinding HeaderImage}" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<StackPanel>
+					<TextBlock Margin="16,9,0,1" TextWrapping="Wrap" FontWeight="Bold" Text="{TemplateBinding Caption}" />
+					<TextBlock Margin="32,0,0,3" TextWrapping="Wrap" Text="{TemplateBinding Description}" />
+				</StackPanel>
+			</DockPanel>
+
+			<Border Background="{TemplateBinding Background}"
+					BorderBrush="{TemplateBinding BorderBrush}"
+					BorderThickness="{TemplateBinding BorderThickness}"
+					Padding="{TemplateBinding Padding}"
+					SnapsToDevicePixels="True">
+				<ContentPresenter Content="{TemplateBinding Content}" 
+								  ContentTemplate="{TemplateBinding ContentTemplate}" 
+								  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+			</Border>
+		</DockPanel>
+	</ControlTemplate>
+
+	<!-- 
+	
+		STYLES
+	
+	-->
+	
+	<!-- wizard:Wizard -->
+	<Style x:Key="{x:Type wizard:Wizard}" TargetType="wizard:Wizard">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="wizard:Wizard">
+					
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="True">
+						<DockPanel>
+							<wizard:WizardButtonContainer x:Name="PART_ButtonContainer" DockPanel.Dock="Bottom" Padding="{TemplateBinding ButtonContainerPadding}" />
+							
+							<wizard:WizardPagePresenter 
+								x:Name="PART_TransitionPresenter" 
+								DefaultDirection="{TemplateBinding TransitionDefaultDirection}" 
+								TransitionSelector="{TemplateBinding TransitionSelector}" />
+						</DockPanel>
+					</Border>
+					
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- wizard:WizardButtonContainer -->
+	<Style x:Key="{x:Type wizard:WizardButtonContainer}" TargetType="wizard:WizardButtonContainer">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerMediumBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="0,1,0,0" />
+		<Setter Property="Padding" Value="7" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="wizard:WizardButtonContainer">
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="{TemplateBinding Padding}"
+							SnapsToDevicePixels="True">
+						<DockPanel>
+							<Button x:Name="PART_HelpButton" DockPanel.Dock="Left" MinWidth="75" Command="wizard:WizardCommands.Help"
+								Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=HelpButtonText}" 
+								Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=(wizard:Wizard.SelectedPage).(wizard:WizardPage.HelpButtonVisibility)}" />
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+								<Button x:Name="PART_CancelButton" Margin="0,0,7,0" MinWidth="75" Command="wizard:WizardCommands.Cancel" 
+									Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=CancelButtonText}" 
+									Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=(wizard:Wizard.SelectedPage).(wizard:WizardPage.CancelButtonVisibility)}" />
+								<Button x:Name="PART_BackButton" MinWidth="75" Command="wizard:WizardCommands.PreviousPage" 
+									Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=BackButtonText}" 
+									Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=(wizard:Wizard.SelectedPage).(wizard:WizardPage.BackButtonVisibility)}" />
+								<Button x:Name="PART_NextButton" MinWidth="75" Command="wizard:WizardCommands.NextPage"
+									Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=NextButtonText}" 
+									Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=(wizard:Wizard.SelectedPage).(wizard:WizardPage.NextButtonVisibility)}" />
+								<Button x:Name="PART_FinishButton" Margin="7,0,0,0" MinWidth="75" Command="wizard:WizardCommands.Finish" 
+									Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=FinishButtonText}" 
+									Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wizard:Wizard}, Path=(wizard:Wizard.SelectedPage).(wizard:WizardPage.FinishButtonVisibility)}" />
+							</StackPanel>
+						</DockPanel>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- wizard:WizardPage -->
+	<Style x:Key="{x:Type wizard:WizardPage}" TargetType="wizard:WizardPage">		
+		<Style.Triggers>
+			<Trigger Property="PageType" Value="Interior">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlBackgroundNormalBrushKey}}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+				<Setter Property="BorderThickness" Value="0,1,0,0" />
+				<Setter Property="HeaderBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBackgroundNormalBrushKey}}" />
+				<Setter Property="Padding" Value="14" />
+				<Setter Property="Template" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type wizard:Wizard},ResourceId=WizardPageInteriorTemplate}}" />
+			</Trigger>
+			<Trigger Property="PageType" Value="Exterior">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBackgroundNormalBrushKey}}" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="HeaderBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceMediumBackgroundNormalBrushKey}}" />
+				<Setter Property="Padding" Value="14" />
+				<Setter Property="Template" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type wizard:Wizard},ResourceId=WizardPageExteriorTemplate}}" />
+			</Trigger>
+			<Trigger Property="PageType" Value="Blank">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlBackgroundNormalBrushKey}}" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="HeaderBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlBackgroundNormalBrushKey}}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Template" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type wizard:Wizard},ResourceId=WizardPageBlankTemplate}}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+		
+</ResourceDictionary>

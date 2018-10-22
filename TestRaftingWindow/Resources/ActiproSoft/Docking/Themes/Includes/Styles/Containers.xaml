@@ -1,0 +1,692 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:docking="clr-namespace:ActiproSoftware.Windows.Controls.Docking;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:dockingPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Docking.Primitives;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:dockingThemes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:productsDocking="clr-namespace:ActiproSoftware.Products.Docking;assembly=ActiproSoftware.Docking.Wpf" 
+		>
+
+	<!-- Converters -->
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<dockingPrimitives:DockingScrollingVisibilityConverter x:Key="DockingScrollingVisibilityConverter" />
+	<shared:ThicknessConverter x:Key="NoNegativeThicknessConverter" AllowNegative="False" />
+	<shared:ThicknessConverter x:Key="ThicknessConverter" />
+
+	<!-- Glyphs -->
+	<Geometry x:Key="LeftArrow">M 0,3.5 L 4,0 L 4,7 Z</Geometry>
+	<Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+
+	<!-- 
+	
+		STYLES
+	
+	-->
+
+	<!-- dockingThemes:DockingResourceKeys.DockingTabScrollViewerStyleKey -->
+	<Style x:Key="{x:Static dockingThemes:DockingResourceKeys.DockingTabScrollViewerStyleKey}" TargetType="{x:Type ScrollViewer}">
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="VerticalContentAlignment" Value="Stretch" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ScrollViewer}">
+					<Grid SnapsToDevicePixels="true">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<!-- Content -->
+						<Border Grid.Column="1">
+							<ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Margin="{TemplateBinding Padding}"
+									Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+									CanContentScroll="{TemplateBinding CanContentScroll}"
+									HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+									VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+						</Border>
+
+						<!-- Left Arrow -->
+						<RepeatButton Margin="1,2,1,2" Width="14" Height="14"
+								Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+								Command="{x:Static ScrollBar.LineLeftCommand}"
+								CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Focusable="false">
+							<RepeatButton.Visibility>
+								<MultiBinding FallbackValue="Visibility.Collapsed" Converter="{StaticResource DockingScrollingVisibilityConverter}" ConverterParameter="0">
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ComputedHorizontalScrollBarVisibility" />
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="HorizontalOffset" />
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ExtentWidth" />
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ViewportWidth" />
+								</MultiBinding>
+							</RepeatButton.Visibility>
+							<Path Margin="0,1,0,0" Width="4" Height="7" Fill="{Binding RelativeSource={RelativeSource Self}, Path=(TextElement.Foreground)}"
+									Data="{StaticResource LeftArrow}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						</RepeatButton>
+
+						<!-- Right Arrow -->
+						<RepeatButton Grid.Column="2" Margin="1,2,1,2"  Width="14" Height="14"
+								Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}" 
+								Command="{x:Static ScrollBar.LineRightCommand}"
+								CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Focusable="false">
+							<RepeatButton.Visibility>
+								<MultiBinding FallbackValue="Visibility.Collapsed" Converter="{StaticResource DockingScrollingVisibilityConverter}" ConverterParameter="100">
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ComputedHorizontalScrollBarVisibility" />
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="HorizontalOffset" />
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ExtentWidth" />
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ViewportWidth" />
+								</MultiBinding>
+							</RepeatButton.Visibility>
+							<Path Margin="0,1,0,0" Width="4" Height="7" Fill="{Binding RelativeSource={RelativeSource Self}, Path=(TextElement.Foreground)}"
+									Data="{StaticResource RightArrow}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						</RepeatButton>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- docking:TabbedMdiContainer -->
+	<Style x:Key="{x:Type docking:TabbedMdiContainer}" TargetType="{x:Type docking:TabbedMdiContainer}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBackgroundInactiveNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemBorderInactiveSelectedBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBorderNormalThicknessKey}}" />
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlPaddingNormalThicknessKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBorderHighlightedCornerRadiusKey}}" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+
+		<!-- 7/27/2010 - Moved panel to ItemsPanel because when using panel directly in a ScrollViewer and changing theme, inherited properties are not properly refreshing on children of panels. -->
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<dockingPrimitives:DockingWindowTabPanel HorizontalAlignment="Left"
+							SelectedTab="{Binding RelativeSource={RelativeSource AncestorType={x:Type docking:TabbedMdiContainer}}, Path=SelectedItem}" 
+							HorizontalTabSpacing="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabItemSpacingNormalDoubleKey}}"
+							/>
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type docking:TabbedMdiContainer}">
+					<ControlTemplate.Resources>
+						<shared:IsTypeConverter x:Key="IsTypeConverter" />
+					</ControlTemplate.Resources>
+
+					<Grid x:Name="rootGrid" SnapsToDevicePixels="True">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<shared:PixelSnapper x:Name="tabContainer" Grid.Row="0" Margin="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlHeaderTopMarginNormalThicknessKey}}" Panel.ZIndex="1"
+											 TextElement.Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlForegroundNormalBrushKey}}">
+							<dockingPrimitives:ReverseMeasureDockPanel>
+
+								<ScrollViewer x:Name="scrollViewer" DockPanel.Dock="Left" CanContentScroll="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
+										Style="{DynamicResource {x:Static dockingThemes:DockingResourceKeys.DockingTabScrollViewerStyleKey}}">
+									<ItemsPresenter />
+								</ScrollViewer>
+
+								<Button x:Name="closeButton" DockPanel.Dock="Right" Margin="1,2,1,2" Padding="1" Focusable="False"
+										Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+										ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.CloseGlyphTemplateKey}}" Command="{x:Static docking:DockingCommands.CloseWindow}"
+										CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" ToolTip="{productsDocking:SRExtension UITabbedMdiContainerCloseButtonToolTip}"
+										AutomationProperties.Name="Close" />
+
+								<shared:PopupButton x:Name="documentsButton" DockPanel.Dock="Right" DisplayMode="PopupOnly" Margin="1,2,1,2" Padding="1" Focusable="False"
+										Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedPopupButtonOverrideStyleKey}}"
+										PopupIndicatorTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.DropDownArrowGlyphTemplateKey}}"
+										Command="{x:Static docking:DockingCommands.OpenDocumentsMenu}" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+										CommandParameter="{Binding RelativeSource={RelativeSource Self}}" ToolTip="{productsDocking:SRExtension UITabbedMdiContainerDocumentsButtonToolTip}"
+										AutomationProperties.Name="Documents" />
+
+							</dockingPrimitives:ReverseMeasureDockPanel>
+						</shared:PixelSnapper>
+
+						<shared:TintableBorder x:Name="contentContainer" Grid.Row="1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+											   BorderThickness="{TemplateBinding BorderThickness}"
+											   TintColor="{TemplateBinding TintColor}"
+											   CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" Padding="{TemplateBinding Padding}">
+							<Border Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.Background}"
+									BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.BorderBrush}"
+									BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.BorderThickness}"
+									SnapsToDevicePixels="True">
+								<ContentPresenter x:Name="PART_SelectedContentHost"
+										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										Content="{TemplateBinding SelectedContent}"
+										ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+										ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" />
+							</Border>
+						</shared:TintableBorder>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="HasWindows" Value="False">
+							<Setter TargetName="rootGrid" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="AllTabsVisible" Value="False">
+							<Setter TargetName="documentsButton" Property="PopupIndicatorTemplate" Value="{DynamicResource {x:Static themes:SharedResourceKeys.OverflowDropDownArrowGlyphTemplateKey}}" />
+						</Trigger>
+						<Trigger Property="docking:TabbedMdiHost.IsCloseButtonOnTab" Value="True">
+							<Setter TargetName="closeButton" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="BorderThickness" Value="1">
+							
+						</Trigger>
+						<Trigger Property="docking:TabbedMdiHost.TabPlacement" Value="Bottom">
+							<Setter TargetName="tabContainer" Property="Grid.Row" Value="2" />
+							<Setter TargetName="tabContainer" Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlHeaderBottomMarginNormalThicknessKey}}" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehavior" Value="None">
+							<Setter TargetName="documentsButton" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehavior" Value="Shrink">
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.IsStretched" Value="True" />
+							<Setter TargetName="documentsButton" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehavior" Value="ShrinkWithMenu">
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.IsStretched" Value="True" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehavior" Value="Scroll">
+							<Setter TargetName="scrollViewer" Property="HorizontalScrollBarVisibility" Value="Visible" />
+							<Setter TargetName="documentsButton" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehavior" Value="ScrollWithMenu">
+							<Setter TargetName="scrollViewer" Property="HorizontalScrollBarVisibility" Value="Visible" />
+						</Trigger>
+						<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.CanCloseResolved}"
+								Value="False">
+							<Setter TargetName="closeButton" Property="Visibility" Value="Collapsed" />
+						</DataTrigger>
+						<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Converter={StaticResource IsTypeConverter}, ConverterParameter={x:Type docking:DockingWindow}}"
+								Value="True">
+							<Setter Property="TintColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.TabTintColor}" />
+						</DataTrigger>
+						<Trigger Property="docking:Workspace.IsActive" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBackgroundActiveNormalBrushKey}}" />
+						</Trigger>
+						<Trigger Property="docking:DockingWindowContainer.IsActive" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.TabbedMdiContainerTabControlBackgroundActiveFocusedBrushKey}}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="docking:TabbedMdiHost.TabPlacement" Value="Bottom" />
+								<Condition Property="Padding" Value="0,2,0,0" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="contentContainer" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessConverter}, ConverterParameter='Left,Top,Right'}" />
+							<Setter TargetName="contentContainer" Property="Padding" Value="0,0,0,2" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="docking:TabbedMdiHost.TabPlacement" Value="Top" />
+								<Condition Property="Padding" Value="0,2,0,0" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="contentContainer" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessConverter}, ConverterParameter='Left,Right,Bottom'}" />
+						</MultiTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- RaftableDockingWindowContainerStyleBase -->
+	<Style x:Key="RaftableDockingWindowContainerStyleBase" TargetType="{x:Type dockingPrimitives:RaftableDockingWindowContainer}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="1" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+	</Style>
+
+	<!-- docking:ToolWindowContainer -->
+	<Style x:Key="{x:Type docking:ToolWindowContainer}" TargetType="{x:Type docking:ToolWindowContainer}"
+			BasedOn="{StaticResource RaftableDockingWindowContainerStyleBase}">
+		
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderSelectedBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabControlBorderNormalThicknessKey}}" />
+		<Setter Property="HasTitleBarGripper" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarHasGripperBooleanKey}}" />
+		<Setter Property="HeaderMargin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabControlHeaderBottomMarginNormalThicknessKey}}" />
+
+		<!-- 7/27/2010 - Moved panel to ItemsPanel because when using panel directly in a ScrollViewer and changing theme, inherited properties are not properly refreshing on children of panels. -->
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<dockingPrimitives:DockingWindowTabPanel HorizontalAlignment="Left"
+							SelectedTab="{Binding RelativeSource={RelativeSource AncestorType={x:Type docking:ToolWindowContainer}}, Path=SelectedItem}"
+							HorizontalTabSpacing="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemSpacingNormalDoubleKey}}"
+							ClipToBounds="True" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type docking:ToolWindowContainer}">
+
+					<Grid x:Name="rootGrid">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<!-- TitleBar -->
+						<shared:PixelSnapper>
+							<Border x:Name="titleBarBorder"
+									Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.HasTitleBarResolved, Converter={StaticResource BooleanToVisibilityConverter}}"
+									BorderBrush="{TemplateBinding BorderBrush}"
+									BorderThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessConverter}, ConverterParameter='Left,Top,Right'}" 
+									Background="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarBackgroundInactiveBrushKey}}"
+									TextElement.Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarGlyphBackgroundInactiveBrushKey}}"
+									CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarBorderNormalCornerRadiusKey}}" SnapsToDevicePixels="True">
+								<DockPanel x:Name="PART_TitleBar" Background="Transparent" Margin="{TemplateBinding Padding}"
+										LastChildFill="True">
+
+									<!-- Buttons -->
+									<Button x:Name="closeButton" DockPanel.Dock="Right" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+											ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.CloseGlyphTemplateKey}}"
+											Command="{x:Static docking:DockingCommands.CloseWindow}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											ToolTip="{productsDocking:SRExtension UIToolWindowContainerCloseButtonToolTip}"
+											Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.CanCloseResolved, Converter={StaticResource BooleanToVisibilityConverter}}"
+											AutomationProperties.Name="Close" />
+
+									<Button x:Name="autoHideButton" DockPanel.Dock="Right" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+											ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.UnpinGlyphTemplateKey}}"
+											Command="{x:Static docking:DockingCommands.ToggleWindowAutoHideState}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											ToolTip="{productsDocking:SRExtension UIToolWindowContainerAutoHideButtonToolTip}"
+											Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.CanAutoHideResolved, Converter={StaticResource BooleanToVisibilityConverter}}"
+											AutomationProperties.Name="Auto-Hide" />
+
+									<Button x:Name="maximizeButton" DockPanel.Dock="Right" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+											ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.MaximizeGlyphTemplateKey}}"
+											Command="{x:Static docking:WindowCommands.Maximize}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											ToolTip="{productsDocking:SRExtension UICommandMaximizeWindowText}"
+											Visibility="Collapsed" AutomationProperties.Name="Maximize" />
+
+									<Button x:Name="restoreButton" DockPanel.Dock="Right" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+											ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.RestoreGlyphTemplateKey}}"
+											Command="{x:Static docking:WindowCommands.Restore}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											ToolTip="{productsDocking:SRExtension UICommandRestoreWindowText}"
+											Visibility="Collapsed" AutomationProperties.Name="Restore" />
+
+									<shared:PopupButton x:Name="optionsButton" DockPanel.Dock="Right" DisplayMode="PopupOnly" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedPopupButtonOverrideStyleKey}}"
+											PopupIndicatorTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.DropDownArrowGlyphTemplateKey}}"
+											Command="{x:Static docking:DockingCommands.OpenOptionsMenu}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											CommandParameter="{x:Static docking:DockingContextMenuType.DockingWindowOptionsButton}"
+											ToolTip="{productsDocking:SRExtension UIToolWindowContainerOptionsButtonToolTip}"
+											Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.HasOptionsResolved, Converter={StaticResource BooleanToVisibilityConverter}}"
+											AutomationProperties.Name="Options" />
+
+									<DockPanel>
+										<shared:PixelSnapper DockPanel.Dock="Left" VerticalRoundMode="CeilingToOdd">
+											<dockingPrimitives:ReverseMeasureDockPanel>
+
+												<!-- Title -->
+												<shared:PixelSnapper DockPanel.Dock="Left" VerticalAlignment="Center">
+													<TextBlock x:Name="title" Margin="3,1,3,1" TextTrimming="CharacterEllipsis"
+															Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.Title}"
+															Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarForegroundInactiveBrushKey}}"
+															AutomationProperties.Name="Title" />
+												</shared:PixelSnapper>
+
+												<Image x:Name="contextImage" DockPanel.Dock="Left"
+														AutomationProperties.Name="Context Image" Stretch="None"
+														Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.ContextImageSource}"
+														VerticalAlignment="Center" SnapsToDevicePixels="True" Margin="2,1,2,1" />
+
+											</dockingPrimitives:ReverseMeasureDockPanel>
+										</shared:PixelSnapper>
+										
+										<Rectangle x:Name="titleBarGripper" Margin="4,0" Height="5" Opacity="0.5" VerticalAlignment="Center"
+											Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HasTitleBarGripper, Converter={StaticResource BooleanToVisibilityConverter}}">
+											<Rectangle.Fill>
+												<DrawingBrush Viewport="0,0,4,5" ViewportUnits="Absolute" TileMode="Tile" Viewbox="0,0,4,5" ViewboxUnits="Absolute">
+													<DrawingBrush.Drawing>
+														<GeometryDrawing Brush="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarForegroundInactiveBrushKey}}">
+															<GeometryDrawing.Geometry>
+																<GeometryGroup>
+																	<RectangleGeometry Rect="0,0,1,1" />
+																	<RectangleGeometry Rect="2,2,1,1" />
+																	<RectangleGeometry Rect="0,4,1,1" />
+																</GeometryGroup>
+															</GeometryDrawing.Geometry>
+														</GeometryDrawing>
+													</DrawingBrush.Drawing>
+												</DrawingBrush>
+											</Rectangle.Fill>
+										</Rectangle>
+									</DockPanel>
+								</DockPanel>
+							</Border>
+						</shared:PixelSnapper>
+
+						<!-- Content -->
+						<Border Grid.Row="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessConverter}, ConverterParameter='Left,Right,Bottom'}" 
+								SnapsToDevicePixels="True">
+							<Border
+									Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.Background}"
+									BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.BorderBrush}"
+									BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.BorderThickness}"
+									SnapsToDevicePixels="True">
+								<shared:TransitionPresenter x:Name="PART_SelectedContentHost" DefaultDuration="0:0:0.15"
+										TransitionSelector="{TemplateBinding docking:DockSite.ToolWindowTransitionSelector}"
+										Content="{TemplateBinding SelectedContent}"
+										ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+										ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" />
+							</Border>
+						</Border>
+						
+						<!-- TabPanelSpacer -->
+						<Border x:Name="tabPanelSpacer" Grid.Row="3" VerticalAlignment="Top"
+								Background="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBackgroundSelectedBrushKey}}"
+								BorderThickness="1,0,1,1"
+								BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabItemBorderSelectedBrushKey}}"
+								Padding="{TemplateBinding HeaderMargin, Converter={StaticResource NoNegativeThicknessConverter}, ConverterParameter='Top'}"
+								/>
+
+						<!-- TabPanel -->
+						<Grid x:Name="tabPanelGrid" Grid.Row="3"
+							  Margin="{TemplateBinding HeaderMargin}"
+							  TextElement.Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabControlForegroundNormalBrushKey}}"
+							  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTabBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+
+							<ScrollViewer x:Name="scrollViewer" CanContentScroll="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
+									dockingPrimitives:DockingWindowTabPanel.IsStretched="True" dockingPrimitives:DockingWindowTabPanel.StretchDirection="DownOnly"
+									Style="{DynamicResource {x:Static dockingThemes:DockingResourceKeys.DockingTabScrollViewerStyleKey}}">
+								<ItemsPresenter />
+							</ScrollViewer>
+
+							<shared:PopupButton x:Name="toolsButton" Grid.Column="1" DisplayMode="PopupOnly" Margin="1,2,1,2" Padding="1" Focusable="False"
+									Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedPopupButtonOverrideStyleKey}}"
+									PopupIndicatorTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.DropDownArrowGlyphTemplateKey}}"
+									Command="{x:Static docking:DockingCommands.OpenToolsMenu}"
+									CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+									CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+									ToolTip="{productsDocking:SRExtension UIToolWindowContainerToolsButtonToolTip}"
+									AutomationProperties.Name="Tool Windows" Visibility="Collapsed" />
+						</Grid>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="docking:DockingWindowContainer.IsActive" Value="True">
+							<Setter TargetName="titleBarBorder" Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarBackgroundActiveBrushKey}}" />
+							<Setter TargetName="titleBarBorder" Property="TextElement.Foreground"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarGlyphBackgroundActiveBrushKey}}" />
+							<Setter TargetName="title" Property="Foreground"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarForegroundActiveBrushKey}}" />
+							<Setter TargetName="titleBarGripper" Property="Fill">
+								<Setter.Value>
+									<DrawingBrush Viewport="0,0,4,5" ViewportUnits="Absolute" TileMode="Tile" Viewbox="0,0,4,5" ViewboxUnits="Absolute">
+										<DrawingBrush.Drawing>
+											<GeometryDrawing Brush="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarForegroundActiveBrushKey}}">
+												<GeometryDrawing.Geometry>
+													<GeometryGroup>
+														<RectangleGeometry Rect="0,0,1,1" />
+														<RectangleGeometry Rect="2,2,1,1" />
+														<RectangleGeometry Rect="0,4,1,1" />
+													</GeometryGroup>
+												</GeometryDrawing.Geometry>
+											</GeometryDrawing>
+										</DrawingBrush.Drawing>
+									</DrawingBrush>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+						<Trigger Property="AllTabsVisible" Value="False">
+							<Setter TargetName="toolsButton" Property="PopupIndicatorTemplate" Value="{DynamicResource {x:Static themes:SharedResourceKeys.OverflowDropDownArrowGlyphTemplateKey}}" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehaviorResolved" Value="None">
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.IsStretched" Value="False" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehaviorResolved" Value="Menu">
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.IsStretched" Value="False" />
+							<Setter TargetName="toolsButton" Property="Visibility" Value="Visible" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehaviorResolved" Value="ShrinkWithMenu">
+							<Setter TargetName="toolsButton" Property="Visibility" Value="Visible" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehaviorResolved" Value="Scroll">
+							<Setter TargetName="scrollViewer" Property="HorizontalScrollBarVisibility" Value="Visible" />
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.IsStretched" Value="False" />
+						</Trigger>
+						<Trigger Property="TabOverflowBehaviorResolved" Value="ScrollWithMenu">
+							<Setter TargetName="scrollViewer" Property="HorizontalScrollBarVisibility" Value="Visible" />
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.IsStretched" Value="False" />
+							<Setter TargetName="toolsButton" Property="Visibility" Value="Visible" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="HasSingleWindow" Value="True" />
+								<Condition Property="SingleTabLayoutBehaviorResolved" Value="Hide" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="tabPanelSpacer" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="tabPanelGrid" Property="Visibility" Value="Collapsed" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="HasSingleWindow" Value="True" />
+								<Condition Property="SingleTabLayoutBehaviorResolved" Value="Stretch" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="scrollViewer" Property="HorizontalContentAlignment" Value="Stretch" />
+							<Setter TargetName="scrollViewer" Property="HorizontalScrollBarVisibility" Value="Hidden" />
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.IsStretched" Value="True" />
+							<Setter TargetName="scrollViewer" Property="dockingPrimitives:DockingWindowTabPanel.StretchDirection" Value="Both" />
+							<Setter TargetName="toolsButton" Property="Visibility" Value="Collapsed" />
+						</MultiTrigger>
+						<Trigger Property="HasWindows" Value="False">
+							<Setter TargetName="rootGrid" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="State" Value="AutoHide">
+							<Setter TargetName="tabPanelSpacer" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="autoHideButton" Property="ContentTemplate" Value="{DynamicResource {x:Static themes:SharedResourceKeys.PinGlyphTemplateKey}}" />
+						</Trigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding Path=State, RelativeSource={RelativeSource Self}}" Value="Floating" />
+								<Condition Binding="{Binding Path=SelectedItem.CanMaximizeResolved, RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.CanContainerMaximize), RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.IsMaximized), RelativeSource={RelativeSource Self}}" Value="false" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="maximizeButton" Property="Visibility" Value="Visible" />
+						</MultiDataTrigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding Path=State, RelativeSource={RelativeSource Self}}" Value="Floating" />
+								<Condition Binding="{Binding Path=SelectedItem.CanMaximizeResolved, RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.CanContainerMaximize), RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.IsMaximized), RelativeSource={RelativeSource Self}}" Value="true" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="restoreButton" Property="Visibility" Value="Visible" />
+						</MultiDataTrigger>
+						<Trigger SourceName="contextImage" Property="Source" Value="{x:Null}">
+							<Setter TargetName="contextImage" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger SourceName="tabPanelSpacer" Property="Padding" Value="0">
+							<Setter TargetName="tabPanelSpacer" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="docking:DockSite.ToolWindowsTabPlacement" Value="Top">
+							<Setter TargetName="titleBarBorder" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=BorderThickness}" />
+							<Setter TargetName="tabPanelSpacer" Property="Grid.Row" Value="1" />
+							<Setter TargetName="tabPanelSpacer" Property="BorderThickness" Value="1,1,1,0" />
+							<Setter TargetName="tabPanelSpacer" Property="Padding" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HeaderMargin, Converter={StaticResource ThicknessConverter}, ConverterParameter='Bottom'}" />
+							<Setter TargetName="tabPanelSpacer" Property="VerticalAlignment" Value="Bottom" />
+							<Setter TargetName="tabPanelGrid" Property="Grid.Row" Value="1" />
+							<Setter Property="HeaderMargin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowContainerTabControlHeaderTopMarginNormalThicknessKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- dockingPrimitives:RaftedDocumentWindowContainer -->
+	<Style x:Key="{x:Type dockingPrimitives:RaftedDocumentWindowContainer}" TargetType="{x:Type dockingPrimitives:RaftedDocumentWindowContainer}"
+			BasedOn="{StaticResource RaftableDockingWindowContainerStyleBase}">
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type dockingPrimitives:RaftedDocumentWindowContainer}">
+
+					<Grid x:Name="rootGrid">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+
+						<!-- TitleBar -->
+						<shared:PixelSnapper>
+							<Border x:Name="titleBarBorder"
+									Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.HasTitleBarResolved, Converter={StaticResource BooleanToVisibilityConverter}}"
+									Background="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarBackgroundInactiveBrushKey}}"
+									TextElement.Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarGlyphBackgroundInactiveBrushKey}}"
+									CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarBorderNormalCornerRadiusKey}}" SnapsToDevicePixels="True">
+								<DockPanel x:Name="PART_TitleBar" Background="Transparent" Margin="{TemplateBinding Padding}"
+										LastChildFill="True">
+
+									<!-- Buttons -->
+									<Button x:Name="closeButton" DockPanel.Dock="Right" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+											ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.CloseGlyphTemplateKey}}"
+											Command="{x:Static docking:DockingCommands.CloseWindow}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											ToolTip="{productsDocking:SRExtension UIToolWindowContainerCloseButtonToolTip}"
+											Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.CanCloseResolved, Converter={StaticResource BooleanToVisibilityConverter}}"
+											AutomationProperties.Name="Close" />
+
+									<Button x:Name="maximizeButton" DockPanel.Dock="Right" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+											ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.MaximizeGlyphTemplateKey}}"
+											Command="{x:Static docking:WindowCommands.Maximize}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											ToolTip="{productsDocking:SRExtension UICommandMaximizeWindowText}"
+											Visibility="Collapsed" AutomationProperties.Name="Maximize" />
+
+									<Button x:Name="restoreButton" DockPanel.Dock="Right" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}"
+											ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.RestoreGlyphTemplateKey}}"
+											Command="{x:Static docking:WindowCommands.Restore}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											ToolTip="{productsDocking:SRExtension UICommandRestoreWindowText}"
+											Visibility="Collapsed" AutomationProperties.Name="Restore" />
+
+									<shared:PopupButton x:Name="optionsButton" DockPanel.Dock="Right" DisplayMode="PopupOnly" Padding="2" Focusable="False"
+											Style="{DynamicResource {x:Static themes:SharedResourceKeys.EmbeddedPopupButtonOverrideStyleKey}}"
+											PopupIndicatorTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.DropDownArrowGlyphTemplateKey}}"
+											Command="{x:Static docking:DockingCommands.OpenOptionsMenu}"
+											CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+											CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+											ToolTip="{productsDocking:SRExtension UIToolWindowContainerOptionsButtonToolTip}"
+											Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.HasOptionsResolved, Converter={StaticResource BooleanToVisibilityConverter}}"
+											AutomationProperties.Name="Options" />
+
+									<Image x:Name="image" DockPanel.Dock="Left" AutomationProperties.Name="Image" Margin="2,0,0,2"
+											Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.ImageSource}"
+											Width="16" Height="16" Stretch="Uniform" VerticalAlignment="Center"
+											SnapsToDevicePixels="True" />
+
+									<dockingPrimitives:ReverseMeasureDockPanel>
+
+										<!-- Title -->
+										<shared:PixelSnapper DockPanel.Dock="Left" VerticalAlignment="Center">
+											<TextBlock x:Name="title" Margin="3,1,3,1" TextTrimming="CharacterEllipsis"
+													Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.Title}"
+													Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarForegroundInactiveBrushKey}}"
+													AutomationProperties.Name="Title" />
+										</shared:PixelSnapper>
+
+										<Image x:Name="contextImage" DockPanel.Dock="Left"
+												AutomationProperties.Name="Context Image" Stretch="None"
+												Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.ContextImageSource}"
+												VerticalAlignment="Center" SnapsToDevicePixels="True" Margin="2,1,2,1" />
+
+									</dockingPrimitives:ReverseMeasureDockPanel>
+								</DockPanel>
+							</Border>
+						</shared:PixelSnapper>
+
+						<!-- Content -->
+						<Border Grid.Row="1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+							<Border
+									Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.Background}"
+									BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.BorderBrush}"
+									BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.BorderThickness}"
+									SnapsToDevicePixels="True">
+								<shared:TransitionPresenter x:Name="PART_SelectedContentHost" DefaultDuration="0:0:0.15"
+										TransitionSelector="{TemplateBinding docking:DockSite.ToolWindowTransitionSelector}"
+										Content="{TemplateBinding SelectedContent}"
+										ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+										ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" />
+							</Border>
+						</Border>
+
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="docking:DockingWindowContainer.IsActive" Value="True">
+							<Setter TargetName="titleBarBorder" Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarBackgroundActiveBrushKey}}" />
+							<Setter TargetName="titleBarBorder" Property="TextElement.Foreground"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarGlyphBackgroundActiveBrushKey}}" />
+							<Setter TargetName="title" Property="Foreground"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockingWindowContainerTitleBarForegroundActiveBrushKey}}" />
+						</Trigger>
+						<Trigger Property="HasWindows" Value="False">
+							<Setter TargetName="rootGrid" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding Path=State, RelativeSource={RelativeSource Self}}" Value="Floating" />
+								<Condition Binding="{Binding Path=SelectedItem.CanMaximizeResolved, RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.CanContainerMaximize), RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.IsMaximized), RelativeSource={RelativeSource Self}}" Value="false" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="maximizeButton" Property="Visibility" Value="Visible" />
+						</MultiDataTrigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding Path=State, RelativeSource={RelativeSource Self}}" Value="Floating" />
+								<Condition Binding="{Binding Path=SelectedItem.CanMaximizeResolved, RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.CanContainerMaximize), RelativeSource={RelativeSource Self}}" Value="true" />
+								<Condition Binding="{Binding Path=(dockingPrimitives:RaftableDockingWindowContainer.IsMaximized), RelativeSource={RelativeSource Self}}" Value="true" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="restoreButton" Property="Visibility" Value="Visible" />
+						</MultiDataTrigger>
+						<Trigger SourceName="image" Property="Source" Value="{x:Null}">
+							<Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger SourceName="contextImage" Property="Source" Value="{x:Null}">
+							<Setter TargetName="contextImage" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

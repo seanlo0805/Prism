@@ -1,0 +1,214 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:controlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Primitives;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf"
+		>
+
+	<!-- WindowTitleBarButtonNormalTemplate -->
+	<ControlTemplate x:Key="WindowTitleBarButtonNormalTemplate" TargetType="{x:Type ButtonBase}">
+		<Border Background="Transparent" Padding="{TemplateBinding Padding}">
+			<Grid>
+				<controlsPrimitives:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+						BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundInactiveDisabledBrushKey}}"
+						BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActiveHoverBrushKey}}"
+						BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActivePressedBrushKey}}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderInactiveDisabledBrushKey}}"
+						BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderActiveHoverBrushKey}}"
+						BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderActivePressedBrushKey}}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						HighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonHighlightActiveHoverBrushKey}}"
+						HighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonHighlightActivePressedBrushKey}}"
+						InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderInactiveNormalBrushKey}}"
+						InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderInactiveDisabledBrushKey}}"
+						InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderActiveHoverBrushKey}}"
+						InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderActivePressedBrushKey}}"
+						InnerBorderThickness="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderNormalThicknessKey}}"
+						BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonElementChromeBorderStyleKey}}"
+						CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="true">
+					<ContentPresenter x:Name="presenter" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+				</controlsPrimitives:ElementChrome>
+				<Rectangle x:Name="PART_IndicatorArea" Fill="Transparent" Visibility="Collapsed" />
+			</Grid>
+		</Border>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="themes:ThemeProperties.IsActive" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="BackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderActiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="InnerBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderActiveDisabledBrushKey}}" />
+			</Trigger>
+			<Trigger Property="controls:PopupButton.DisplayMode" Value="PopupOnly">
+				<Setter TargetName="PART_IndicatorArea" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<Trigger Property="IsMouseOver" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActiveHoverBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Hover" />
+			</Trigger>
+			<Trigger Property="IsPressed" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActivePressedBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Pressed" />
+			</Trigger>
+			<Trigger Property="ToggleButton.IsChecked" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActivePressedBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Pressed" />
+			</Trigger>
+			<Trigger Property="controls:PopupButton.IsPopupOpen" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActivePressedBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Pressed" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnabled" Value="False" />
+					<Condition Property="themes:ThemeProperties.IsActive" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundInactiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Disabled" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnabled" Value="False" />
+					<Condition Property="themes:ThemeProperties.IsActive" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Disabled" />
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<!-- WindowTitleBarButtonAlternateTemplate -->
+	<ControlTemplate x:Key="WindowTitleBarButtonAlternateTemplate" TargetType="{x:Type ButtonBase}">
+		<Border Background="Transparent" Padding="{TemplateBinding Padding}">
+			<Grid>
+				<controlsPrimitives:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+						BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBackgroundInactiveDisabledBrushKey}}"
+						BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBackgroundActiveHoverBrushKey}}"
+						BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBackgroundActivePressedBrushKey}}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBorderInactiveDisabledBrushKey}}"
+						BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBorderActiveHoverBrushKey}}"
+						BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBorderActivePressedBrushKey}}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						HighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateHighlightActiveHoverBrushKey}}"
+						HighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateHighlightActivePressedBrushKey}}"
+						InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateInnerBorderInactiveNormalBrushKey}}"
+						InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateInnerBorderInactiveDisabledBrushKey}}"
+						InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateInnerBorderActiveHoverBrushKey}}"
+						InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateInnerBorderActivePressedBrushKey}}"
+						InnerBorderThickness="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonInnerBorderNormalThicknessKey}}"
+						BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonElementChromeBorderStyleKey}}"
+						CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="true">
+					<ContentPresenter x:Name="presenter" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+				</controlsPrimitives:ElementChrome>
+				<Rectangle x:Name="PART_IndicatorArea" Fill="Transparent" Visibility="Collapsed" />
+			</Grid>
+		</Border>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="themes:ThemeProperties.IsActive" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateForegroundActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBackgroundActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="BackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBackgroundActiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBorderActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBorderActiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="InnerBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateInnerBorderActiveNormalBrushKey}}" />
+				<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateInnerBorderActiveDisabledBrushKey}}" />
+			</Trigger>
+			<Trigger Property="controls:PopupButton.DisplayMode" Value="PopupOnly">
+				<Setter TargetName="PART_IndicatorArea" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<Trigger Property="IsMouseOver" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateForegroundActiveHoverBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Hover" />
+			</Trigger>
+			<Trigger Property="IsPressed" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateForegroundActivePressedBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Pressed" />
+			</Trigger>
+			<Trigger Property="ToggleButton.IsChecked" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateForegroundActivePressedBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Pressed" />
+			</Trigger>
+			<Trigger Property="controls:PopupButton.IsPopupOpen" Value="true">
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActivePressedBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Pressed" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnabled" Value="False" />
+					<Condition Property="themes:ThemeProperties.IsActive" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateForegroundInactiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Disabled" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsEnabled" Value="False" />
+					<Condition Property="themes:ThemeProperties.IsActive" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="presenter" Property="TextElement.Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateForegroundActiveDisabledBrushKey}}" />
+				<Setter TargetName="chrome" Property="State" Value="Disabled" />
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<!-- themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}" TargetType="{x:Type ButtonBase}">
+		<Setter Property="OverridesDefaultStyle" Value="True" />
+
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundInactiveNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderInactiveNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundInactiveNormalBrushKey}}" />
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonPaddingNormalThicknessKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderNormalCornerRadiusKey}}" />
+
+		<Setter Property="HorizontalAlignment" Value="Center" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="Focusable" Value="False" />
+
+		<Setter Property="Template" Value="{StaticResource WindowTitleBarButtonNormalTemplate}" />
+		
+		<Style.Triggers>
+			<Trigger Property="themes:ThemeProperties.UseAlternateStyle" Value="True">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBackgroundInactiveNormalBrushKey}}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateBorderInactiveNormalBrushKey}}" />
+				<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateForegroundInactiveNormalBrushKey}}" />
+				<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonAlternateMarginNormalThicknessKey}}" />
+
+				<Setter Property="Template" Value="{StaticResource WindowTitleBarButtonAlternateTemplate}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+	
+	<!-- themes:SharedResourceKeys.WindowTitleBarButtonBaseAlternateStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseAlternateStyleKey}" TargetType="{x:Type ButtonBase}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}">
+		<Setter Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+	</Style>
+
+	<!-- themes:SharedResourceKeys.ToolWindowTitleBarButtonBaseStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.ToolWindowTitleBarButtonBaseStyleKey}" TargetType="{x:Type ButtonBase}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}">
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowTitleBarButtonBorderNormalCornerRadiusKey}}" />
+	</Style>
+
+	<!-- themes:SharedResourceKeys.ToolWindowTitleBarButtonBaseAlternateStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.ToolWindowTitleBarButtonBaseAlternateStyleKey}" TargetType="{x:Type ButtonBase}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseAlternateStyleKey}}">
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolWindowTitleBarButtonBorderNormalCornerRadiusKey}}" />
+	</Style>
+
+</ResourceDictionary>

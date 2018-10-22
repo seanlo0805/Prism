@@ -1,0 +1,60 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+
+	<!-- ribbonControls:ButtonGroup -->
+	<Style x:Key="{x:Type ribbonControls:ButtonGroup}" TargetType="{x:Type ribbonControls:ButtonGroup}">
+		<Setter Property="AllowSeparator" Value="{Binding RelativeSource={RelativeSource Self}, Path=HasBorder}" />
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonGroupBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonGroupBorderNormalBrushKey}}" />
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="MinHeight" Value="20" />
+		<Setter Property="MinWidth" Value="20" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="2" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ribbonControls:ButtonGroup}">
+
+					<Border x:Name="outerBorder" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True">
+						<Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+							<ItemsPresenter VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+							<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True" />
+						</Grid>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="HasBorder" Value="False">
+							<Setter Property="Background" Value="Transparent" />
+							<Setter Property="BorderBrush" Value="Transparent" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="Context" Value="MiniToolBarItem">
+				<Setter Property="HasBorder" Value="False" />
+			</Trigger>
+			<Trigger Property="Context" Value="StatusBarItem">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.StatusBarButtonGroupBackgroundNormalBrushKey}}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.StatusBarButtonGroupBorderNormalBrushKey}}" />
+				<Setter Property="Margin" Value="0,1,0,1" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

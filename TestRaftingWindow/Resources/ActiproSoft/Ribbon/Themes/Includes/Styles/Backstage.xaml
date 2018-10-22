@@ -1,0 +1,71 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"	
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+	
+	<!-- ribbonControls:Backstage -->
+	<Style x:Key="{x:Type ribbonControls:Backstage}" TargetType="TabControl">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.BackstageTabControlBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.BackstageTabControlBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.BackstageTabControlBorderNormalThicknessKey}}" />
+		<Setter Property="Focusable" Value="True" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.BackstageTabControlForegroundNormalBrushKey}}" />
+		<Setter Property="TabStripPlacement" Value="Left" />
+		<Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<StackPanel IsItemsHost="true" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<!-- 11/12/2010 - Enhanced support for scrolling backstage content to better match MS requirements. -->
+				<ControlTemplate TargetType="TabControl">
+
+					<!-- Apply TemplateBinding Background as a secondary level so that watermarks can be specified in it -->
+					<Border Background="#FFFFFF" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
+							KeyboardNavigation.TabNavigation="Cycle" SnapsToDevicePixels="true">
+						<Border Background="{TemplateBinding Background}">
+							<ScrollViewer Style="{DynamicResource {x:Static themes:SharedResourceKeys.ScrollViewerStyleKey}}">
+								<ribbonControlsPrimitives:PopupContentDecorator>
+									<DockPanel>
+
+										<Border DockPanel.Dock="Left" Width="{x:Static ribbonUI:RibbonMeasurements.BackstageTabWidth}"
+												Background="{DynamicResource {x:Static themes:AssetResourceKeys.BackstageTabControlHeaderBackgroundNormalBrushKey}}">
+											<Grid>
+												<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+													<Rectangle Width="4" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.BackstageTabControlHeaderHighlightNormalBrushKey}}" />
+													<Rectangle Width="1" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.BackstageTabControlHeaderBorderNormalBrushKey}}" />
+												</StackPanel>
+
+												<ItemsPresenter Margin="0,5,0,5" Panel.ZIndex="1" />
+											</Grid>
+										</Border>
+
+										<Border KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
+											<ContentPresenter x:Name="PART_SelectedContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+													Margin="{TemplateBinding Padding}" ContentSource="SelectedContent" />
+										</Border>
+
+									</DockPanel>
+								</ribbonControlsPrimitives:PopupContentDecorator>
+							</ScrollViewer>
+						</Border>
+					</Border>
+
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

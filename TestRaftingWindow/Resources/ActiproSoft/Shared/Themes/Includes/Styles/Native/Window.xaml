@@ -1,0 +1,639 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:system="clr-namespace:System;assembly=mscorlib"
+		xmlns:controlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Primitives;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:data="clr-namespace:ActiproSoftware.Windows.Data;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:media="clr-namespace:ActiproSoftware.Windows.Media;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:productsShared="clr-namespace:ActiproSoftware.Products.Shared;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf">
+
+	<data:CornerRadiusConverter x:Key="CornerRadiusConverter" />
+	<media:IconFrameConverter x:Key="IconFrameConverter" DesiredWidth="16" DesiredHeight="16" />
+	
+	<!-- WindowTemplateKey -->
+	<ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Window}">
+		<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+				BorderThickness="{TemplateBinding BorderThickness}">
+			<Grid>
+				<AdornerDecorator>
+					<ContentPresenter />
+				</AdornerDecorator>
+
+				<ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" IsTabStop="false" />
+			</Grid>
+		</Border>
+		<ControlTemplate.Triggers>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="Window.ResizeMode" Value="CanResizeWithGrip" />
+					<Condition Property="Window.WindowState" Value="Normal" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+
+	<!-- themes:SharedResourceKeys.WindowStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.WindowStyleKey}" TargetType="{x:Type Window}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowForegroundNormalBrushKey}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Window}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<AdornerDecorator>
+							<ContentPresenter />
+						</AdornerDecorator>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="Window.ResizeMode" Value="CanResizeWithGrip">
+				<Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	
+	<!-- NonGlassWindowTemplate -->
+	<ControlTemplate x:Key="NonGlassWindowTemplate" TargetType="Window">
+		<AdornerDecorator themes:WindowChrome.ElementKind="NonClientArea">
+			<Grid x:Name="outerGrid" themes:WindowChrome.ElementKind="NonClientArea">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition x:Name="titleBarRowDefinition" Height="Auto" />
+					<RowDefinition x:Name="titleBarInnerBorderRowDefinition" Height="Auto" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				
+				<Border x:Name="innerBorderTop" Grid.Row="0" Grid.ColumnSpan="3" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Top}"
+						Background="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderTopActiveBrushKey}}"
+						CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.CornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Top}" />
+				<Border x:Name="titleBarBackground" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,0,0,-1"
+						Background="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarBackgroundActiveBrushKey}}" />
+				<Rectangle x:Name="titleBarInnerBorder" Grid.Row="2" Grid.ColumnSpan="3" Height="3" 
+							Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarInnerBorderActiveBrushKey}}" />
+				<Rectangle x:Name="innerBorderLeft" Grid.Row="3" Grid.Column="0" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" 
+							Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderLeftActiveBrushKey}}" />
+				<Rectangle x:Name="innerBorderRight" Grid.Row="3" Grid.Column="2" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" 
+							Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderRightActiveBrushKey}}" />
+				<Border x:Name="innerBorderBottom" Grid.Row="4" Grid.ColumnSpan="3" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Bottom}"
+						Background="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderBottomActiveBrushKey}}"
+						CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.CornerRadius), Converter={StaticResource CornerRadiusConverter}, ConverterParameter=Bottom}" />
+				
+				<Border x:Name="outerBorder" Grid.RowSpan="5" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"
+						CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" />
+								
+				<Grid x:Name="titleBarGrid" Grid.Row="1" Grid.Column="1" themes:WindowChrome.ElementKind="NonClientArea">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					
+					<Rectangle x:Name="titleBarBackgroundGripper" Grid.ColumnSpan="3" Fill="Transparent" themes:WindowChrome.ElementKind="TitleBar" />
+	
+					<TextBlock x:Name="titleBarTextShadow" Grid.Column="1" Margin="0,2"
+								Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+								FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+								FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+								FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+								FontWeight="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarFontWeightKey}}"
+								Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarForegroundShadowActiveBrushKey}}"
+								TextTrimming="CharacterEllipsis" RenderOptions.ClearTypeHint="Enabled"
+								VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar">
+						<TextBlock.RenderTransform>
+							<TranslateTransform X="1" Y="1" />
+						</TextBlock.RenderTransform>
+					</TextBlock>
+						
+					<TextBlock x:Name="titleBarText" Grid.Column="1" Margin="0,2"
+								Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+								FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+								FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+								FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+								FontWeight="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarFontWeightKey}}"
+								Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarForegroundActiveBrushKey}}"
+								TextTrimming="CharacterEllipsis" RenderOptions.ClearTypeHint="Enabled"
+								VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar" />
+							
+					<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top" themes:WindowChrome.ElementKind="NonClientArea">
+						<ContentPresenter x:Name="titleBarContentPresenter" themes:WindowChrome.ElementKind="TitleBarButton"
+											ContentTemplate="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(themes:WindowChrome.Chrome).TitleBarContentTemplate}" />
+						
+						<Button x:Name="minimizeButton" AutomationProperties.Name="Minimize" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonMinimizeGlyphTemplateKey}}"
+							Command="{x:Static themes:WindowChrome.MinimizeCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandMinimizeWindowText}" ToolTipService.InitialShowDelay="500" />
+						<Button x:Name="restoreButton" AutomationProperties.Name="Restore" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonRestoreGlyphTemplateKey}}" Visibility="Collapsed"
+							Command="{x:Static themes:WindowChrome.RestoreCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandRestoreWindowText}" ToolTipService.InitialShowDelay="500" />
+						<Button x:Name="maximizeButton" AutomationProperties.Name="Maximize" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonMaximizeGlyphTemplateKey}}"
+							Command="{x:Static themes:WindowChrome.MaximizeCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandMaximizeWindowText}" ToolTipService.InitialShowDelay="500" />
+						<Button x:Name="closeButton" AutomationProperties.Name="Close" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseAlternateStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonCloseGlyphTemplateKey}}"
+							Command="{x:Static themes:WindowChrome.CloseCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandCloseWindowText}" ToolTipService.InitialShowDelay="500" />
+					</StackPanel>
+							
+					<Border x:Name="iconBorder" MinWidth="16" MinHeight="16" Background="Transparent"
+							Padding="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(themes:WindowChrome.Chrome).IconMargin}"
+							themes:WindowChrome.ElementKind="SystemMenu">
+						<Image x:Name="icon" Stretch="None" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(themes:WindowChrome.Chrome).IconSource}" VerticalAlignment="Center" />
+					</Border>
+				</Grid>
+				
+				<Border Grid.Row="3" Grid.Column="1" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" themes:WindowChrome.ElementKind="{TemplateBinding themes:WindowChrome.ElementKind}">
+					<ContentPresenter
+						Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Content}"
+						ContentTemplate="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ContentTemplate}"
+						ContentTemplateSelector="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ContentTemplateSelector}"
+						TextElement.Foreground="{TemplateBinding Foreground}"
+						RenderOptions.ClearTypeHint="Enabled"
+						/>
+				</Border>
+							
+				<ResizeGrip x:Name="resizeGrip" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" IsTabStop="false"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.StatusBarEmbeddedResizeGripStyleKey}}"
+							themes:WindowChrome.ElementKind="ResizeGrip" /> 
+			</Grid>
+		</AdornerDecorator>
+
+		<ControlTemplate.Triggers>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).IconSource}" Value="{x:Null}">
+				<Setter TargetName="icon" Property="Source" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Icon, Converter={StaticResource IconFrameConverter}}" />
+				<Setter TargetName="icon" Property="Width" Value="16" />
+				<Setter TargetName="icon" Property="Height" Value="16" />
+				<Setter TargetName="icon" Property="Stretch" Value="Uniform" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).TitleBarContentTemplate}" Value="{x:Null}">
+				<Setter TargetName="titleBarContentPresenter" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+					<Condition Property="WindowState" Value="Normal" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="resizeGrip" Property="Visibility" Value="Visible" />
+			</MultiTrigger>
+
+			<Trigger Property="IsActive" Value="False">
+				<Setter TargetName="outerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBorderInactiveBrushKey}}" />
+				<Setter TargetName="innerBorderTop" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderTopInactiveBrushKey}}" />
+				<Setter TargetName="titleBarInnerBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarInnerBorderInactiveBrushKey}}" />
+				<Setter TargetName="innerBorderLeft" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderLeftInactiveBrushKey}}" />
+				<Setter TargetName="innerBorderRight" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderRightInactiveBrushKey}}" />
+				<Setter TargetName="innerBorderBottom" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowInnerBorderBottomInactiveBrushKey}}" />
+				<Setter TargetName="titleBarBackground" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarBackgroundInactiveBrushKey}}" />
+				<Setter TargetName="titleBarText" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarForegroundInactiveBrushKey}}" />
+				<Setter TargetName="titleBarTextShadow" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="BorderThickness" Value="0">
+				<Setter TargetName="outerBorder" Property="BorderThickness" Value="0" />
+			</Trigger>
+			<Trigger Property="WindowState" Value="Maximized">
+				<Setter TargetName="maximizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="restoreButton" Property="Visibility" Value="Visible" />
+				<Setter TargetName="outerBorder" Property="BorderThickness" Value="0" />
+				<Setter TargetName="innerBorderTop" Property="Height" Value="0" />
+				<Setter TargetName="innerBorderLeft" Property="Width" Value="0" />
+				<Setter TargetName="innerBorderRight" Property="Width" Value="0" />
+				<Setter TargetName="innerBorderBottom" Property="Height" Value="0" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="WindowState" Value="Maximized" />
+					<Condition Property="themes:WindowChrome.IsTaskbarAutoHidden" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="outerGrid" Property="Margin" Value="{x:Static themes:WindowChrome.SystemResizeBorderThickness}" />
+			</MultiTrigger>
+
+			<Trigger Property="ResizeMode" Value="CanMinimize">
+				<Setter TargetName="maximizeButton" Property="IsEnabled" Value="False" />
+				<Setter TargetName="restoreButton" Property="IsEnabled" Value="False" />
+			</Trigger>
+			<Trigger Property="ResizeMode" Value="NoResize">
+				<Setter TargetName="minimizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="maximizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="restoreButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="WindowStyle" Value="None">
+				<Setter TargetName="titleBarGrid" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarRowDefinition" Property="Height" Value="0" />
+				<Setter TargetName="titleBarInnerBorderRowDefinition" Property="Height" Value="0" />
+			</Trigger>
+			<Trigger Property="WindowStyle" Value="ToolWindow">
+				<Setter TargetName="iconBorder" Property="MinWidth" Value="0" />
+				<Setter TargetName="iconBorder" Property="Padding" Value="2" />
+				<Setter TargetName="iconBorder" Property="themes:WindowChrome.ElementKind" Value="TitleBar" />
+				<Setter TargetName="icon" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasMinimizeButton}" Value="False">
+				<Setter TargetName="minimizeButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasRestoreButton}" Value="False">
+				<Setter TargetName="restoreButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasMaximizeButton}" Value="False">
+				<Setter TargetName="maximizeButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasCloseButton}" Value="False">
+				<Setter TargetName="closeButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+		
+	<!-- ClassicWindowTemplate -->
+	<ControlTemplate x:Key="ClassicWindowTemplate" TargetType="Window">
+		<AdornerDecorator themes:WindowChrome.ElementKind="NonClientArea">
+			<Grid x:Name="outerGrid" themes:WindowChrome.ElementKind="NonClientArea">
+				<controlsPrimitives:ElementChrome x:Name="outerBorder" Grid.RowSpan="2" Grid.ColumnSpan="3" BorderStyle="AlternateRaised" BorderThickness="2" 
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBorderInactiveBrushKey}}" />
+					
+				<Grid x:Name="innerGrid" Margin="{TemplateBinding BorderThickness}" themes:WindowChrome.ElementKind="NonClientArea">
+					<Grid.RowDefinitions>
+						<RowDefinition x:Name="titleBarRowDefinition" Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+				
+					<Border x:Name="titleBarBackground" Grid.ColumnSpan="3" themes:WindowChrome.ElementKind="TitleBar"
+							Background="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarBackgroundActiveBrushKey}}" />
+					
+					<TextBlock x:Name="titleBarText" Grid.Column="1" Margin="0,2"
+								Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+								FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+								FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+								FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+								FontWeight="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarFontWeightKey}}"
+								Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarForegroundActiveBrushKey}}"
+								TextTrimming="CharacterEllipsis" RenderOptions.ClearTypeHint="Enabled"
+								VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar" />
+						
+					<StackPanel x:Name="titleBarButtonPanel" Grid.Column="2" Margin="0,0,2,0" Orientation="Horizontal" VerticalAlignment="Top" themes:WindowChrome.ElementKind="NonClientArea">
+						<ContentPresenter x:Name="titleBarContentPresenter" themes:WindowChrome.ElementKind="TitleBarButton"
+											ContentTemplate="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(themes:WindowChrome.Chrome).TitleBarContentTemplate}" />
+						
+						<Button x:Name="minimizeButton" AutomationProperties.Name="Minimize" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonMinimizeGlyphTemplateKey}}"
+							Command="{x:Static themes:WindowChrome.MinimizeCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandMinimizeWindowText}" ToolTipService.InitialShowDelay="500" />
+						<Button x:Name="restoreButton" AutomationProperties.Name="Restore" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonRestoreGlyphTemplateKey}}" Visibility="Collapsed"
+							Command="{x:Static themes:WindowChrome.RestoreCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandRestoreWindowText}" ToolTipService.InitialShowDelay="500" />
+						<Button x:Name="maximizeButton" AutomationProperties.Name="Maximize" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonMaximizeGlyphTemplateKey}}"
+							Command="{x:Static themes:WindowChrome.MaximizeCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandMaximizeWindowText}" ToolTipService.InitialShowDelay="500" />
+						<Button x:Name="closeButton" AutomationProperties.Name="Close" themes:WindowChrome.ElementKind="TitleBarButton"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonBaseAlternateStyleKey}}"
+							ContentTemplate="{DynamicResource {x:Static themes:SharedResourceKeys.WindowTitleBarButtonCloseGlyphTemplateKey}}"
+							Command="{x:Static themes:WindowChrome.CloseCommand}" themes:ThemeProperties.IsActive="{TemplateBinding IsActive}"
+							ToolTip="{productsShared:SRExtension UICommandCloseWindowText}" ToolTipService.InitialShowDelay="500" />
+					</StackPanel>
+							
+					<Border x:Name="iconBorder" MinWidth="16" MinHeight="16" Background="Transparent"
+							Padding="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(themes:WindowChrome.Chrome).IconMargin}"
+							themes:WindowChrome.ElementKind="SystemMenu">
+						<Image x:Name="icon" Stretch="None" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(themes:WindowChrome.Chrome).IconSource}" VerticalAlignment="Center" />
+					</Border>
+				
+					<Border Grid.Row="1" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" themes:WindowChrome.ElementKind="{TemplateBinding themes:WindowChrome.ElementKind}">
+						<ContentPresenter
+							Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Content}"
+							ContentTemplate="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ContentTemplate}"
+							ContentTemplateSelector="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ContentTemplateSelector}"
+							TextElement.Foreground="{TemplateBinding Foreground}"
+							RenderOptions.ClearTypeHint="Enabled"
+							/>
+					</Border>
+							
+					<ResizeGrip x:Name="resizeGrip" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" IsTabStop="false"
+								Style="{DynamicResource {x:Static themes:SharedResourceKeys.StatusBarEmbeddedResizeGripStyleKey}}"
+								themes:WindowChrome.ElementKind="ResizeGrip" /> 
+				</Grid>
+			</Grid>
+		</AdornerDecorator>
+			
+		<ControlTemplate.Triggers>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).IconSource}" Value="{x:Null}">
+				<Setter TargetName="icon" Property="Source" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Icon, Converter={StaticResource IconFrameConverter}}" />
+				<Setter TargetName="icon" Property="Width" Value="16" />
+				<Setter TargetName="icon" Property="Height" Value="16" />
+				<Setter TargetName="icon" Property="Stretch" Value="Uniform" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).TitleBarContentTemplate}" Value="{x:Null}">
+				<Setter TargetName="titleBarContentPresenter" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+					<Condition Property="WindowState" Value="Normal" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="resizeGrip" Property="Visibility" Value="Visible" />
+			</MultiTrigger>
+
+			<Trigger Property="IsActive" Value="False">
+				<Setter TargetName="titleBarBackground" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarBackgroundInactiveBrushKey}}" />
+				<Setter TargetName="titleBarText" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarForegroundInactiveBrushKey}}" />
+			</Trigger>
+			<Trigger Property="WindowState" Value="Maximized">
+				<Setter TargetName="maximizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="restoreButton" Property="Visibility" Value="Visible" />
+				<Setter TargetName="outerBorder" Property="BorderThickness" Value="0" />
+				<Setter TargetName="innerGrid" Property="Margin" Value="0" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="WindowState" Value="Maximized" />
+					<Condition Property="themes:WindowChrome.IsTaskbarAutoHidden" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="outerGrid" Property="Margin" Value="{x:Static themes:WindowChrome.SystemResizeBorderThickness}" />
+			</MultiTrigger>
+						
+			<Trigger Property="ResizeMode" Value="CanMinimize">
+				<Setter TargetName="maximizeButton" Property="IsEnabled" Value="False" />
+				<Setter TargetName="restoreButton" Property="IsEnabled" Value="False" />
+			</Trigger>
+			<Trigger Property="ResizeMode" Value="NoResize">
+				<Setter TargetName="minimizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="maximizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="restoreButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="WindowStyle" Value="None">
+				<Setter TargetName="titleBarButtonPanel" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarRowDefinition" Property="Height" Value="0" />
+			</Trigger>
+			<Trigger Property="WindowStyle" Value="ToolWindow">
+				<Setter TargetName="iconBorder" Property="MinWidth" Value="0" />
+				<Setter TargetName="iconBorder" Property="Padding" Value="2" />
+				<Setter TargetName="iconBorder" Property="themes:WindowChrome.ElementKind" Value="TitleBar" />
+				<Setter TargetName="icon" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasMinimizeButton}" Value="False">
+				<Setter TargetName="minimizeButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasRestoreButton}" Value="False">
+				<Setter TargetName="restoreButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasMaximizeButton}" Value="False">
+				<Setter TargetName="maximizeButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).HasCloseButton}" Value="False">
+				<Setter TargetName="closeButton" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+		
+	<!-- GlassWindowTemplate -->
+	<ControlTemplate x:Key="GlassWindowTemplate" TargetType="Window">
+		<AdornerDecorator themes:WindowChrome.ElementKind="NonClientArea">
+			<Grid x:Name="outerGrid" Margin="{TemplateBinding BorderThickness}" themes:WindowChrome.ElementKind="NonClientArea">
+				<Grid.RowDefinitions>
+					<RowDefinition x:Name="titleBarRowDefinition" Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+								
+				<Border x:Name="titleBarBackground" Grid.ColumnSpan="3" Background="Transparent" themes:WindowChrome.ElementKind="TitleBar" />
+
+				<StackPanel x:Name="titleBarButtonPanel" Grid.Column="2" MinHeight="{DynamicResource {x:Static SystemParameters.WindowCaptionHeightKey}}"
+							Orientation="Horizontal" VerticalAlignment="Top" themes:WindowChrome.ElementKind="NonClientArea">
+					<ContentPresenter x:Name="titleBarContentPresenter" themes:WindowChrome.ElementKind="TitleBarButton"
+										ContentTemplate="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(themes:WindowChrome.Chrome).TitleBarContentTemplate}" />
+					
+					<Rectangle Margin="{x:Static themes:WindowChrome.SystemTitleBarCaptionButtonMargin}" Visibility="Hidden" />
+
+					<StackPanel.RenderTransform>
+						<TranslateTransform Y="-4" />
+					</StackPanel.RenderTransform>
+				</StackPanel>
+
+				<!-- Multiple iterations of blur shader effects are required to achive outer glow similar to what a single bitmap effect used to provide -->
+				<TextBlock x:Name="titleBarTextGlow4" Grid.Column="1"
+							Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+							FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+							FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+							FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+							FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
+							Foreground="#ffffff"
+							TextTrimming="CharacterEllipsis" VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar">
+					<TextBlock.Effect>
+						<BlurEffect Radius="20" />
+					</TextBlock.Effect>
+					<TextBlock.RenderTransform>
+						<TranslateTransform Y="-4" />
+					</TextBlock.RenderTransform>
+				</TextBlock>
+				<TextBlock x:Name="titleBarTextGlow3" Grid.Column="1"
+							Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+							FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+							FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+							FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+							FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
+							Foreground="#ffffff"
+							TextTrimming="CharacterEllipsis" VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar">
+					<TextBlock.Effect>
+						<BlurEffect Radius="14" />
+					</TextBlock.Effect>
+					<TextBlock.RenderTransform>
+						<TranslateTransform Y="-4" />
+					</TextBlock.RenderTransform>
+				</TextBlock>
+				<TextBlock x:Name="titleBarTextGlow2" Grid.Column="1"
+							Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+							FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+							FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+							FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+							FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
+							Foreground="#ffffff"
+							TextTrimming="CharacterEllipsis" VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar">
+					<TextBlock.Effect>
+						<BlurEffect Radius="10" />
+					</TextBlock.Effect>
+					<TextBlock.RenderTransform>
+						<TranslateTransform Y="-4" />
+					</TextBlock.RenderTransform>
+				</TextBlock>
+				<TextBlock x:Name="titleBarTextGlow1" Grid.Column="1"
+							Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+							FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+							FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+							FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+							FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
+							Foreground="#ffffff"
+							TextTrimming="CharacterEllipsis" VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar">
+					<TextBlock.Effect>
+						<BlurEffect Radius="7" />
+					</TextBlock.Effect>
+					<TextBlock.RenderTransform>
+						<TranslateTransform Y="-4" />
+					</TextBlock.RenderTransform>
+				</TextBlock>
+																	
+				<TextBlock x:Name="titleBarText" Grid.Column="1"
+							Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Title}" 
+							FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
+							FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+							FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}"
+							FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
+							Foreground="#000000"
+							TextTrimming="CharacterEllipsis" VerticalAlignment="Center" themes:WindowChrome.ElementKind="TitleBar">
+					<TextBlock.RenderTransform>
+						<TranslateTransform Y="-4" />
+					</TextBlock.RenderTransform>
+				</TextBlock>
+							
+				<Border x:Name="iconBorder" Padding="2,0,8,0" Background="Transparent" VerticalAlignment="Top" themes:WindowChrome.ElementKind="SystemMenu">
+					<Image x:Name="icon" Width="16" Height="16" Stretch="Uniform" 
+							Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Icon, Converter={StaticResource IconFrameConverter}}" />
+				</Border>
+			
+				<Border Grid.Row="1" Grid.ColumnSpan="3" Background="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBackgroundNormalBrushKey}}" 
+						Margin="{TemplateBinding Padding}" themes:WindowChrome.ElementKind="{TemplateBinding themes:WindowChrome.ElementKind}">
+					<ContentPresenter
+						Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Content}"
+						ContentTemplate="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ContentTemplate}"
+						ContentTemplateSelector="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ContentTemplateSelector}"
+						TextElement.Foreground="{TemplateBinding Foreground}"
+						RenderOptions.ClearTypeHint="Enabled"
+						/>
+				</Border>
+							
+				<ResizeGrip x:Name="resizeGrip" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" IsTabStop="false"
+							Style="{DynamicResource {x:Static themes:SharedResourceKeys.StatusBarEmbeddedResizeGripStyleKey}}"
+							themes:WindowChrome.ElementKind="ResizeGrip" /> 
+			</Grid>
+		</AdornerDecorator>
+
+		<ControlTemplate.Triggers>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.Chrome).TitleBarContentTemplate}" Value="{x:Null}">
+				<Setter TargetName="titleBarContentPresenter" Property="Visibility" Value="Collapsed" />
+			</DataTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+					<Condition Property="WindowState" Value="Normal" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="resizeGrip" Property="Visibility" Value="Visible" />
+			</MultiTrigger>
+			<Trigger Property="WindowState" Value="Maximized">
+				<Setter TargetName="iconBorder" Property="VerticalAlignment" Value="Stretch" />
+				<Setter TargetName="icon" Property="VerticalAlignment" Value="Center" />
+				<Setter TargetName="titleBarText" Property="RenderTransform" Value="{x:Null}" />
+				<Setter TargetName="titleBarTextGlow1" Property="RenderTransform" Value="{x:Null}" />
+				<Setter TargetName="titleBarTextGlow2" Property="RenderTransform" Value="{x:Null}" />
+				<Setter TargetName="titleBarTextGlow3" Property="RenderTransform" Value="{x:Null}" />
+				<Setter TargetName="titleBarTextGlow4" Property="RenderTransform" Value="{x:Null}" />
+				<Setter TargetName="titleBarContentPresenter" Property="RenderTransform" Value="{x:Null}" />
+			</Trigger>
+			<Trigger Property="WindowStyle" Value="None">
+				<Setter TargetName="titleBarButtonPanel" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarRowDefinition" Property="Height" Value="0" />
+			</Trigger>
+			<Trigger Property="WindowStyle" Value="ToolWindow">
+				<Setter TargetName="iconBorder" Property="Padding" Value="2" />
+				<Setter TargetName="iconBorder" Property="themes:WindowChrome.ElementKind" Value="TitleBar" />
+				<Setter TargetName="icon" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="WindowState" Value="Maximized" />
+					<Condition Property="themes:WindowChrome.IsTaskbarAutoHidden" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="outerGrid" Property="Margin" Value="0" />
+			</MultiTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(themes:WindowChrome.IsGlassActive)}" Value="True" />
+					<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=WindowState}" Value="Maximized" />
+					<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Major, Mode=OneTime}" Value="6" />
+					<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Minor, Mode=OneTime}" Value="0" />
+				</MultiDataTrigger.Conditions>
+				<!-- Windows Vista reverses the maximized glass background -->
+				<Setter TargetName="titleBarText" Property="Foreground" Value="#ffffff" />
+				<Setter TargetName="titleBarTextGlow1" Property="Foreground" Value="#000000" />
+				<Setter TargetName="titleBarTextGlow2" Property="Foreground" Value="#000000" />
+				<Setter TargetName="titleBarTextGlow3" Property="Foreground" Value="#000000" />
+				<Setter TargetName="titleBarTextGlow4" Property="Foreground" Value="#000000" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Major, Mode=OneTime}" Value="6" />
+					<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Minor, Mode=OneTime}" Value="2" />
+				</MultiDataTrigger.Conditions>
+				<!-- Disable title glow in Windows 8 -->
+				<Setter TargetName="titleBarTextGlow1" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarTextGlow2" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarTextGlow3" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarTextGlow4" Property="Visibility" Value="Collapsed" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Major, Mode=OneTime}" Value="10" />
+					<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Minor, Mode=OneTime}" Value="0" />
+				</MultiDataTrigger.Conditions>
+				<!-- Disable title glow in Windows 10 -->
+				<Setter TargetName="titleBarTextGlow1" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarTextGlow2" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarTextGlow3" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="titleBarTextGlow4" Property="Visibility" Value="Collapsed" />
+			</MultiDataTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+		
+	<!-- themes:SharedResourceKeys.WindowChromeStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.WindowChromeStyleKey}" TargetType="{x:Type Window}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBorderActiveBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowResizeBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowForegroundNormalBrushKey}}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:WindowChrome.ThemeName" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ThemeNameStringKey}}" />
+		<Setter Property="Template" Value="{StaticResource NonGlassWindowTemplate}" />
+		<Setter Property="themes:WindowChrome.ElementKind" Value="ClientArea" />
+			
+		<Style.Triggers>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.ThemeName)}" Value="Classic">
+				<Setter Property="Template" Value="{StaticResource ClassicWindowTemplate}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.ThemeName)}" Value="HighContrast">
+				<Setter Property="Template" Value="{StaticResource ClassicWindowTemplate}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(themes:WindowChrome.IsGlassActive)}" Value="True">
+				<Setter Property="BorderThickness" Value="{x:Static themes:WindowChrome.SystemResizeBorderThickness}" />
+				<Setter Property="Template" Value="{StaticResource GlassWindowTemplate}" />
+			</DataTrigger>
+		</Style.Triggers>
+	</Style>
+		
+</ResourceDictionary>

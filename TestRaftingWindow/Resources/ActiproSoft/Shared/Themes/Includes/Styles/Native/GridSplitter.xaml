@@ -1,0 +1,30 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf">
+
+	<!-- GridSplitterPreviewStyle -->
+	<Style x:Key="GridSplitterPreviewStyle">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Fill="#80000000" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- themes:SharedResourceKeys.GridSplitterStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.GridSplitterStyleKey}" TargetType="{x:Type GridSplitter}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.GridSplitterBackgroundNormalBrushKey}}" />
+		<Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type GridSplitter}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+							Background="{TemplateBinding Background}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

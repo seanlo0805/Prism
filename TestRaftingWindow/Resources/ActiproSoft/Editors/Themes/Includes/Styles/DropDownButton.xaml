@@ -1,0 +1,78 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:editorsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Editors.Primitives;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<!-- editorsPrimitives:DropDownButton -->
+	<Style x:Key="{x:Type editorsPrimitives:DropDownButton}" TargetType="{x:Type editorsPrimitives:DropDownButton}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderNormalThicknessKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonIsAnimationEnabledBooleanKey}}" />
+
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="ClickMode" Value="Press" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitives:DropDownButton}">
+					<Decorator Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+						<shared:ScrollChrome x:Name="chrome" Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundDisabledBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundHoverBrushKey}}"
+								BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundPressedBrushKey}}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderDisabledBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderHoverBrushKey}}"
+								BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderPressedBrushKey}}" BorderThickness="{TemplateBinding BorderThickness}"
+								GlyphBackground="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundNormalBrushKey}}"
+								GlyphBackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundDisabledBrushKey}}"
+								GlyphBackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundHoverBrushKey}}"
+								GlyphBackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundPressedBrushKey}}"
+								InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderNormalBrushKey}}"
+								InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderDisabledBrushKey}}"
+								InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderHoverBrushKey}}"
+								InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderPressedBrushKey}}" InnerBorderThickness="1"
+								IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownElementChromeBorderStyleKey}}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+								UseAlternateGeometry="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphUseAlternateGeometryBooleanKey}}" Glyph="DropDownArrow"
+								Margin="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownChromeMarginNormalThicknessKey}}" SnapsToDevicePixels="true" />
+					</Decorator>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsTransparencyModeEnabled" Value="true">
+							<Setter Property="Background" Value="Transparent" />
+							<Setter Property="BorderBrush" Value="Transparent" />
+							<Setter TargetName="chrome" Property="GlyphBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphAlternateBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphAlternateBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrush" Value="Transparent" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsTransparencyModeEnabled" Value="True" />
+								<Condition SourceName="chrome" Property="State" Value="Normal" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="chrome" Property="BorderStyle" Value="None" />
+						</MultiTrigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsChecked" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

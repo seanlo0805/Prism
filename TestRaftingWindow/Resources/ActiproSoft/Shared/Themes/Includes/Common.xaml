@@ -1,0 +1,41 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="Styles/AnimatedExpander.xaml" />
+		<ResourceDictionary Source="Styles/AnimatedProgressBar.xaml" />
+		<ResourceDictionary Source="Styles/Glyphs.xaml" />
+		<ResourceDictionary Source="Styles/HorizontalListBox.xaml" />
+		<ResourceDictionary Source="Styles/PopupButton.xaml" />
+		<ResourceDictionary Source="Styles/RadialSlider.xaml" />
+		<ResourceDictionary Source="Styles/RadioButtonList.xaml" />
+		<ResourceDictionary Source="Styles/ResizableContentControl.xaml" />
+		<ResourceDictionary Source="Styles/TransitionPreview.xaml" />
+		<ResourceDictionary Source="Styles/WindowTitleBarButton.xaml" />
+
+		<ResourceDictionary Source="Styles/ColorSelection/ColorComponentSlider.xaml" />
+		<ResourceDictionary Source="Styles/ColorSelection/GradientBrushSlider.xaml" />
+		<ResourceDictionary Source="Styles/ColorSelection/SpectrumColorPicker.xaml" />
+		<ResourceDictionary Source="Styles/ColorSelection/SpectrumSlice.xaml" />
+		<ResourceDictionary Source="Styles/ColorSelection/SpectrumSlider.xaml" />
+
+		<ResourceDictionary Source="Styles/Native/Button.xaml" />
+		<ResourceDictionary Source="Styles/Native/ComboBox.xaml" />
+		<ResourceDictionary Source="Styles/Native/Edit.xaml" />
+		<ResourceDictionary Source="Styles/Native/Expander.xaml" />
+		<ResourceDictionary Source="Styles/Native/GridSplitter.xaml" />
+		<ResourceDictionary Source="Styles/Native/GroupBox.xaml" />
+		<ResourceDictionary Source="Styles/Native/List.xaml" />
+		<ResourceDictionary Source="Styles/Native/Menu.xaml" />
+		<ResourceDictionary Source="Styles/Native/Misc.xaml" />
+		<ResourceDictionary Source="Styles/Native/ProgressBar.xaml" />
+		<ResourceDictionary Source="Styles/Native/ResizeGrip.xaml" />
+		<ResourceDictionary Source="Styles/Native/Scroll.xaml" />
+		<ResourceDictionary Source="Styles/Native/Slider.xaml" />
+		<ResourceDictionary Source="Styles/Native/StatusBar.xaml" />
+		<ResourceDictionary Source="Styles/Native/TabControl.xaml" />
+		<ResourceDictionary Source="Styles/Native/ToolBar.xaml" />
+		<ResourceDictionary Source="Styles/Native/Window.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

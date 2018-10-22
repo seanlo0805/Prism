@@ -1,0 +1,534 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+		xmlns:productsNavigation="clr-namespace:ActiproSoftware.Products.Navigation;assembly=ActiproSoftware.Navigation.Wpf"
+		xmlns:navigation="clr-namespace:ActiproSoftware.Windows.Controls.Navigation;assembly=ActiproSoftware.Navigation.Wpf"
+		xmlns:navigationPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Navigation.Primitives;assembly=ActiproSoftware.Navigation.Wpf"
+		>
+
+	<!-- Converters -->
+	<shared:BooleanNotConverter x:Key="BooleanNotConverter" />
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<shared:PercentageConverter x:Key="PercentageConverter" />
+	<shared:ThicknessConverter x:Key="ThicknessConverter" />
+
+	<!-- Geometries -->
+	<Geometry x:Key="ArrowGlyph">M 0,5 L 5,0 L 6,0 L 7,1 L 7,2 L 4,5 L 4,6 L 7,9 L 7,10 L 6,11 L 5,11 L 0,6 Z</Geometry>
+
+	<!-- DataTemplates -->
+	<DataTemplate x:Key="ExpandTemplate">
+		<Viewbox Width="12" Height="12">
+			<Viewbox.LayoutTransform>
+				<RotateTransform Angle="180" />
+			</Viewbox.LayoutTransform>
+			<Path Stretch="Fill" Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+					Data="M 1.5,5 L 5.5,1.5 L 5.5,3.5 L 3.5,5 L 5.5,6.5 L 5.5,8.5 Z M 5.5,5 L 9.5,1.5 L 9.5,3.5 L 7.5,5 L 9.5,6.5 L 9.5,8.5 Z" />
+		</Viewbox>
+	</DataTemplate>
+
+	<DataTemplate x:Key="CollapseTemplate">
+		<Viewbox Width="12" Height="12">
+			<Path Stretch="Fill" Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+					Data="M 1.5,5 L 5.5,1.5 L 5.5,3.5 L 3.5,5 L 5.5,6.5 L 5.5,8.5 Z M 5.5,5 L 9.5,1.5 L 9.5,3.5 L 7.5,5 L 9.5,6.5 L 9.5,8.5 Z" />
+		</Viewbox>
+	</DataTemplate>
+
+	<DataTemplate x:Key="MagnifyingGlassPlusTemplate">
+		<Viewbox>
+			<Canvas Width="299.545" Height="299.7" Clip="F1 M 0,0L 299.545,0L 299.545,299.7L 0,299.7L 0,0">
+				<Path Width="299.545" Height="299.7" Canvas.Left="0" Canvas.Top="0" Stretch="Fill"
+						Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Data="M 0,264.345L 70.3168,194.028C 57.1908,174.249 49.5449,150.517 49.5449,125C 49.5449,55.9644 105.509,0 174.545,0C 243.58,0 299.545,55.9644 299.545,125C 299.545,194.036 243.58,250 174.545,250C 149.108,250 125.446,242.402 105.704,229.352L 35.3554,299.7L 0,264.345 Z M 174.545,37.4999C 126.22,37.4999 87.0449,76.675 87.0449,125C 87.0449,173.325 126.22,212.5 174.545,212.5C 222.87,212.5 262.045,173.325 262.045,125C 262.045,76.675 222.87,37.4999 174.545,37.4999 Z " />
+				<Path Width="160" Height="160" Canvas.Left="94.545" Canvas.Top="44.9989" Stretch="Fill" StrokeThickness="35" StrokeLineJoin="Round"
+						Stroke="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Data="M 174.545,62.4989L 174.545,187.499M 112.045,124.999L 237.045,124.999" />
+			</Canvas>
+		</Viewbox>
+	</DataTemplate>
+
+	<DataTemplate x:Key="MagnifyingGlassMinusTemplate">
+		<Viewbox>
+			<Canvas Width="299.545" Height="299.7" Clip="F1 M 0,0L 299.545,0L 299.545,299.7L 0,299.7L 0,0">
+				<Path Width="299.545" Height="299.7" Canvas.Left="0" Canvas.Top="0" Stretch="Fill"
+						Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Data="M 0,264.345L 70.3168,194.028C 57.1908,174.249 49.5449,150.517 49.5449,125C 49.5449,55.9644 105.509,0 174.545,0C 243.58,0 299.545,55.9644 299.545,125C 299.545,194.036 243.58,250 174.545,250C 149.108,250 125.446,242.402 105.704,229.352L 35.3554,299.7L 0,264.345 Z M 174.545,37.4999C 126.22,37.4999 87.0449,76.675 87.0449,125C 87.0449,173.325 126.22,212.5 174.545,212.5C 222.87,212.5 262.045,173.325 262.045,125C 262.045,76.675 222.87,37.4999 174.545,37.4999 Z " />
+				<Path Width="160" Height="35" Canvas.Left="94.545" Canvas.Top="107.499" Stretch="Fill" StrokeThickness="35" StrokeLineJoin="Round"
+						Stroke="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}" Data="M 112.045,124.999L 237.045,124.999" />
+			</Canvas>
+		</Viewbox>
+	</DataTemplate>
+
+	<DataTemplate x:Key="ResetViewTemplate">
+		<Viewbox>
+			<Canvas Width="265" Height="238.5" Clip="F1 M 0,0L 265,0L 265,238.5L 0,238.5L 0,0">
+				<Path Width="265" Height="165" Canvas.Left="0" Canvas.Top="73.5004" Stretch="Fill" StrokeThickness="15" StrokeLineJoin="Round"
+						Stroke="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Data="M 17.5,81.0004L 82.5,81.0004L 82.5,91.0005L 22.5002,91.0005C 19.7388,91.0005 17.5002,93.239 17.5002,96.0004L 17.5002,216C 17.5002,218.762 19.7388,221 22.5002,221L 242.5,221C 245.262,221 247.5,218.762 247.5,216L 247.5,96.0004C 247.5,93.239 245.262,91.0005 242.5,91.0005L 182.5,91.0005L 182.5,81.0004L 247.5,81.0004C 253.023,81.0004 257.5,85.4775 257.5,91.0004L 257.5,221C 257.5,226.523 253.023,231 247.5,231L 17.5,231C 11.9772,231 7.5,226.523 7.5,221L 7.5,91.0004C 7.5,85.4775 11.9772,81.0004 17.5,81.0004 Z " />
+				<Path Width="125" Height="200" Canvas.Left="70.0005" Canvas.Top="0" Stretch="Fill"
+						Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Data="M 113.25,0L 151.731,6.10352e-005L 151.732,122.45L 195.001,122.45L 132.501,200L 70.0005,122.45L 113.27,122.45L 113.25,0 Z " />
+			</Canvas>
+		</Viewbox>
+	</DataTemplate>
+
+	<DataTemplate x:Key="ZoomToFitTemplate">
+		<Viewbox>
+			<Canvas Width="270" Height="270" Clip="F1 M 0,0L 270,0L 270,270L 0,270L 0,0">
+				<Rectangle Width="270" Height="270" Canvas.Left="0" Canvas.Top="-6.10352e-005" Stretch="Fill" StrokeThickness="30" StrokeLineJoin="Round"
+						Stroke="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}" />
+				<Path Width="200" Height="200" Canvas.Left="35.0001" Canvas.Top="34.9999" Stretch="Fill"
+						Fill="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource Self}}"
+						Data="M 135,34.9999L 167.5,84.9999L 145,84.9999L 145,125L 185,125L 185,102.5L 235,135L 185,167.5L 185,145L 145,145L 145,185L 167.5,185L 135,235L 102.5,185L 125,185L 125,145L 85.0001,145L 85.0001,167.5L 35.0001,135L 85.0001,102.5L 85.0001,125L 125,125L 125,84.9999L 102.5,84.9999L 135,34.9999 Z " />
+			</Canvas>
+		</Viewbox>
+	</DataTemplate>
+
+	<!-- Button Styles -->
+
+	<!-- navigation:ZoomContentControl.ButtonBaseStyleKey -->
+	<Style x:Key="{x:Static navigation:ZoomContentControl.ButtonBaseStyleKey}" TargetType="{x:Type ButtonBase}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.EmbeddedButtonBaseOverrideStyleKey}}">
+		<Setter Property="Padding" Value="1" />
+	</Style>
+
+	<!-- navigation:ZoomContentControl.PopupButtonStyleKey -->
+	<Style x:Key="{x:Static navigation:ZoomContentControl.PopupButtonStyleKey}" TargetType="{x:Type shared:PopupButton}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.EmbeddedPopupButtonOverrideStyleKey}}">
+		<Setter Property="Padding" Value="1" />
+	</Style>
+
+	<!-- ToggleMinimizationStyle -->
+	<Style x:Key="ToggleMinimizationStyle" TargetType="ToggleButton" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedButtonBaseStyleKey}}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonRoundBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="2" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ButtonBase">
+					<Grid>
+						<Ellipse Focusable="False" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBackgroundNormalBrushKey}}"
+								 Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBorderNormalBrushKey}}"
+								 StrokeThickness="1" />
+						<Ellipse x:Name="background" Margin="1" Focusable="False" Fill="{TemplateBinding Background}" />
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" />
+					</Grid>
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsMouseOver" Value="True" />
+								<Condition Property="IsEnabled" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonRoundBackgroundHoverBrushKey}}" />
+						</MultiTrigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonRoundBackgroundPressedBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- Separator Styles-->
+
+	<!-- Separator -->
+	<Style x:Key="{x:Static navigation:ZoomContentControl.HorizontalSeparatorStyleKey}" TargetType="Separator">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarSeparatorBackgroundNormalBrushKey}}" />
+
+		<Setter Property="Width" Value="Auto" />
+		<Setter Property="Height" Value="1" />
+		<Setter Property="Margin" Value="-1,2" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Separator">
+					<Rectangle Fill="{TemplateBinding Background}" SnapsToDevicePixels="True" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="{x:Static navigation:ZoomContentControl.VerticalSeparatorStyleKey}" TargetType="Separator">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarSeparatorBackgroundNormalBrushKey}}" />
+
+		<Setter Property="Width" Value="1" />
+		<Setter Property="Height" Value="Auto" />
+		<Setter Property="Margin" Value="2,0" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Separator">
+					<Rectangle Fill="{TemplateBinding Background}" SnapsToDevicePixels="True" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigationPrimitives:PanPad -->
+	<Style x:Key="{x:Type navigationPrimitives:PanPad}" TargetType="{x:Type navigationPrimitives:PanPad}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonRoundBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type navigationPrimitives:PanPad}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="8*" />
+							<RowDefinition Height="4*" />
+							<RowDefinition Height="8*" />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="8*" />
+							<ColumnDefinition Width="4*" />
+							<ColumnDefinition Width="8*" />
+						</Grid.ColumnDefinitions>
+
+						<Ellipse Grid.RowSpan="3" Grid.ColumnSpan="3" Focusable="False"
+								 Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBackgroundNormalBrushKey}}"
+								 Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBorderNormalBrushKey}}" StrokeThickness="1" />
+						<Ellipse x:Name="background" Grid.RowSpan="3" Grid.ColumnSpan="3" Margin="1" Focusable="False" Fill="{TemplateBinding Background}" />
+
+						<Path Grid.Row="0" Grid.Column="1" Stretch="Uniform" Fill="{TemplateBinding Foreground}"
+								Data="{StaticResource ArrowGlyph}">
+							<Path.LayoutTransform>
+								<RotateTransform Angle="90" />
+							</Path.LayoutTransform>
+						</Path>
+						<Path Grid.Row="1" Grid.Column="0" Stretch="Uniform" Fill="{TemplateBinding Foreground}"
+								Data="{StaticResource ArrowGlyph}" />
+						<Path Grid.Row="1" Grid.Column="2" Stretch="Uniform" Fill="{TemplateBinding Foreground}"
+								Data="{StaticResource ArrowGlyph}">
+							<Path.LayoutTransform>
+								<RotateTransform Angle="180" />
+							</Path.LayoutTransform>
+						</Path>
+						<Path Grid.Row="2" Grid.Column="1" Stretch="Uniform" Fill="{TemplateBinding Foreground}"
+								Data="{StaticResource ArrowGlyph}">
+							<Path.LayoutTransform>
+								<RotateTransform Angle="270" />
+							</Path.LayoutTransform>
+						</Path>
+
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonRoundBackgroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPanning" Value="True">
+							<Setter Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonRoundBackgroundPressedBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonRoundBackgroundDisabledBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigationPrimitives:ZoomContentControlScrollViewer -->
+	<Style x:Key="{x:Type navigationPrimitives:ZoomContentControlScrollViewer}" TargetType="{x:Type navigationPrimitives:ZoomContentControlScrollViewer}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ScrollViewerStyleKey}}" />
+
+	<!-- navigationPrimitives:ZoomContentControlSlider -->
+	<Style x:Key="{x:Type navigationPrimitives:ZoomContentControlSlider}" TargetType="{x:Type navigationPrimitives:ZoomContentControlSlider}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.SliderStyleKey}}" />
+
+	<!-- navigation:ZoomContentControl -->
+	<Style x:Key="{x:Type navigation:ZoomContentControl}" TargetType="{x:Type navigation:ZoomContentControl}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceLightBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type navigation:ZoomContentControl}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid>
+							<navigationPrimitives:ZoomContentControlScrollViewer x:Name="scrollViewer"
+									HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+									VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" CanContentScroll="True">
+								<navigation:ZoomDecorator x:Name="PART_ZoomDecorator"
+										CenterPoint="{Binding CenterPoint, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+										DefaultCenterPoint="{TemplateBinding DefaultCenterPoint}" DefaultZoomLevel="{TemplateBinding DefaultZoomLevel}"
+										HorizontalScrollLineStep="{TemplateBinding HorizontalScrollLineStep}"
+										HorizontalScrollPageStep="{TemplateBinding HorizontalScrollPageStep}"
+										IsVirtualSpaceEnabled="{TemplateBinding IsVirtualSpaceEnabled}" MaxZoomLevel="{TemplateBinding MaxZoomLevel}"
+										MinZoomLevel="{TemplateBinding MinZoomLevel}" PanAnimationDuration="{TemplateBinding PanAnimationDuration}"
+										VerticalScrollLineStep="{TemplateBinding VerticalScrollLineStep}"
+										VerticalScrollPageStep="{TemplateBinding VerticalScrollPageStep}"
+										ZoomAnimationDuration="{TemplateBinding ZoomAnimationDuration}"
+										ZoomLevel="{Binding ZoomLevel, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+										ZoomLevelStops="{TemplateBinding ZoomLevelStops}" ZoomStep="{TemplateBinding ZoomStep}">
+									<Grid>
+										<ContentPresenter />
+										<navigationPrimitives:ZoomContentControlItemsControl
+												ZoomLevel="{Binding ElementName=PART_ZoomDecorator, Path=ZoomLevelAnimated, Mode=OneWay}"
+												ItemsSource="{Binding Overlays, RelativeSource={RelativeSource TemplatedParent}}"
+												Visibility="{Binding AreOverlaysVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+											<navigationPrimitives:ZoomContentControlItemsControl.ItemsPanel>
+												<ItemsPanelTemplate>
+													<Canvas />
+												</ItemsPanelTemplate>
+											</navigationPrimitives:ZoomContentControlItemsControl.ItemsPanel>
+											<navigationPrimitives:ZoomContentControlItemsControl.ItemContainerStyle>
+												<Style TargetType="FrameworkElement">
+													<Setter Property="Canvas.Left"
+															Value="{Binding Path=Content.(Canvas.Left), RelativeSource={RelativeSource Self}}" />
+													<Setter Property="Canvas.Top"
+															Value="{Binding Path=Content.(Canvas.Top), RelativeSource={RelativeSource Self}}" />
+													<Setter Property="Canvas.Right"
+															Value="{Binding Path=Content.(Canvas.Right), RelativeSource={RelativeSource Self}}" />
+													<Setter Property="Canvas.Bottom"
+															Value="{Binding Path=Content.(Canvas.Bottom), RelativeSource={RelativeSource Self}}" />
+													<Setter Property="Cursor" Value="Arrow" />
+												</Style>
+											</navigationPrimitives:ZoomContentControlItemsControl.ItemContainerStyle>
+										</navigationPrimitives:ZoomContentControlItemsControl>
+									</Grid>
+								</navigation:ZoomDecorator>
+							</navigationPrimitives:ZoomContentControlScrollViewer>
+
+							<Canvas x:Name="PART_Canvas" ClipToBounds="True" Width="{Binding ViewportWidth, ElementName=scrollViewer}"
+									Height="{Binding ViewportHeight, ElementName=scrollViewer}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+							<!-- View Control Pane-->
+							<StackPanel x:Name="PART_ViewControlPane" Orientation="Horizontal" Grid.IsSharedSizeScope="True" Margin="7"
+									HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="{TemplateBinding ViewControlPaneOpacityAnimated}"
+									Visibility="{Binding IsViewControlPaneVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+								<!-- Pan/Zoom Controls -->
+								<shared:AnimatedExpanderDecorator ExpandDirection="Right"
+										IsExpanded="{Binding IsViewControlPaneMinimized, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanNotConverter}}">
+									<Grid>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto" SharedSizeGroup="____row0" />
+											<RowDefinition Height="*" />
+										</Grid.RowDefinitions>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="Auto" />
+										</Grid.ColumnDefinitions>
+
+										<!-- PanPad -->
+										<navigationPrimitives:PanPad x:Name="PART_PanPad" Height="50" Width="50" Margin="0,0,5,5" HorizontalAlignment="Center"
+												VerticalAlignment="Center" />
+
+										<!-- Horizontal panel -->
+										<Grid x:Name="horizontalPanel" Grid.Column="1" Margin="0,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="Auto" />
+												<ColumnDefinition Width="*" />
+												<ColumnDefinition Width="Auto" />
+											</Grid.ColumnDefinitions>
+
+											<Ellipse Grid.Column="0" Margin="0,0,-8,0" Width="16" VerticalAlignment="Stretch"
+													Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBackgroundNormalBrushKey}}"
+													Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayHorizontalBorderNormalBrushKey}}" StrokeThickness="1" />
+											<Ellipse Grid.Column="2" Margin="-8,0,0,0" Width="16" VerticalAlignment="Stretch"
+													Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBackgroundNormalBrushKey}}"
+													Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayHorizontalBorderNormalBrushKey}}" StrokeThickness="1" />
+											<Border Grid.Column="1" Background="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayHorizontalBackgroundNormalBrushKey}}" 
+													BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayHorizontalBorderNormalBrushKey}}" BorderThickness="0,1,0,1" />
+
+											<shared:PixelSnapper Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+													HorizontalRoundMode="CeilingToEven" VerticalRoundMode="CeilingToEven">
+												<StackPanel Margin="-2,3,-2,3" Orientation="Horizontal">
+													<ItemsControl Focusable="False"
+															ItemsSource="{Binding HorizontalItems, RelativeSource={RelativeSource TemplatedParent}}">
+														<ItemsControl.ItemsPanel>
+															<ItemsPanelTemplate>
+																<StackPanel Orientation="Horizontal" />
+															</ItemsPanelTemplate>
+														</ItemsControl.ItemsPanel>
+													</ItemsControl>
+												</StackPanel>
+											</shared:PixelSnapper>
+										</Grid>
+
+										<!-- Vertical panel -->
+										<Grid x:Name="verticalPanel" Grid.Row="1" Margin="0,0,5,5" HorizontalAlignment="Center" VerticalAlignment="Top">
+											<Grid.RowDefinitions>
+												<RowDefinition Height="Auto" />
+												<RowDefinition Height="*" />
+												<RowDefinition Height="Auto" />
+											</Grid.RowDefinitions>
+
+											<Ellipse Grid.Row="0" Margin="0,0,0,-8" Height="16" HorizontalAlignment="Stretch"
+													Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBackgroundNormalBrushKey}}"
+													Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayVerticalBorderNormalBrushKey}}" StrokeThickness="1" />
+											<Ellipse Grid.Row="2" Margin="0,-8,0,0" Height="16" HorizontalAlignment="Stretch"
+													Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayRoundBackgroundNormalBrushKey}}"
+													Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayVerticalBorderNormalBrushKey}}" StrokeThickness="1" />
+											<Border Grid.Row="1" Background="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayVerticalBackgroundNormalBrushKey}}" 
+													BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceToolBarTrayVerticalBorderNormalBrushKey}}" BorderThickness="1,0,1,0" />
+
+											<shared:PixelSnapper Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+													HorizontalRoundMode="CeilingToEven" VerticalRoundMode="CeilingToEven">
+												<StackPanel Margin="2,-2,2,-2">
+
+													<!-- ZoomIn Button -->
+													<RepeatButton Width="26" Height="26" Padding="4"
+															Style="{DynamicResource {x:Static navigation:ZoomContentControl.ButtonBaseStyleKey}}"
+															Command="navigation:ZoomContentControlCommands.ZoomIn"
+															ContentTemplate="{StaticResource MagnifyingGlassPlusTemplate}"
+															ToolTip="{productsNavigation:SRExtension UIZoomContentControlZoomInButtonToolTip}"
+															Visibility="{TemplateBinding AreZoomButtonsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+													<!-- Zoom Slider -->
+													<!-- 6/24/2010 - Switched to custom slider to allow default value to be centered (http://www.actiprosoftware.com/Support/Forums/ViewForumTopic.aspx?ForumTopicID=4991#18314) -->
+													<navigationPrimitives:ZoomContentControlSlider MinHeight="150" Orientation="Vertical" Focusable="True"
+															HorizontalAlignment="Center" Margin="2,0"
+															Visibility="{TemplateBinding IsZoomSliderVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+															ZoomLevel="{Binding ZoomLevel, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+															MinZoomLevel="{TemplateBinding MinZoomLevel}" MaxZoomLevel="{TemplateBinding MaxZoomLevel}"
+															ZoomLevelStops="{TemplateBinding ZoomLevelStops}" ZoomStep="{TemplateBinding ZoomStep}"
+															DefaultZoomLevel="{TemplateBinding DefaultZoomLevel}" />
+
+													<!-- Zoom Label (w/ hidden TextBlock that has MaxZoomLevel so calculate the maximum width. -->
+													<TextBlock HorizontalAlignment="Center" FontSize="9" Foreground="{TemplateBinding Foreground}"
+															Visibility="{TemplateBinding IsZoomLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+															Text="{Binding ZoomLevel, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource PercentageConverter}, StringFormat={}{0}%}" />
+													<shared:ZeroSizeContentControl Visibility="Hidden" HasHeight="False">
+														<TextBlock FontSize="9" Foreground="{TemplateBinding Foreground}"
+																Visibility="{TemplateBinding IsZoomLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+																Text="{Binding MaxZoomLevel, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource PercentageConverter}, StringFormat={}{0}%}" />
+													</shared:ZeroSizeContentControl>
+
+													<!-- ZoomOut Button -->
+													<RepeatButton Width="26" Height="26" Padding="4"
+															Style="{DynamicResource {x:Static navigation:ZoomContentControl.ButtonBaseStyleKey}}"
+															Command="navigation:ZoomContentControlCommands.ZoomOut"
+															ContentTemplate="{StaticResource MagnifyingGlassMinusTemplate}"
+															ToolTip="{productsNavigation:SRExtension UIZoomContentControlZoomOutButtonToolTip}"
+															Visibility="{TemplateBinding AreZoomButtonsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+													<Separator x:Name="zoomSeparator"
+															Style="{StaticResource {x:Static navigation:ZoomContentControl.HorizontalSeparatorStyleKey}}" />
+
+													<!-- ZoomToFit Button -->
+													<Button Width="26" Height="26" Padding="4"
+															Style="{DynamicResource {x:Static navigation:ZoomContentControl.ButtonBaseStyleKey}}"
+															Command="navigation:ZoomContentControlCommands.ZoomToFit"
+															ContentTemplate="{StaticResource ZoomToFitTemplate}"
+															ToolTip="{productsNavigation:SRExtension UIZoomContentControlZoomToFitButtonToolTip}"
+															Visibility="{TemplateBinding IsZoomToFitButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+													<!-- ResetView Button -->
+													<Button Width="26" Height="26" Padding="4"
+															Style="{DynamicResource {x:Static navigation:ZoomContentControl.ButtonBaseStyleKey}}"
+															Command="navigation:ZoomContentControlCommands.ResetView"
+															ContentTemplate="{StaticResource ResetViewTemplate}"
+															ToolTip="{productsNavigation:SRExtension UIZoomContentControlResetViewButtonToolTip}"
+															Visibility="{TemplateBinding IsResetViewButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+												</StackPanel>
+											</shared:PixelSnapper>
+										</Grid>
+									</Grid>
+								</shared:AnimatedExpanderDecorator>
+
+								<!-- Expand/CollapseButton -->
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="Auto" SharedSizeGroup="____row0" />
+									</Grid.RowDefinitions>
+
+									<shared:PixelSnapper HorizontalRoundMode="Ceiling" VerticalRoundMode="Ceiling">
+										<Grid
+												Visibility="{TemplateBinding IsViewControlPaneMinimizable, Converter={StaticResource BooleanToVisibilityConverter}}">
+											<ToggleButton x:Name="expandButton" Width="24" Height="24" Padding="0,0,2,0" Margin="0,0,5,5"
+													Style="{StaticResource ToggleMinimizationStyle}"
+													IsChecked="{Binding IsViewControlPaneMinimized, RelativeSource={RelativeSource TemplatedParent}}"
+													ContentTemplate="{StaticResource CollapseTemplate}"
+													ToolTip="{productsNavigation:SRExtension UIZoomContentControlToggleMinimizationButtonMinimizeToolTip}" />
+										</Grid>
+									</shared:PixelSnapper>
+								</Grid>
+							</StackPanel>
+						</Grid>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsViewControlPaneMinimized" Value="True">
+							<Setter TargetName="expandButton" Property="ContentTemplate" Value="{StaticResource ExpandTemplate}" />
+							<Setter TargetName="expandButton" Property="Padding" Value="2,0,0,0" />
+							<Setter TargetName="expandButton" Property="ToolTip"
+									Value="{productsNavigation:SRExtension UIZoomContentControlToggleMinimizationButtonExpandToolTip}" />
+						</Trigger>
+						<Trigger Property="IsPanPadVisible" Value="False">
+							<Setter TargetName="PART_PanPad" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="verticalPanel" Property="Grid.Row" Value="0" />
+							<Setter TargetName="verticalPanel" Property="Grid.RowSpan" Value="2" />
+						</Trigger>
+						<Trigger Property="HasHorizontalItems" Value="False">
+							<Setter TargetName="horizontalPanel" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsZoomToFitButtonVisible" Value="False" />
+								<Condition Property="IsResetViewButtonVisible" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="zoomSeparator" Property="Visibility" Value="Collapsed" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="AreZoomButtonsVisible" Value="False" />
+								<Condition Property="IsZoomSliderVisible" Value="False" />
+								<Condition Property="IsZoomLabelVisible" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="zoomSeparator" Property="Visibility" Value="Collapsed" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="AreZoomButtonsVisible" Value="False" />
+								<Condition Property="IsZoomSliderVisible" Value="False" />
+								<Condition Property="IsZoomLabelVisible" Value="False" />
+								<Condition Property="IsZoomToFitButtonVisible" Value="False" />
+								<Condition Property="IsResetViewButtonVisible" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="verticalPanel" Property="Visibility" Value="Collapsed" />
+						</MultiTrigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigationPrimitives:ZoomContentControlOverlay -->
+    <Style x:Key="{x:Type navigationPrimitives:ZoomContentControlOverlay}"
+           TargetType="{x:Type navigationPrimitives:ZoomContentControlOverlay}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type navigationPrimitives:ZoomContentControlOverlay}">
+					<ContentPresenter>
+						<ContentPresenter.LayoutTransform>
+							<ScaleTransform
+									ScaleX="{Binding ZoomLevel, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static navigationPrimitives:DoubleInverseConverter.Instance}}"
+									ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Self}}" />
+						</ContentPresenter.LayoutTransform>
+					</ContentPresenter>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

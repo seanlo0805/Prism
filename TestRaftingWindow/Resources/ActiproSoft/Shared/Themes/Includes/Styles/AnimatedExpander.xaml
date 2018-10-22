@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf">
+	
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="./Native/Expander.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+	<!-- AnimatedExpander -->
+	<Style x:Key="{x:Type controls:AnimatedExpander}" TargetType="{x:Type controls:AnimatedExpander}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ExpanderStyleKey}}" />
+
+</ResourceDictionary>

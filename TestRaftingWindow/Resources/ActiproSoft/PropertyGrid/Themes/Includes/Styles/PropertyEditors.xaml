@@ -1,0 +1,593 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:system="clr-namespace:System;assembly=mscorlib"
+		xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:propgrid="clr-namespace:ActiproSoftware.Windows.Controls.PropertyGrid;assembly=ActiproSoftware.PropertyGrid.Wpf"
+		xmlns:propgridEditors="clr-namespace:ActiproSoftware.Windows.Controls.PropertyGrid.Editors;assembly=ActiproSoftware.PropertyGrid.Wpf"
+		xmlns:propgridPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.PropertyGrid.Primitives;assembly=ActiproSoftware.PropertyGrid.Wpf"
+		>
+
+	<shared:NoOpConverter x:Key="NoOpConverter" />
+
+	<CollectionViewSource Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" x:Key="SortedFontFamiliesViewSource">
+		<CollectionViewSource.SortDescriptions>
+			<componentModel:SortDescription PropertyName="Source" />
+		</CollectionViewSource.SortDescriptions>
+	</CollectionViewSource>
+
+	<!--
+	
+	ERROR TEMPLATES
+	
+	-->
+
+	<ControlTemplate x:Key="PropertyGridTextBoxErrorTemplate">
+		<Grid>
+			<AdornedElementPlaceholder x:Name="controlWithError"/>
+			<Border BorderBrush="Red" BorderThickness="1" />
+		</Grid>
+	</ControlTemplate>	
+	
+	<!--
+	
+	NAME TEMPLATES
+	
+	-->
+
+	<!-- TextBlockNameTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.TextBlockNameTemplateKey}">
+		<TextBlock Margin="4,0,0,0" VerticalAlignment="Center"
+				Text="{Binding DisplayName, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+	</DataTemplate>
+
+	<!--
+	
+	VALUE TEMPLATES
+	
+	-->
+
+	<!-- DynamicValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.DynamicValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true"
+					ItemsSource="{Binding StandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Visibility, ElementName=comboBox}" Value="Visible" />
+					<Condition Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+							Value="false" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Visibility, ElementName=comboBox}" Value="Visible" />
+					<Condition Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+							Value="true" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</MultiDataTrigger>
+			<DataTrigger Binding="{Binding Visibility, ElementName=textBox}" Value="Visible">
+				<Setter TargetName="textBox" Property="Text"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding HasItems, ElementName=comboBox}" Value="false">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- DynamicStringValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.DynamicStringValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true"
+					ItemsSource="{Binding StandardValuesAsStrings, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Visibility, ElementName=comboBox}" Value="Visible" />
+					<Condition Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+							Value="false" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Visibility, ElementName=comboBox}" Value="Visible" />
+					<Condition Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+							Value="true" />
+				</MultiDataTrigger.Conditions>
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</MultiDataTrigger>
+			<DataTrigger Binding="{Binding Visibility, ElementName=textBox}" Value="Visible">
+				<Setter TargetName="textBox" Property="Text"
+						Value="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding HasItems, ElementName=comboBox}" Value="false">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- BrushValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.BrushValueTemplateKey}">
+		<DockPanel LastChildFill="True">
+			<Border DockPanel.Dock="Left" VerticalAlignment="Center" Margin="2" Height="13" Width="13" BorderThickness="1"
+					BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.BulletBorderNormalBrushKey}}" SnapsToDevicePixels="True"
+					Background="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+			<TextBox x:Name="textBox" Margin="0" VerticalAlignment="Center" BorderThickness="0" Background="Transparent"
+					MaxLines="1" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					Text="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+		</DockPanel>
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- CheckBoxValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.CheckBoxValueTemplateKey}">
+		<CheckBox x:Name="checkBox" Margin="2,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+				FocusVisualStyle="{x:Null}"
+				IsChecked="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="checkBox" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}" Value="true">
+				<Setter TargetName="checkBox" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- ComboBoxValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.ComboBoxValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true"
+					ItemsSource="{Binding StandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed"
+					Text="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="false">
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- ComboBoxStringValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.ComboBoxStringValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true"
+					ItemsSource="{Binding StandardValuesAsStrings, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed"
+					Text="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="false">
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- DialogTextBoxValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.DialogTextBoxValueTemplateKey}">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1"
+					Text="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+			<shared:PopupButton Grid.Column="1" Content="..." DisplayMode="ButtonOnly" IsTransparencyModeEnabled="True"
+					Command="{x:Static propgrid:PropertyGrid.ShowPropertyDialogCommand}"
+					CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<DataTrigger
+					Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+	
+	<!-- FontFamilyValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.FontFamilyValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true"
+					ItemsSource="{Binding Source={StaticResource SortedFontFamiliesViewSource}}" />
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed"
+					Text="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="false">
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- FontStretchValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.FontStretchValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true">
+				<FontStretch>UltraCondensed</FontStretch>
+				<FontStretch>ExtraCondensed</FontStretch>
+				<FontStretch>Condensed</FontStretch>
+				<FontStretch>SemiCondensed</FontStretch>
+				<FontStretch>Normal</FontStretch>
+				<FontStretch>SemiExpanded</FontStretch>
+				<FontStretch>Expanded</FontStretch>
+				<FontStretch>ExtraExpanded</FontStretch>
+				<FontStretch>UltraExpanded</FontStretch>
+			</ComboBox>
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed"
+					Text="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="false">
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- FontStyleValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.FontStyleValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true">
+				<FontStyle>Normal</FontStyle>
+				<FontStyle>Italic</FontStyle>
+				<FontStyle>Oblique</FontStyle>
+			</ComboBox>
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed"
+					Text="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="false">
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- FontWeightValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.FontWeightValueTemplateKey}">
+		<Grid x:Name="grid">
+			<ComboBox x:Name="comboBox" Margin="0" Padding="0" 
+					HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderBrush="Transparent" themes:ThemeProperties.UseBorderStates="False"
+					Background="Transparent" IsEditable="true">
+				<FontWeight>Thin</FontWeight>
+				<FontWeight>UltraLight</FontWeight>
+				<FontWeight>Light</FontWeight>
+				<FontWeight>Normal</FontWeight>
+				<FontWeight>Medium</FontWeight>
+				<FontWeight>SemiBold</FontWeight>
+				<FontWeight>Bold</FontWeight>
+				<FontWeight>UltraBold</FontWeight>
+				<FontWeight>Black</FontWeight>
+				<FontWeight>UltraBlack</FontWeight>
+			</ComboBox>
+			<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+					BorderThickness="0" Background="Transparent" MaxLines="1" Visibility="Collapsed"
+					Text="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+		</Grid>
+
+		<DataTemplate.Triggers>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="false">
+				<Setter TargetName="comboBox" Property="Text"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsLimitedToStandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="SelectedItem"
+						Value="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+				<Setter TargetName="comboBox" Property="IsReadOnly" Value="true" />
+			</DataTrigger>
+			<DataTrigger
+					Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="comboBox" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="textBox" Property="Visibility" Value="Visible" />
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- RadioButtonListValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.RadioButtonListValueTemplateKey}">
+		<shared:RadioButtonList x:Name="radioButtonList" Margin="0" BorderThickness="0" Background="Transparent"
+				SelectedItem="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+				ItemsSource="{Binding StandardValues, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="radioButtonList" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="radioButtonList" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- RadioButtonListStringValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.RadioButtonListStringValueTemplateKey}">
+		<shared:RadioButtonList x:Name="radioButtonList" Margin="0" BorderThickness="0" Background="Transparent"
+				SelectedItem="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}"
+				ItemsSource="{Binding StandardValuesAsStrings, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}" />
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="radioButtonList" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="radioButtonList" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- TextBoxValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.TextBoxValueTemplateKey}">
+		<TextBox x:Name="textBox" Margin="0" Padding="0" Validation.ErrorTemplate="{StaticResource PropertyGridTextBoxErrorTemplate}"
+				BorderThickness="0" Background="Transparent" MaxLines="1"
+				Text="{Binding ValueAsString, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Converter={StaticResource NoOpConverter}}" />
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="textBox" Property="IsReadOnly" Value="true" />
+				<Setter TargetName="textBox" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+	<!-- ThreeStateCheckBoxValueTemplateKey -->
+	<DataTemplate x:Key="{x:Static propgridEditors:BuiltinEditors.ThreeStateCheckBoxValueTemplateKey}">
+		<CheckBox x:Name="checkBox" Margin="2,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+				FocusVisualStyle="{x:Null}" IsThreeState="True"
+				IsChecked="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}, Mode=TwoWay, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type propgridPrimitives:IPropertyDataAccessor}}}"
+					Value="true">
+				<Setter TargetName="checkBox" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=(propgrid:PropertyGrid.IsReadOnly), RelativeSource={RelativeSource Self}}"
+					Value="true">
+				<Setter TargetName="checkBox" Property="IsEnabled" Value="false" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,304 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:calendar="clr-namespace:ActiproSoftware.Windows.Controls.Calendar;assembly=ActiproSoftware.Legacy.Wpf"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		>
+
+	<!-- Converters -->
+	<shared:DayOfWeekFormatPatternConverter x:Key="DayOfWeekFormatPatternConverter" />
+
+	<!-- ComboBoxFocusVisualKey -->
+	<Style x:Key="ComboBoxFocusVisualKey">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Margin="4,4,21,4" StrokeThickness="1"
+							Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" StrokeDashArray="1 2"
+							SnapsToDevicePixels="true" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ComboBoxEditableTextBoxKey -->
+	<Style x:Key="ComboBoxEditableTextBoxKey" TargetType="{x:Type TextBox}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+		<Setter Property="MinWidth" Value="0" />
+		<Setter Property="MinHeight" Value="0" />
+
+		<Setter Property="AllowDrop" Value="true" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+		<Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+		<Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type TextBox}">
+					<ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
+							Background="Transparent" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ComboBoxTransparentButtonStyleKey -->
+	<Style x:Key="ComboBoxTransparentButtonStyleKey" TargetType="{x:Type ToggleButton}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderNormalThicknessKey}}" />
+
+		<Setter Property="MinWidth" Value="0" />
+		<Setter Property="MinHeight" Value="0" />
+		<Setter Property="Width" Value="Auto" />
+		<Setter Property="Height" Value="Auto" />
+
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="ClickMode" Value="Press" />
+
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonIsAnimationEnabledBooleanKey}}" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ToggleButton}">
+					<Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" SharedSizeGroup="ComboBoxButton" />
+						</Grid.ColumnDefinitions>
+						<Decorator Grid.Column="1" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
+								Margin="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownMarginNormalThicknessKey}}">
+							<shared:ScrollChrome x:Name="chrome" Background="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundNormalBrushKey}}"
+									BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundDisabledBrushKey}}"
+									BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundHoverBrushKey}}"
+									BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBackgroundPressedBrushKey}}" BorderBrush="{TemplateBinding BorderBrush}"
+									BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderDisabledBrushKey}}"
+									BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderHoverBrushKey}}"
+									BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderPressedBrushKey}}" BorderThickness="{TemplateBinding BorderThickness}"
+									GlyphBackground="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundNormalBrushKey}}"
+									GlyphBackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundDisabledBrushKey}}"
+									GlyphBackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundHoverBrushKey}}"
+									GlyphBackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphBackgroundPressedBrushKey}}"
+									InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderNormalBrushKey}}"
+									InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderDisabledBrushKey}}"
+									InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderHoverBrushKey}}"
+									InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownInnerBorderPressedBrushKey}}" InnerBorderThickness="1"
+									IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+									BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownElementChromeBorderStyleKey}}"
+									CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownBorderNormalCornerRadiusKey}}"
+									UseAlternateGeometry="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownGlyphUseAlternateGeometryBooleanKey}}" Glyph="DropDownArrow"
+									Margin="{DynamicResource {x:Static themes:AssetResourceKeys.DropDownChromeMarginNormalThicknessKey}}" SnapsToDevicePixels="true" />
+						</Decorator>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsChecked" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- calendar:DateTimePicker -->
+	<!-- NOTE: Style adapted from themes:SharedResourceKeys.ComboBoxStyleKey -->
+	<Style x:Key="{x:Type calendar:DateTimePicker}" TargetType="{x:Type calendar:DateTimePicker}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBoxEditPaddingNormalThicknessKey}}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderNormalCornerRadiusKey}}" />
+
+		<Setter Property="FocusVisualStyle" Value="{StaticResource ComboBoxFocusVisualKey}" />
+
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+		<Setter Property="ScrollViewer.PanningMode" Value="Both" />
+		<Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditIsAnimationEnabledBooleanKey}}" />
+		
+		<Setter Property="ClearButtonStyle">
+			<Setter.Value>
+				<Style TargetType="Button">
+					<Setter Property="Margin" Value="2" />
+					<Setter Property="MinWidth" Value="50" />
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="DayItemTemplate">
+			<Setter.Value>
+				<DataTemplate DataType="calendar:DayItem">
+					<TextBlock Text="{Binding Path=Date.Day}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="DayOfWeekItemTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<TextBlock
+							Text="{Binding Path=DayOfWeek, Converter={StaticResource DayOfWeekFormatPatternConverter}, ConverterParameter={x:Static shared:DayOfWeekFormatPattern.Abbreviated}}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="TodayButtonStyle">
+			<Setter.Value>
+				<Style TargetType="Button">
+					<Setter Property="Margin" Value="2" />
+					<Setter Property="MinWidth" Value="50" />
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="WeekNumberTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<TextBlock Text="{Binding}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="MonthCalendarStyle">
+			<Setter.Value>
+				<Style TargetType="{x:Type calendar:MonthCalendar}">
+					<Setter Property="ClearButtonContent" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ClearButtonContent}" />
+					<Setter Property="ClearButtonStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ClearButtonStyle}" />
+					<Setter Property="ClearButtonVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ClearButtonVisible}" />
+					<Setter Property="DayItemPresenterStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayItemPresenterStyle}" />
+					<Setter Property="DayItemPresenterStyleSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayItemPresenterStyleSelector}" />
+					<Setter Property="DayItemsPresenterStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayItemsPresenterStyle}" />
+					<Setter Property="DayItemTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayItemTemplate}" />
+					<Setter Property="DayOfWeekHeadersVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayOfWeekHeadersVisible}" />
+					<Setter Property="DayOfWeekItemPresenterStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayOfWeekItemPresenterStyle}" />
+					<Setter Property="DayOfWeekItemPresenterStyleSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayOfWeekItemPresenterStyleSelector}" />
+					<Setter Property="DayOfWeekItemTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DayOfWeekItemTemplate}" />
+					<Setter Property="FirstDayOfWeek" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FirstDayOfWeek}" />
+					<Setter Property="NextMonthButtonStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NextMonthButtonStyle}" />
+					<Setter Property="PreviousMonthButtonStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PreviousMonthButtonStyle}" />
+					<Setter Property="TitleStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TitleStyle}" />
+					<Setter Property="TitleVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TitleVisible}" />
+					<Setter Property="TodayButtonContent" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TodayButtonContent}" />
+					<Setter Property="TodayButtonStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TodayButtonStyle}" />
+					<Setter Property="TodayButtonVisible" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type calendar:DateTimePicker}}, Path=TodayButtonVisible}" />
+					<Setter Property="WeekNumberPresenterStyle" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WeekNumberPresenterStyle}" />
+					<Setter Property="WeekNumberPresenterStyleSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WeekNumberPresenterStyleSelector}" />
+					<Setter Property="WeekNumbersVisible" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WeekNumbersVisible}" />
+					<Setter Property="WeekNumberTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WeekNumberTemplate}" />
+					<Setter Property="YearSelectionEnabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YearSelectionEnabled}" />
+				</Style>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type calendar:DateTimePicker}">
+					<Grid SnapsToDevicePixels="true">
+						<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundDisabledBrushKey}}"
+								BackgroundFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundFocusedBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBackgroundHoverBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderDisabledBrushKey}}"
+								BorderBrushFocused="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderFocusedBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.EditBorderHoverBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.EditElementChromeBorderStyleKey}}" 
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+								SnapsToDevicePixels="true">
+							<Grid Grid.IsSharedSizeScope="true">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="Auto" SharedSizeGroup="ComboBoxButton" />
+								</Grid.ColumnDefinitions>
+								<Grid Margin="{TemplateBinding Padding}">
+									<Border x:Name="selectedItemBorder" Margin="1" />
+									<ContentPresenter x:Name="nonEditableContent" Content="{Binding ElementName=PART_EditableTextBox, Path=Text}"
+											Margin="3,1,1,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+									<TextBox x:Name="PART_EditableTextBox" Style="{StaticResource ComboBoxEditableTextBoxKey}"
+											ContextMenu="{TemplateBinding ContextMenu}"
+											IsReadOnly="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsReadOnly}" Margin="1"
+											HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+											VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed" />
+								</Grid>
+								<ToggleButton x:Name="dropDownButton" Grid.ColumnSpan="2" Style="{StaticResource ComboBoxTransparentButtonStyleKey}"
+										IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" />
+							</Grid>
+						</shared:ElementChrome>
+						<Popup x:Name="PART_Popup" AllowsTransparency="true" Placement="Bottom"
+								IsOpen="{Binding Path=IsDropDownOpen,RelativeSource={RelativeSource TemplatedParent}}" Focusable="false"
+								PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+							<shared:DropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{TemplateBinding ActualWidth}">
+								<Border Background="{DynamicResource {x:Static themes:AssetResourceKeys.PopupBackgroundNormalBrushKey}}"
+										BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.PopupBorderNormalBrushKey}}"
+										BorderThickness="{DynamicResource {x:Static themes:AssetResourceKeys.PopupBorderNormalThicknessKey}}">
+									<ScrollViewer>
+										<calendar:MonthCalendar x:Name="PART_MonthCalendar" BorderThickness="0"
+												MaxDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Maximum}"
+												MinDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Minimum}"
+												Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MonthCalendarStyle}" />
+									</ScrollViewer>
+								</Border>
+							</shared:DropShadowChrome>
+						</Popup>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEditable" Value="False" />
+								<Condition Property="IsSelectionBoxHighlighted" Value="true" />
+								<Condition Property="IsDropDownOpen" Value="false" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionForegroundFocusedBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEditable" Value="False" />
+								<Condition Property="IsSelectionBoxHighlighted" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="selectedItemBorder" Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.EditSelectionBackgroundFocusedBrushKey}}" />
+						</MultiTrigger>
+						<Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow" Value="true">
+							<Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
+							<Setter TargetName="shadow" Property="Color" Value="#71000000" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocusWithin" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Focused" />
+						</Trigger>
+						<Trigger Property="IsEditable" Value="True">
+							<Setter Property="IsTabStop" Value="False" />
+							<Setter TargetName="nonEditableContent" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+							<Setter TargetName="dropDownButton" Property="Background" Value="{x:Null}" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

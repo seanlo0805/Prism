@@ -1,0 +1,248 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf">
+
+	<!--
+	
+	BUTTON
+	
+	-->
+
+	<!-- Button -->
+	<Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ButtonBaseStyleKey}}" />
+
+	<!-- RepeatButton -->
+	<Style x:Key="{x:Type RepeatButton}" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ButtonBaseStyleKey}}" />
+
+	<!-- ToggleButton -->
+	<Style x:Key="{x:Type ToggleButton}" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ButtonBaseStyleKey}}" />
+
+	<!-- CheckBox -->
+	<Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.CheckBoxStyleKey}}" />
+
+	<!-- RadioButton -->
+	<Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.RadioButtonStyleKey}}" />
+
+	<!-- Hyperlink -->
+	<Style x:Key="{x:Type Hyperlink}" TargetType="{x:Type Hyperlink}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.HyperlinkStyleKey}}" />
+
+	<!--
+	
+	COMBOBOX
+	
+	-->
+
+	<!-- ComboBoxItem -->
+	<Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ComboBoxItemStyleKey}}" />
+
+	<!-- ComboBox -->
+	<Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ComboBoxStyleKey}}" />
+	
+	<!--
+	
+	EDIT
+	
+	-->
+
+	<!-- TextBox -->
+	<Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.TextBoxBaseStyleKey}}" />
+
+	<!-- RichTextBox -->
+	<Style x:Key="{x:Type RichTextBox}" TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.TextBoxBaseStyleKey}}" />
+
+	<!-- PasswordBox -->
+	<Style x:Key="{x:Type PasswordBox}" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.PasswordBoxStyleKey}}" />
+
+	<!--
+	
+	EXPANDER
+	
+	-->
+
+	<!-- Expander -->
+	<Style x:Key="{x:Type Expander}" TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ExpanderStyleKey}}" />
+
+	<!--
+	
+	LIST
+	
+	-->
+
+	<!-- ListBoxItem -->
+	<Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ListBoxItemStyleKey}}" />
+
+	<!-- ListBox -->
+	<Style x:Key="{x:Type ListBox}" TargetType="{x:Type ListBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ListBoxStyleKey}}" />
+
+	<!-- GridViewColumnHeader -->
+	<Style x:Key="{x:Type GridViewColumnHeader}" TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.GridViewColumnHeaderStyleKey}}" />
+
+		<!-- ListViewItem -->
+	<Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ListViewItemStyleKey}}" />
+
+	<!-- ListView -->
+	<Style x:Key="{x:Type ListView}" TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ListViewStyleKey}}" />
+
+	<!-- TreeViewItem -->
+	<Style x:Key="{x:Type TreeViewItem}" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.TreeViewItemStyleKey}}" />
+
+	<!-- TreeView -->
+	<Style x:Key="{x:Type TreeView}" TargetType="{x:Type TreeView}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.TreeViewStyleKey}}" />
+
+	<!--
+	
+	MISC
+	
+	-->
+
+	<!-- MenuItem.SeparatorStyleKey -->
+	<Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.MenuEmbeddedSeparatorStyleKey}}" />
+
+	<!-- MenuItem -->
+	<Style x:Key="{x:Type MenuItem}" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.MenuItemStyleKey}}" />
+
+	<!-- ContextMenu -->
+	<Style x:Key="{x:Type ContextMenu}" TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ContextMenuStyleKey}}" />
+
+	<!-- Menu -->
+	<Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.MenuStyleKey}}" />
+
+	<!--
+	
+	MISC
+	
+	-->
+
+	<!-- DocumentViewer -->
+	<Style x:Key="{x:Type DocumentViewer}" TargetType="{x:Type DocumentViewer}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.DocumentViewerStyleKey}}" />
+
+	<!-- GridSplitter -->
+	<Style x:Key="{x:Type GridSplitter}" TargetType="{x:Type GridSplitter}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.GridSplitterStyleKey}}" />
+
+	<!-- GroupBox -->
+	<Style x:Key="{x:Type GroupBox}" TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.GroupBoxStyleKey}}" />
+
+	<!-- Label -->
+	<Style x:Key="{x:Type Label}" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.LabelStyleKey}}" />
+
+	<!-- Separator -->
+	<Style x:Key="{x:Type Separator}" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.SeparatorStyleKey}}" />
+
+	<!-- Thumb -->
+	<Style x:Key="{x:Type Thumb}" TargetType="{x:Type Thumb}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ThumbStyleKey}}" />
+
+	<!-- ToolTip -->
+	<Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolTipStyleKey}}" />
+
+	<!--
+	
+	PROGRESSBAR
+	
+	-->
+
+	<!-- ProgressBar -->
+	<Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ProgressBarStyleKey}}" />
+
+	<!--
+	
+	RESIZEGRIP
+	
+	-->
+
+	<!-- ResizeGrip -->
+	<Style x:Key="{x:Type ResizeGrip}" TargetType="{x:Type ResizeGrip}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ResizeGripStyleKey}}" />
+
+	<!--
+	
+	SCROLL
+	
+	-->
+
+	<!-- ScrollBar -->
+	<Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ScrollBarStyleKey}}" />
+
+	<!-- ScrollViewer -->
+	<Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ScrollViewerStyleKey}}" />
+
+	<!--
+	
+	SLIDER
+	
+	-->
+
+	<!-- Slider -->
+	<Style x:Key="{x:Type Slider}" TargetType="{x:Type Slider}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.SliderStyleKey}}" />
+
+	<!--
+	
+	STATUSBAR
+	
+	-->
+
+	<!-- StatusBar.SeparatorStyleKey -->
+	<Style x:Key="{x:Static StatusBar.SeparatorStyleKey}" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.StatusBarEmbeddedSeparatorStyleKey}}"  />
+
+	<!-- StatusBarItem -->
+	<Style x:Key="{x:Type StatusBarItem}" TargetType="{x:Type StatusBarItem}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.StatusBarItemStyleKey}}" />
+
+	<!-- StatusBar -->
+	<Style x:Key="{x:Type StatusBar}" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.StatusBarStyleKey}}" />
+
+	<!--
+	
+	TABCONTROL
+	
+	-->
+
+	<!-- TabItem -->
+	<Style x:Key="{x:Type TabItem}" TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.TabItemStyleKey}}" />
+
+	<!-- TabControl -->
+	<Style x:Key="{x:Type TabControl}" TargetType="{x:Type TabControl}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.TabControlStyleKey}}" />
+
+	<!--
+	
+	TOOLBAR
+	
+	-->
+
+	<!-- ToolBar.ButtonStyleKey -->
+	<Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedButtonBaseStyleKey}}" />
+
+	<!-- ToolBar.CheckBoxStyleKey -->
+	<Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedButtonBaseStyleKey}}" />
+
+	<!-- ToolBar.ComboBoxStyleKey -->
+	<Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedComboBoxStyleKey}}" />
+
+	<!-- ToolBar.MenuStyleKey -->
+	<Style x:Key="{x:Static ToolBar.MenuStyleKey}" TargetType="{x:Type Menu}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedMenuStyleKey}}" />
+
+	<!-- ToolBar.RadioButtonStyleKey -->
+	<Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedButtonBaseStyleKey}}" />
+
+	<!-- ToolBar.SeparatorStyleKey -->
+	<Style x:Key="{x:Static ToolBar.SeparatorStyleKey}" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedSeparatorStyleKey}}" />
+
+	<!-- ToolBar.TextBoxStyleKey -->
+	<Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedTextBoxStyleKey}}" />
+
+	<!-- ToolBar.ToggleButtonStyleKey -->
+	<Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedButtonBaseStyleKey}}" />
+
+	<!-- ToolBar -->
+	<Style x:Key="{x:Type ToolBar}" TargetType="{x:Type ToolBar}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarStyleKey}}" />
+
+	<!-- ToolBarTray -->
+	<Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarTrayStyleKey}}" />
+
+	<!--
+	
+	WINDOW
+	
+	-->
+
+	<!-- Window -->
+	<Style x:Key="{x:Type Window}" TargetType="{x:Type Window}" BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.WindowStyleKey}}" />
+
+</ResourceDictionary>

@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shell.Wpf"
+					>
+
+	<ResourceDictionary.MergedDictionaries>
+		<themes:ShellThemeCatalogRegistrar />
+
+		<ResourceDictionary Source="/ActiproSoftware.Shell.Wpf;component/Themes/Includes/Styles/Shell.xaml" />
+
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

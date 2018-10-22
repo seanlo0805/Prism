@@ -1,0 +1,507 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:editors="clr-namespace:ActiproSoftware.Windows.Controls.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsPrimitivesCalendar="clr-namespace:ActiproSoftware.Windows.Controls.Editors.Primitives.Calendar;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:productsEditors="clr-namespace:ActiproSoftware.Products.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<!-- Converters -->
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<editorsPrimitivesCalendar:DateToDecadeStringConverter x:Key="DateToDecadeStringConverter" />
+	<shared:DayOfWeekFormatPatternConverter x:Key="DayOfWeekFormatPatternConverter" />
+	<shared:StringFormatConverter x:Key="StringFormatConverter" />
+
+	<!-- Geometries -->
+	<Geometry x:Key="LeftArrow">M 4,0 L 0,3.5 L 4,7 Z</Geometry>
+	<Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+
+	<!-- Transitions -->
+
+	<!-- 4/19/2011 - Moved transitions to separate resources so x:Shared can be set to false, since multiple thread may need to access them (0B4-15396811-5A5D) -->
+	<shared:SlideTransition x:Key="BackwardTransition" x:Shared="False" Direction="Forward" Duration="0:0:0.3" IsFromContentPushed="True" />
+	<shared:SlideTransition x:Key="ForwardTransition" x:Shared="False" Direction="Backward" Duration="0:0:0.3" IsFromContentPushed="True" />
+	
+	<!-- 9/1/2011 - Moved transitions to separate resources so x:Shared can be set to false, since multiple thread may need to access them (1C8-15F1607E-1A66) -->
+	<shared:FadedZoomTransition x:Key="ZoomInTransition" x:Shared="False" Mode="In" Duration="0:0:0.3" />
+	<shared:FadedZoomTransition x:Key="ZoomOutTransition" x:Shared="False" Mode="Out" Duration="0:0:0.3" />
+
+	<!--
+	
+	BUTTONS
+	
+	-->
+
+	<!-- editorsPrimitivesCalendar:CalendarButton -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:CalendarButton}" TargetType="{x:Type editorsPrimitivesCalendar:CalendarButton}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedButtonBaseStyleKey}}" />
+
+	<!-- editorsPrimitivesCalendar:CalendarRepeatButton -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:CalendarRepeatButton}" TargetType="{x:Type editorsPrimitivesCalendar:CalendarRepeatButton}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ToolBarEmbeddedButtonBaseStyleKey}}" />
+
+	<!-- editorsPrimitivesCalendar:CalendarTodayButton -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:CalendarTodayButton}" TargetType="{x:Type editorsPrimitivesCalendar:CalendarTodayButton}"
+			BasedOn="{StaticResource {x:Type editorsPrimitivesCalendar:CalendarButton}}">
+
+		<Setter Property="Command" Value="{x:Static editorsPrimitivesCalendar:CalendarCommands.GoToToday}" />
+		<Setter Property="Focusable" Value="False" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitivesCalendar:CalendarTodayButton}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<Border Width="25" VerticalAlignment="Stretch" Margin="0,1,3,1" Background="Transparent"
+									BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}"
+									BorderThickness="1"
+									CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalCornerRadiusKey}}" SnapsToDevicePixels="true"
+									Visibility="{Binding IsTodayHighlighted, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+							<shared:PixelSnapper Grid.Column="1">
+								<TextBlock VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Text}"
+										TextTrimming="CharacterEllipsis" />
+							</shared:PixelSnapper>
+						</Grid>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!--
+	
+	TITLE BAR
+	
+	-->
+
+	<!-- editorsPrimitivesCalendar:CalendarViewTitleBar -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:CalendarViewTitleBar}" TargetType="{x:Type editorsPrimitivesCalendar:CalendarViewTitleBar}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceMediumBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceMediumForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="2" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitivesCalendar:CalendarViewTitleBar}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid Margin="{TemplateBinding Padding}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<!-- Previous View -->
+							<editorsPrimitivesCalendar:CalendarButton Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Focusable="False"
+									Foreground="{TemplateBinding Foreground}" Command="{x:Static editorsPrimitivesCalendar:CalendarCommands.GoToPreviousView}"
+									Style="{TemplateBinding PreviousViewButtonStyle}"
+									Visibility="{Binding AreSmallChangeButtonsVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+								<Path Data="{StaticResource LeftArrow}" Margin="3"
+										Fill="{Binding Path=(TextBlock.Foreground), RelativeSource={RelativeSource Self}}"
+										Stroke="{Binding Path=(TextBlock.Foreground), RelativeSource={RelativeSource Self}}" />
+							</editorsPrimitivesCalendar:CalendarButton>
+							<!-- Title/Zoom -->
+							<editorsPrimitivesCalendar:CalendarButton Grid.Column="1" VerticalAlignment="Center" Focusable="False"
+									Foreground="{TemplateBinding Foreground}" Command="{x:Static editorsPrimitivesCalendar:CalendarCommands.ZoomOut}"
+									Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+									ContentTemplate="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+									ContentTemplateSelector="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+							<!-- Next View -->
+							<editorsPrimitivesCalendar:CalendarButton Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Focusable="False"
+									Foreground="{TemplateBinding Foreground}" Command="{x:Static editorsPrimitivesCalendar:CalendarCommands.GoToNextView}"
+									Style="{TemplateBinding NextViewButtonStyle}"
+									Visibility="{Binding AreSmallChangeButtonsVisible, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+								<Path Data="{StaticResource RightArrow}" Margin="3"
+										Fill="{Binding Path=(TextBlock.Foreground), RelativeSource={RelativeSource Self}}"
+										Stroke="{Binding Path=(TextBlock.Foreground), RelativeSource={RelativeSource Self}}" />
+							</editorsPrimitivesCalendar:CalendarButton>
+						</Grid>
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="themes:ThemeProperties.UseAlternateStyle" Value="True">
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!--
+	
+	VIEWITEMS
+	
+	-->
+
+	<!-- ViewItemStyleFocusVisual -->
+	<Style x:Key="ViewItemStyleFocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Margin="2" StrokeThickness="1"
+							Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundNormalBrushKey}}" StrokeDashArray="1 2"
+							SnapsToDevicePixels="true" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ViewItemStyle -->
+	<Style x:Key="ViewItemStyle" TargetType="{x:Type editorsPrimitivesCalendar:ViewItemBase}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundNormalBrushKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalCornerRadiusKey}}" />
+
+		<Setter Property="Padding" Value="1" />
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Stretch" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+
+		<Setter Property="FocusVisualStyle" Value="{StaticResource ViewItemStyleFocusVisual}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitivesCalendar:ViewItemBase}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+							SnapsToDevicePixels="true">
+						<Grid SnapsToDevicePixels="true">
+							<Border x:Name="innerBorder"
+									BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderNormalBrushKey}}"
+									BorderThickness="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalThicknessKey}}"
+									CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="true" />
+							<shared:PixelSnapper VerticalRoundMode="CeilingToEven" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+									VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+								<ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+							</shared:PixelSnapper>
+						</Grid>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsSelected" Value="true">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundCheckedNormalBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderCheckedNormalBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderCheckedNormalBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocused" Value="true">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsMouseOver" Value="true" />
+								<Condition Property="IsSelected" Value="true" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsKeyboardFocused" Value="true" />
+								<Condition Property="IsSelected" Value="true" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}" />
+						</MultiTrigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsOverflowItem" Value="True">
+							<Setter TargetName="contentPresenter" Property="Opacity" Value="0.5" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+						<Trigger Property="ContainsToday" Value="True">
+							<Setter Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:DayItem -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:DayItem}" TargetType="{x:Type editorsPrimitivesCalendar:DayItem}" BasedOn="{StaticResource ViewItemStyle}">
+		<Setter Property="Content"
+				Value="{Binding Date, RelativeSource={RelativeSource Self}, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:%d}'}" />
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:DayOfWeekItem -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:DayOfWeekItem}" TargetType="{x:Type editorsPrimitivesCalendar:DayOfWeekItem}"
+			BasedOn="{StaticResource ViewItemStyle}">
+		<Setter Property="Padding" Value="1" />
+		<Style.Triggers>
+			<Trigger Property="DayOfWeekFormatPattern" Value="SingleLetter">
+				<Setter Property="Content"
+						Value="{Binding DayOfWeek, RelativeSource={RelativeSource Self}, Converter={StaticResource DayOfWeekFormatPatternConverter}, ConverterParameter={x:Static shared:DayOfWeekFormatPattern.SingleLetter}}" />
+			</Trigger>
+			<Trigger Property="DayOfWeekFormatPattern" Value="Shortest">
+				<Setter Property="Content"
+						Value="{Binding DayOfWeek, RelativeSource={RelativeSource Self}, Converter={StaticResource DayOfWeekFormatPatternConverter}, ConverterParameter={x:Static shared:DayOfWeekFormatPattern.Shortest}}" />
+			</Trigger>
+			<Trigger Property="DayOfWeekFormatPattern" Value="Abbreviated">
+				<Setter Property="Content"
+						Value="{Binding DayOfWeek, RelativeSource={RelativeSource Self}, Converter={StaticResource DayOfWeekFormatPatternConverter}, ConverterParameter={x:Static shared:DayOfWeekFormatPattern.Abbreviated}}" />
+			</Trigger>
+			<Trigger Property="DayOfWeekFormatPattern" Value="Full">
+				<Setter Property="Content"
+						Value="{Binding DayOfWeek, RelativeSource={RelativeSource Self}, Converter={StaticResource DayOfWeekFormatPatternConverter}, ConverterParameter={x:Static shared:DayOfWeekFormatPattern.Full}}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:DecadeItem -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:DecadeItem}" TargetType="{x:Type editorsPrimitivesCalendar:DecadeItem}"
+			BasedOn="{StaticResource ViewItemStyle}">
+		<Setter Property="Content"
+				Value="{Binding Date, RelativeSource={RelativeSource Self}, Converter={StaticResource DateToDecadeStringConverter}, ConverterParameter=true}" />
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:MonthItem -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:MonthItem}" TargetType="{x:Type editorsPrimitivesCalendar:MonthItem}"
+			BasedOn="{StaticResource ViewItemStyle}">
+		<Setter Property="Content"
+				Value="{Binding Date, RelativeSource={RelativeSource Self}, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:MMM}'}" />
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:WeekNumberItem -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:WeekNumberItem}" TargetType="{x:Type editorsPrimitivesCalendar:WeekNumberItem}"
+			BasedOn="{StaticResource ViewItemStyle}">
+		<Setter Property="Padding" Value="2,0" />
+		<Setter Property="Content" Value="{Binding Week, RelativeSource={RelativeSource Self}}" />
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:YearItem -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:YearItem}" TargetType="{x:Type editorsPrimitivesCalendar:YearItem}" BasedOn="{StaticResource ViewItemStyle}">
+		<Setter Property="Content"
+				Value="{Binding Date, RelativeSource={RelativeSource Self}, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:yyyy}'}" />
+	</Style>
+	
+	<!--
+	
+	VIEWS
+	
+	-->
+
+	<!-- editorsPrimitivesCalendar:ViewBase -->
+	<Style x:Key="ViewStyle" TargetType="{x:Type editorsPrimitivesCalendar:ViewBase}">
+		<Setter Property="BackwardTransition" Value="{StaticResource BackwardTransition}" />
+		<Setter Property="ForwardTransition" Value="{StaticResource ForwardTransition}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitivesCalendar:ViewBase}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<shared:TransitionPresenter TransitionSelector="{TemplateBinding TransitionSelector}" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:CenturyView -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:CenturyView}" TargetType="{x:Type editorsPrimitivesCalendar:CenturyView}" BasedOn="{StaticResource ViewStyle}" />
+
+	<!-- editorsPrimitivesCalendar:DecadeView -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:DecadeView}" TargetType="{x:Type editorsPrimitivesCalendar:DecadeView}" BasedOn="{StaticResource ViewStyle}" />
+
+	<!-- editorsPrimitivesCalendar:MonthView -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:MonthView}" TargetType="{x:Type editorsPrimitivesCalendar:MonthView}" BasedOn="{StaticResource ViewStyle}">
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListBorderNormalBrushKey}}" />
+	</Style>
+
+	<!-- editorsPrimitivesCalendar:YearView -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:YearView}" TargetType="{x:Type editorsPrimitivesCalendar:YearView}" BasedOn="{StaticResource ViewStyle}" />
+
+	<!--
+	
+	MONTHCALENDAR
+	
+	-->
+
+	<!-- editorsPrimitivesCalendar:CalendarView -->
+	<Style x:Key="{x:Type editorsPrimitivesCalendar:CalendarView}" TargetType="{x:Type editorsPrimitivesCalendar:CalendarView}">
+		<Setter Property="ZoomInTransition" Value="{StaticResource ZoomInTransition}" />
+		<Setter Property="ZoomOutTransition" Value="{StaticResource ZoomOutTransition}" />
+
+		<Setter Property="Date" Value="{Binding Path=(editors:MonthCalendar.ActiveDate), RelativeSource={RelativeSource Self}}" />
+		<Setter Property="ContentTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<editorsPrimitivesCalendar:MonthView />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitivesCalendar:CalendarView}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid x:Name="grid">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<!-- Title -->
+							<shared:PixelSnapper HorizontalAlignment="Stretch" VerticalRoundMode="CeilingToEven">
+								<editorsPrimitivesCalendar:CalendarViewTitleBar HorizontalAlignment="Stretch" Content="{TemplateBinding Title}"
+										themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}">
+									<editorsPrimitivesCalendar:CalendarViewTitleBar.ContentTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding}" HorizontalAlignment="Center" />
+										</DataTemplate>
+									</editorsPrimitivesCalendar:CalendarViewTitleBar.ContentTemplate>
+								</editorsPrimitivesCalendar:CalendarViewTitleBar>
+							</shared:PixelSnapper>
+
+							<!-- Active view -->
+							<shared:TransitionPresenter x:Name="transitionPresenter" Grid.Row="1" Margin="2"
+									TransitionSelector="{TemplateBinding TransitionSelector}" />
+						</Grid>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger SourceName="transitionPresenter" Property="IsTransitioning" Value="True">
+							<Setter TargetName="transitionPresenter" Property="editors:MonthCalendar.AreTransitionAnimationsEnabled" Value="False" />
+						</Trigger>
+						<Trigger Property="ActiveViewMode" Value="Year">
+							<Setter Property="ContentTemplate">
+								<Setter.Value>
+									<DataTemplate>
+										<editorsPrimitivesCalendar:YearView />
+									</DataTemplate>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+						<Trigger Property="ActiveViewMode" Value="Decade">
+							<Setter Property="ContentTemplate">
+								<Setter.Value>
+									<DataTemplate>
+										<editorsPrimitivesCalendar:DecadeView />
+									</DataTemplate>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+						<Trigger Property="ActiveViewMode" Value="Century">
+							<Setter Property="ContentTemplate">
+								<Setter.Value>
+									<DataTemplate>
+										<editorsPrimitivesCalendar:CenturyView />
+									</DataTemplate>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- editors:MonthCalendar -->
+	<Style x:Key="{x:Type editors:MonthCalendar}" TargetType="{x:Type editors:MonthCalendar}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="AreTransitionAnimationsEnabled" Value="True" />
+
+		<!-- 9/23/2010 - Updated tab navigation so tab will leave immediately (http://www.actiprosoftware.com/Support/Forums/ViewForumTopic.aspx?ForumTopicID=5191#19054) -->
+		<Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
+		<Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Once" />
+
+		<Setter Property="ClearButtonContent" Value="{productsEditors:SRExtension UICalendarClearButtonText}" />
+		<Setter Property="ClearButtonContentTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<TextBlock>
+						<Hyperlink Command="{x:Static editorsPrimitivesCalendar:CalendarCommands.ClearSelection}">
+							<TextBlock Text="{Binding}" />
+						</Hyperlink>
+					</TextBlock>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editors:MonthCalendar}">
+					<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+							BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListBackgroundDisabledBrushKey}}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListBorderDisabledBrushKey}}"
+							BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" IsAnimationEnabled="False"
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ListElementChromeBorderStyleKey}}" SnapsToDevicePixels="true">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<editorsPrimitivesCalendar:CalendarView themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}" />
+							<shared:PixelSnapper Grid.Row="1" Margin="5,3" VerticalRoundMode="CeilingToEven">
+								<DockPanel>
+									<editorsPrimitivesCalendar:CalendarTodayButton DockPanel.Dock="Left"
+											Visibility="{TemplateBinding IsTodayButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+									<ContentPresenter DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"
+											Content="{TemplateBinding ClearButtonContent}" ContentTemplate="{TemplateBinding ClearButtonContentTemplate}"
+											Visibility="{TemplateBinding IsClearButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+								</DockPanel>
+							</shared:PixelSnapper>
+						</Grid>
+					</shared:ElementChrome>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

@@ -1,0 +1,733 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:controlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Primitives;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf">
+
+	<!-- ScrollBarHorizontalButton -->
+	<Style x:Key="ScrollBarHorizontalButton" TargetType="{x:Type RepeatButton}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalThicknessKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonIsAnimationEnabledBooleanKey}}" />
+
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarHorizontalPaddingNormalThicknessKey}}" />
+		<Setter Property="SnapsToDevicePixels" Value="true" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type RepeatButton}">
+					<Border Background="Transparent">
+						<controlsPrimitives:ScrollChrome x:Name="chrome" 
+								Margin="{TemplateBinding Padding}"
+								Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundDisabledBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundHoverBrushKey}}"
+								BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundPressedBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderDisabledBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderHoverBrushKey}}"
+								BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderPressedBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								Highlight="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightNormalBrushKey}}"
+								HighlightDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightDisabledBrushKey}}"
+								HighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightHoverBrushKey}}"
+								HighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightPressedBrushKey}}"
+								GlyphBackground="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundNormalBrushKey}}"
+								GlyphBackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundDisabledBrushKey}}"
+								GlyphBackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundHoverBrushKey}}"
+								GlyphBackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundPressedBrushKey}}"
+								InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderNormalBrushKey}}"
+								InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderDisabledBrushKey}}"
+								InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderHoverBrushKey}}"
+								InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderPressedBrushKey}}"
+								InnerBorderThickness="1" IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonElementChromeBorderStyleKey}}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+								UseAlternateGeometry="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphUseAlternateGeometryBooleanKey}}"
+								Glyph="{TemplateBinding controlsPrimitives:ScrollChrome.Glyph}" SnapsToDevicePixels="true" />
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.UseAlternateStyle" Value="true">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="Highlight" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderPressedBrushKey}}" />
+						</Trigger>
+						
+						<Trigger Property="themes:ThemeProperties.IsTransparencyModeEnabled" Value="true">
+							<Setter TargetName="chrome" Property="Background" Value="Transparent" />
+							<Setter TargetName="chrome" Property="BackgroundDisabled" Value="Transparent" />
+							<Setter TargetName="chrome" Property="BorderBrush" Value="Transparent" />
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="Transparent" />
+							<Setter TargetName="chrome" Property="Highlight" Value="Transparent" />
+							<Setter TargetName="chrome" Property="InnerBorderBrush" Value="Transparent" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="Transparent" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ScrollBarHorizontalThumb -->
+	<Style x:Key="ScrollBarHorizontalThumb" TargetType="{x:Type Thumb}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalThicknessKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonIsAnimationEnabledBooleanKey}}" />
+
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarHorizontalPaddingNormalThicknessKey}}" />
+		<Setter Property="SnapsToDevicePixels" Value="true" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Thumb}">
+					<Border Background="Transparent">
+						<controlsPrimitives:ScrollChrome x:Name="chrome"
+								Margin="{TemplateBinding Padding}"
+								Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundDisabledBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundHoverBrushKey}}"
+								BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHorizontalBackgroundPressedBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderDisabledBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderHoverBrushKey}}"
+								BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderPressedBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								Highlight="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightNormalBrushKey}}"
+								HighlightDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightDisabledBrushKey}}"
+								HighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightHoverBrushKey}}"
+								HighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightPressedBrushKey}}"
+								GlyphBackground="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphBackgroundNormalBrushKey}}"
+								GlyphBackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphBackgroundHoverBrushKey}}"
+								GlyphBackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphBackgroundPressedBrushKey}}"
+								GlyphHighlight="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphHighlightNormalBrushKey}}"
+								GlyphHighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphHighlightNormalBrushKey}}"
+								GlyphHighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphHighlightNormalBrushKey}}"
+								InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderNormalBrushKey}}"
+								InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderDisabledBrushKey}}"
+								InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderHoverBrushKey}}"
+								InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderPressedBrushKey}}"
+								InnerBorderThickness="1" IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonElementChromeBorderStyleKey}}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" Glyph="{TemplateBinding controlsPrimitives:ScrollChrome.Glyph}"
+								UseAlternateGeometry="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphUseAlternateGeometryBooleanKey}}"
+								SnapsToDevicePixels="true" />
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.UseAlternateStyle" Value="true">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHorizontalBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="Highlight" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphBackgroundPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphHighlight" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphHighlightHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphHighlightPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderPressedBrushKey}}" />
+						</Trigger>
+						
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsDragging" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ScrollBarHorizontalPageButton -->
+	<Style x:Key="ScrollBarHorizontalPageButton" TargetType="{x:Type RepeatButton}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="SnapsToDevicePixels" Value="true" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type RepeatButton}">
+					<Rectangle Fill="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" />
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsPressed" Value="True" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarHorizontalBackgroundPressedBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsPressed" Value="True" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarHorizontalBackgroundPressedBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="false" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarHorizontalBackgroundDisabledBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="false" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarHorizontalBackgroundDisabledBrushKey}}" />
+						</MultiTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ScrollBarVerticalButton -->
+	<Style x:Key="ScrollBarVerticalButton" TargetType="{x:Type RepeatButton}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalThicknessKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonIsAnimationEnabledBooleanKey}}" />
+
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarVerticalPaddingNormalThicknessKey}}" />
+		<Setter Property="SnapsToDevicePixels" Value="true" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type RepeatButton}">
+					<Border Background="Transparent">
+						<controlsPrimitives:ScrollChrome x:Name="chrome" 
+								Margin="{TemplateBinding Padding}"
+								Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundDisabledBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundHoverBrushKey}}"
+								BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundPressedBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderDisabledBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderHoverBrushKey}}"
+								BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderPressedBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								Highlight="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightNormalBrushKey}}"
+								HighlightDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightDisabledBrushKey}}"
+								HighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightHoverBrushKey}}"
+								HighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightPressedBrushKey}}"
+								GlyphBackground="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundNormalBrushKey}}"
+								GlyphBackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundDisabledBrushKey}}"
+								GlyphBackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundHoverBrushKey}}"
+								GlyphBackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphBackgroundPressedBrushKey}}"
+								InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderNormalBrushKey}}"
+								InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderDisabledBrushKey}}"
+								InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderHoverBrushKey}}"
+								InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderPressedBrushKey}}"
+								InnerBorderThickness="1" IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonElementChromeBorderStyleKey}}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+								UseAlternateGeometry="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonGlyphUseAlternateGeometryBooleanKey}}"
+								Glyph="{TemplateBinding controlsPrimitives:ScrollChrome.Glyph}" SnapsToDevicePixels="true" />
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.UseAlternateStyle" Value="true">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="Highlight" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonGlyphBackgroundPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderPressedBrushKey}}" />
+						</Trigger>
+						
+						<Trigger Property="themes:ThemeProperties.IsTransparencyModeEnabled" Value="true">
+							<Setter TargetName="chrome" Property="Background" Value="Transparent" />
+							<Setter TargetName="chrome" Property="BackgroundDisabled" Value="Transparent" />
+							<Setter TargetName="chrome" Property="BorderBrush" Value="Transparent" />
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="Transparent" />
+							<Setter TargetName="chrome" Property="Highlight" Value="Transparent" />
+							<Setter TargetName="chrome" Property="InnerBorderBrush" Value="Transparent" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="Transparent" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ScrollBarVerticalThumb -->
+	<Style x:Key="ScrollBarVerticalThumb" TargetType="{x:Type Thumb}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalThicknessKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonIsAnimationEnabledBooleanKey}}" />
+
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarVerticalPaddingNormalThicknessKey}}" />
+		<Setter Property="SnapsToDevicePixels" Value="true" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Thumb}">
+					<Border Background="Transparent">
+						<controlsPrimitives:ScrollChrome x:Name="chrome" 
+								Margin="{TemplateBinding Padding}"
+								Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundDisabledBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundHoverBrushKey}}"
+								BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonVerticalBackgroundPressedBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderDisabledBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderHoverBrushKey}}"
+								BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonBorderPressedBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								Highlight="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightNormalBrushKey}}"
+								HighlightDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightDisabledBrushKey}}"
+								HighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightHoverBrushKey}}"
+								HighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonHighlightPressedBrushKey}}"
+								GlyphBackground="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphBackgroundNormalBrushKey}}"
+								GlyphBackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphBackgroundHoverBrushKey}}"
+								GlyphBackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphBackgroundPressedBrushKey}}"
+								GlyphHighlight="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphHighlightNormalBrushKey}}"
+								GlyphHighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphHighlightNormalBrushKey}}"
+								GlyphHighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphHighlightNormalBrushKey}}"
+								InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderNormalBrushKey}}"
+								InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderDisabledBrushKey}}"
+								InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderHoverBrushKey}}"
+								InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonInnerBorderPressedBrushKey}}"
+								InnerBorderThickness="1" IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarButtonElementChromeBorderStyleKey}}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" Glyph="{TemplateBinding controlsPrimitives:ScrollChrome.Glyph}"
+								UseAlternateGeometry="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarThumbGlyphUseAlternateGeometryBooleanKey}}"
+								SnapsToDevicePixels="true" />
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.UseAlternateStyle" Value="true">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonVerticalBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="Highlight" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="HighlightPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonHighlightPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphBackgroundNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphBackgroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphBackgroundPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphBackgroundPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphHighlight" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphHighlightHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="GlyphHighlightPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarThumbGlyphHighlightNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushPressed" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarButtonInnerBorderPressedBrushKey}}" />
+						</Trigger>
+						
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsDragging" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ScrollBarVerticalPageButton -->
+	<Style x:Key="ScrollBarVerticalPageButton" TargetType="{x:Type RepeatButton}">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="SnapsToDevicePixels" Value="true" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type RepeatButton}">
+					<Rectangle Fill="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" />
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsPressed" Value="True" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarVerticalBackgroundPressedBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsPressed" Value="True" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarVerticalBackgroundPressedBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="false" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarVerticalBackgroundDisabledBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="false" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarVerticalBackgroundDisabledBrushKey}}" />
+						</MultiTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- themes:SharedResourceKeys.ScrollBarStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.ScrollBarStyleKey}" TargetType="{x:Type ScrollBar}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarVerticalBackgroundNormalBrushKey}}" />
+
+		<Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+		<Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+
+		<Setter Property="themes:ThemeProperties.IsTransparencyModeEnabled"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarIsTransparencyModeEnabledBooleanKey}}" />
+
+		<Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+		<Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ScrollBar}">
+					<Grid x:Name="background" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+						<Grid.RowDefinitions>
+							<RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" />
+							<RowDefinition Height="0.00001*" />
+							<RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" />
+						</Grid.RowDefinitions>
+						<RepeatButton x:Name="upButton" Style="{StaticResource ScrollBarVerticalButton}" Command="{x:Static ScrollBar.LineUpCommand}"
+								themes:ThemeProperties.IsTransparencyModeEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.IsTransparencyModeEnabled)}"
+								themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}"
+								controlsPrimitives:ScrollChrome.Glyph="UpArrow" />
+
+						<Track Grid.Row="1" x:Name="PART_Track" IsDirectionReversed="true">
+							<Track.DecreaseRepeatButton>
+								<RepeatButton Style="{StaticResource ScrollBarVerticalPageButton}" Command="{x:Static ScrollBar.PageUpCommand}" 
+											  themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}" />
+							</Track.DecreaseRepeatButton>
+							<Track.IncreaseRepeatButton>
+								<RepeatButton Style="{StaticResource ScrollBarVerticalPageButton}" Command="{x:Static ScrollBar.PageDownCommand}" 
+											  themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}" />
+							</Track.IncreaseRepeatButton>
+							<Track.Thumb>
+								<Thumb Style="{StaticResource ScrollBarVerticalThumb}" controlsPrimitives:ScrollChrome.Glyph="VerticalGripper" 
+									   themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}" />
+							</Track.Thumb>
+						</Track>
+
+						<RepeatButton x:Name="downButton" Style="{StaticResource ScrollBarVerticalButton}" Grid.Row="2" Command="{x:Static ScrollBar.LineDownCommand}"
+								themes:ThemeProperties.IsTransparencyModeEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.IsTransparencyModeEnabled)}"
+								themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}"
+								controlsPrimitives:ScrollChrome.Glyph="DownArrow" />
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger SourceName="upButton" Property="Padding" Value="1,0,1,0">
+							<Setter TargetName="upButton" Property="Margin" Value="0,0,0,1" />
+						</Trigger>
+						<Trigger SourceName="downButton" Property="Padding" Value="1,0,1,0">
+							<Setter TargetName="downButton" Property="Margin" Value="0,1,0,0" />
+						</Trigger>
+						
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter Property="themes:ThemeProperties.IsTransparencyModeEnabled" Value="false" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="True" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="background" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarVerticalBackgroundNormalBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="false" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="background" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarVerticalBackgroundDisabledBrushKey}}" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsEnabled" Value="false" />
+								<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="background" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarVerticalBackgroundDisabledBrushKey}}" />
+						</MultiTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="Orientation" Value="Horizontal">
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarHorizontalBackgroundNormalBrushKey}}" />
+
+				<Setter Property="Width" Value="Auto" />
+				<Setter Property="MinWidth" Value="0" />
+				<Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+				<Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type ScrollBar}">
+							<Grid x:Name="background" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+									<ColumnDefinition Width="0.00001*" />
+									<ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+								</Grid.ColumnDefinitions>
+								<RepeatButton x:Name="leftButton" Style="{StaticResource ScrollBarHorizontalButton}" Command="{x:Static ScrollBar.LineLeftCommand}"
+										themes:ThemeProperties.IsTransparencyModeEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.IsTransparencyModeEnabled)}"
+										themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}"
+										controlsPrimitives:ScrollChrome.Glyph="LeftArrow" />
+
+								<Track Grid.Column="1" x:Name="PART_Track">
+									<Track.DecreaseRepeatButton>
+										<RepeatButton Style="{StaticResource ScrollBarHorizontalPageButton}" Command="{x:Static ScrollBar.PageLeftCommand}" 
+													  themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}" />
+									</Track.DecreaseRepeatButton>
+									<Track.IncreaseRepeatButton>
+										<RepeatButton Style="{StaticResource ScrollBarHorizontalPageButton}" Command="{x:Static ScrollBar.PageRightCommand}" 
+													  themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}" />
+									</Track.IncreaseRepeatButton>
+									<Track.Thumb>
+										<Thumb Style="{StaticResource ScrollBarHorizontalThumb}" controlsPrimitives:ScrollChrome.Glyph="HorizontalGripper" 
+											   themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}" />
+									</Track.Thumb>
+								</Track>
+
+								<RepeatButton x:Name="rightButton" Style="{StaticResource ScrollBarHorizontalButton}" Grid.Column="2" Command="{x:Static ScrollBar.LineRightCommand}"
+										themes:ThemeProperties.IsTransparencyModeEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.IsTransparencyModeEnabled)}"
+										themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}"
+										controlsPrimitives:ScrollChrome.Glyph="RightArrow" />
+							</Grid>
+							<ControlTemplate.Triggers>
+								<Trigger SourceName="leftButton" Property="Padding" Value="0,1,0,1">
+									<Setter TargetName="leftButton" Property="Margin" Value="0,0,1,0" />
+								</Trigger>
+								<Trigger SourceName="rightButton" Property="Padding" Value="0,1,0,1">
+									<Setter TargetName="rightButton" Property="Margin" Value="1,0,0,0" />
+								</Trigger>
+								
+								<Trigger Property="IsMouseOver" Value="true">
+									<Setter Property="themes:ThemeProperties.IsTransparencyModeEnabled" Value="false" />
+								</Trigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="IsEnabled" Value="True" />
+										<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="background" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarHorizontalBackgroundNormalBrushKey}}" />
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="IsEnabled" Value="false" />
+										<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="False" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="background" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollBarHorizontalBackgroundDisabledBrushKey}}" />
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="IsEnabled" Value="false" />
+										<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="background" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollBarHorizontalBackgroundDisabledBrushKey}}" />
+								</MultiTrigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- themes:SharedResourceKeys.ScrollViewerStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.ScrollViewerStyleKey}" TargetType="{x:Type ScrollViewer}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ScrollViewer">
+					<Grid Background="{TemplateBinding Background}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<!-- Content -->
+						<ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}"
+								ContentTemplate="{TemplateBinding ContentTemplate}" CanContentScroll="{TemplateBinding CanContentScroll}" />
+
+						<!-- Vertical ScrollBar -->
+						<ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="1" Minimum="0" Maximum="{TemplateBinding ScrollableHeight}"
+								ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+								Cursor="Arrow" AutomationProperties.AutomationId="VerticalScrollBar"
+								themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}"
+								Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+						<!-- Horizontal ScrollBar -->
+						<ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Row="1" Orientation="Horizontal" Minimum="0"
+								Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
+								Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Cursor="Arrow"
+								AutomationProperties.AutomationId="HorizontalScrollBar"
+								themes:ThemeProperties.UseAlternateStyle="{TemplateBinding themes:ThemeProperties.UseAlternateStyle}"
+								Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+						<!-- Corner -->
+						<Rectangle x:Name="corner" Grid.Column="1" Grid.Row="1"
+								Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ScrollViewerSpacerBackgroundNormalBrushKey}}" />
+
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.UseAlternateStyle" Value="true">
+							<Setter TargetName="corner" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceScrollViewerSpacerBackgroundNormalBrushKey}}" />
+						</Trigger>
+						<Trigger Property="controls:ResizableContentControl.UseAlternateScrollViewerStyle" Value="true">
+							<Setter TargetName="corner" Property="Height" Value="{DynamicResource {x:Static SystemParameters.ScrollHeightKey}}" />
+							<Setter TargetName="corner" Property="Width" Value="{DynamicResource {x:Static SystemParameters.ScrollWidthKey}}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="controls:ResizableContentControl.UseAlternateScrollViewerStyle" Value="true" />
+								<Condition SourceName="PART_HorizontalScrollBar" Property="Visibility" Value="Collapsed" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="PART_ScrollContentPresenter" Property="Grid.RowSpan" Value="2" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="controls:ResizableContentControl.UseAlternateScrollViewerStyle" Value="true" />
+								<Condition SourceName="PART_VerticalScrollBar" Property="Visibility" Value="Collapsed" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="PART_ScrollContentPresenter" Property="Grid.ColumnSpan" Value="2" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="controls:ResizableContentControl.UseAlternateScrollViewerStyle" Value="true" />
+								<Condition SourceName="PART_HorizontalScrollBar" Property="Visibility" Value="Collapsed" />
+								<Condition SourceName="PART_VerticalScrollBar" Property="Visibility" Value="Collapsed" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="corner" Property="Visibility" Value="Collapsed" />
+						</MultiTrigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- themes:SharedResourceKeys.WorkspaceEmbeddedScrollViewerStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.WorkspaceEmbeddedScrollViewerStyleKey}" TargetType="{x:Type ScrollViewer}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ScrollViewerStyleKey}}">
+		<Setter Property="themes:ThemeProperties.UseAlternateStyle" Value="true" />
+	</Style>
+
+</ResourceDictionary>

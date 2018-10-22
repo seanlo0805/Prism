@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:dockingThemes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Docking.Wpf"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<ResourceDictionary.MergedDictionaries>
+		<dockingThemes:DockingThemeCatalogRegistrar />
+
+		<ResourceDictionary Source="Styles/Docking.xaml" />
+		
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

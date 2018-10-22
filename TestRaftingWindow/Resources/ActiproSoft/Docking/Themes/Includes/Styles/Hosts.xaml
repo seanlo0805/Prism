@@ -1,0 +1,142 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:docking="clr-namespace:ActiproSoftware.Windows.Controls.Docking;assembly=ActiproSoftware.Docking.Wpf"
+		>
+
+	<!--
+	
+	NOTE: AutoHideHost is located in the AutoHide.xaml file.
+	
+	-->
+
+	
+	<!-- 
+	
+		STYLES
+	
+	-->
+
+	<!-- docking:DockSite -->
+	<Style x:Key="{x:Type docking:DockSite}" TargetType="{x:Type docking:DockSite}">
+		<Setter Property="AutoHidePopupOpensOnMouseHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockSiteAutoHidePopupOpensOnMouseHoverBooleanKey}}" />
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceVeryDarkBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="SplitterSize" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockSiteSplitterSizeDoubleKey}}" />
+		<Setter Property="ToolWindowsHaveImagesOnTabs" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DockSiteToolWindowsHaveImagesOnTabsBooleanKey}}" />
+		
+		<Setter Property="HostedRaftingWindowContainer" Value="{Binding RelativeSource={RelativeSource Self}}" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type docking:DockSite}">
+					<AdornerDecorator>
+						<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+							<ContentPresenter Content="{TemplateBinding AutoHideHost}" ClipToBounds="True"
+									SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+						</Border>
+					</AdornerDecorator>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- docking:HierarchyRootContainer -->
+	<Style x:Key="{x:Type docking:HierarchyRootContainer}" TargetType="{x:Type docking:HierarchyRootContainer}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type docking:HierarchyRootContainer}">
+				
+					<AdornerDecorator>
+						<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+								Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+							<ContentPresenter ClipToBounds="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+						</Border>
+					</AdornerDecorator>
+				
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- docking:DockHost -->
+	<Style x:Key="{x:Type docking:DockHost}" TargetType="{x:Type docking:DockHost}" BasedOn="{StaticResource {x:Type docking:HierarchyRootContainer}}" />
+
+	<!-- docking:RaftingHost -->
+	<Style x:Key="{x:Type docking:RaftingHost}" TargetType="{x:Type docking:RaftingHost}" BasedOn="{StaticResource {x:Type docking:DockHost}}" />
+
+	<!-- docking:StandardMdiHost -->
+	<Style x:Key="{x:Type docking:StandardMdiHost}" TargetType="{x:Type docking:StandardMdiHost}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.StandardMdiBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.StandardMdiBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.StandardMdiBorderNormalThicknessKey}}" />
+
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type docking:StandardMdiHost}">
+					<shared:ElementChrome Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.StandardMdiElementChromeBorderStyleKey}}"
+							SnapsToDevicePixels="True">
+						<ScrollViewer>
+							<ItemsPresenter />
+						</ScrollViewer>
+					</shared:ElementChrome>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsScrollingEnabled" Value="True" />
+					<Condition Property="AreWindowsMaximized" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+				<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+			</MultiTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- docking:TabbedMdiHost -->
+	<Style x:Key="{x:Type docking:TabbedMdiHost}" TargetType="{x:Type docking:TabbedMdiHost}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type docking:TabbedMdiHost}">
+
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+							Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+						<ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+								ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" ClipToBounds="True"
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+					</Border>
+
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- docking:Workspace -->
+	<Style x:Key="{x:Type docking:Workspace}" TargetType="{x:Type docking:Workspace}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type docking:Workspace}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+							Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+						<ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+								ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" ClipToBounds="True"
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

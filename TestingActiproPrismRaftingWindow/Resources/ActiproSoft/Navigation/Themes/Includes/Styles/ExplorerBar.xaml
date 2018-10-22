@@ -1,0 +1,181 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:navigation="clr-namespace:ActiproSoftware.Windows.Controls.Navigation;assembly=ActiproSoftware.Navigation.Wpf"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		>
+
+	<!-- Converters -->
+	<shared:ConditionalConverter x:Key="ConditionalConverter" />
+
+	<!-- navigation:ExplorerBar.ExpanderHeaderStyleKey -->
+	<Style x:Key="{x:Static navigation:ExplorerBar.ExpanderHeaderStyleKey}" TargetType="ToggleButton">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderHeaderBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderHeaderForegroundNormalBrushKey}}" />
+
+		<Setter Property="FontWeight" Value="Bold" />
+		
+		<Setter Property="ContextMenu" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderContextMenu)}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderCornerRadius)}" />
+		<Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:HeaderedControlThemeProperties.HeaderPadding)}" />
+
+		<Setter Property="Margin" Value="0" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ToggleButton">
+					<ControlTemplate.Resources>
+						<shared:IsTypeConverter x:Key="IsTypeConverter" />
+					</ControlTemplate.Resources>
+
+					<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+							BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderHeaderBackgroundHoverBrushKey}}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderBrushHover="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+							SnapsToDevicePixels="true">
+						<DockPanel>
+							<Path x:Name="glyph" DockPanel.Dock="Right" Margin="0,0,10,0" Width="9" Height="6" VerticalAlignment="Center"
+								  Stroke="{TemplateBinding Foreground}" StrokeThickness="2" SnapsToDevicePixels="false" Data="M 1,1.5  L 4.5,5  L 8,1.5" />
+							<shared:PixelSnapper>
+								<ContentPresenter x:Name="presenter" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}"
+										ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+							</shared:PixelSnapper>
+						</DockPanel>
+					</shared:ElementChrome>
+
+					<ControlTemplate.Triggers>
+						<DataTrigger
+								Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource IsTypeConverter}, ConverterParameter={x:Type shared:ImageTextInfo}}"
+								Value="True">
+							<Setter TargetName="presenter" Property="Margin" Value="0,0,11,0" />
+							<Setter TargetName="presenter" Property="ContentTemplate">
+								<Setter.Value>
+									<DataTemplate DataType="shared:ImageTextInfo">
+										<DockPanel LastChildFill="True">
+											<shared:ZeroSizeContentControl DockPanel.Dock="Left" HasHeight="False" VerticalContentAlignment="Bottom">
+												<Image Stretch="None" Source="{Binding ImageSourceLarge}" SnapsToDevicePixels="True" />
+											</shared:ZeroSizeContentControl>
+											<TextBlock Margin="2,6,5,6" Text="{Binding Text}" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom" />
+										</DockPanel>
+									</DataTemplate>
+								</Setter.Value>
+							</Setter>
+						</DataTrigger>
+						<Trigger Property="IsChecked" Value="True">
+							<Setter TargetName="glyph" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderHeaderForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderHeaderForegroundHoverBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigation:ExplorerBar.ExpanderHeaderAlternateStyleKey -->
+	<Style x:Key="{x:Static navigation:ExplorerBar.ExpanderHeaderAlternateStyleKey}" TargetType="ToggleButton"
+			BasedOn="{StaticResource {x:Static navigation:ExplorerBar.ExpanderHeaderStyleKey}}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderHeaderAlternateBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderHeaderAlternateForegroundNormalBrushKey}}" />
+	</Style>
+
+	<!-- navigation:ExplorerBar.ExpanderStyleKey -->
+	<Style x:Key="{x:Static navigation:ExplorerBar.ExpanderStyleKey}" TargetType="{x:Type Expander}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1,0,1,1" />
+
+		<Setter Property="Padding" Value="10" />
+		<Setter Property="Margin" Value="0,0,0,12" />
+
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderCornerRadius" Value="4,4,0,0" />
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderPadding" Value="11,6,11,6" />
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderStyle" Value="{DynamicResource {x:Static navigation:ExplorerBar.ExpanderHeaderStyleKey}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Expander">
+					<StackPanel>
+						<ToggleButton Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"
+								ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+								IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsExpanded, Mode=TwoWay}"
+								Style="{TemplateBinding themes:HeaderedControlThemeProperties.HeaderStyle}" />
+						<shared:AnimatedExpanderDecorator x:Name="content"
+								CollapseDuration="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ExpanderThemeProperties.CollapseDuration)}"
+								ExpandDuration="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ExpanderThemeProperties.ExpandDuration)}">
+							<shared:AnimatedExpanderDecorator.CollapsedVisibility>
+								<MultiBinding Converter="{StaticResource ConditionalConverter}">
+									<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="(themes:ExpanderThemeProperties.CanMeasureCollapsedContent)" />
+									<Binding Source="{x:Static Visibility.Hidden}" />
+									<Binding Source="{x:Static Visibility.Collapsed}" />
+								</MultiBinding>
+							</shared:AnimatedExpanderDecorator.CollapsedVisibility>
+
+							<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+									BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+								<shared:PixelSnapper>
+									<ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+								</shared:PixelSnapper>
+							</Border>
+						</shared:AnimatedExpanderDecorator>
+					</StackPanel>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsExpanded" Value="True">
+							<Setter TargetName="content" Property="IsExpanded" Value="True" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigation:ExplorerBar.ExpanderAlternateStyleKey -->
+	<Style x:Key="{x:Static navigation:ExplorerBar.ExpanderAlternateStyleKey}" TargetType="{x:Type Expander}"
+			BasedOn="{StaticResource {x:Static navigation:ExplorerBar.ExpanderStyleKey}}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderAlternateBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ExplorerBarExpanderAlternateBorderNormalBrushKey}}" />
+
+		<Setter Property="themes:HeaderedControlThemeProperties.HeaderStyle"
+				Value="{DynamicResource {x:Static navigation:ExplorerBar.ExpanderHeaderAlternateStyleKey}}" />
+	</Style>
+
+	<!-- navigation:ExplorerBar -->
+	<Style x:Key="{x:Type navigation:ExplorerBar}" TargetType="{x:Type navigation:ExplorerBar}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceDarkBackgroundNormalBrushKey}}" />
+		
+		<Setter Property="Padding" Value="12,12,12,0" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="navigation:ExplorerBar">
+					<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+								  Style="{DynamicResource {x:Static themes:SharedResourceKeys.WorkspaceEmbeddedScrollViewerStyleKey}}">
+						<Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+							<ItemsPresenter />
+						</Border>
+					</ScrollViewer>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="ItemContainerStyleSelector" Value="{x:Null}">
+				<Setter Property="ItemContainerStyle" Value="{DynamicResource {x:Static navigation:ExplorerBar.ExpanderStyleKey}}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

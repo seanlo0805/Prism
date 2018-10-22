@@ -1,0 +1,69 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:editors="clr-namespace:ActiproSoftware.Windows.Controls.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:editorsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Editors.Primitives;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+	<!-- Drawing Brushes -->
+	<DrawingBrush PresentationOptions:Freeze="True" x:Key="CheckerBackgroundBrush" Viewport="0,0,10,10" TileMode="Tile"
+			ViewportUnits="Absolute">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<GeometryDrawing Brush="White">
+					<GeometryDrawing.Geometry>
+						<RectangleGeometry Rect="0,0 100,100" />
+					</GeometryDrawing.Geometry>
+				</GeometryDrawing>
+				<GeometryDrawing Brush="LightGray">
+					<GeometryDrawing.Geometry>
+						<GeometryGroup>
+							<RectangleGeometry Rect="0,0 50,50" />
+							<RectangleGeometry Rect="50,50 50,50" />
+						</GeometryGroup>
+					</GeometryDrawing.Geometry>
+				</GeometryDrawing>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+
+	<DrawingBrush PresentationOptions:Freeze="True" x:Key="NoBrush" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 0,0 L 15,0 L 15,15 L 0,15 Z" Brush="White" />
+					<GeometryDrawing Geometry="M 2,13 L 13,2">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="1" Brush="Red" StartLineCap="Triangle" EndLineCap="Triangle" />
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+
+	<!-- editorsPrimitives:BrushPreviewControl -->
+	<Style x:Key="{x:Type editorsPrimitives:BrushPreviewControl}" TargetType="{x:Type editorsPrimitives:BrushPreviewControl}">
+		<Setter Property="Background" Value="{StaticResource CheckerBackgroundBrush}" />
+		<Setter Property="BorderBrush" Value="DarkGray" />
+		<Setter Property="BorderThickness" Value="1" />
+
+		<Setter Property="Padding" Value="0" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editorsPrimitives:BrushPreviewControl}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<Border x:Name="innerBorder" Background="{TemplateBinding Foreground}" />
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="Foreground" Value="{x:Null}">
+							<Setter TargetName="innerBorder" Property="Background" Value="{StaticResource NoBrush}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

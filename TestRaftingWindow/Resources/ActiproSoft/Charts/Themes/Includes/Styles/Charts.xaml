@@ -1,0 +1,142 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+					xmlns:charts="clr-namespace:ActiproSoftware.Windows.Controls.Charts;assembly=ActiproSoftware.Charts.Wpf"
+					xmlns:primitives="clr-namespace:ActiproSoftware.Windows.Controls.Charts.Primitives;assembly=ActiproSoftware.Charts.Wpf" 
+					xmlns:palettes="clr-namespace:ActiproSoftware.Windows.Controls.Charts.Palettes;assembly=ActiproSoftware.Charts.Wpf"
+					xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+					>
+
+	<!-- AxisVisual -->
+	<Style TargetType="primitives:XAxisVisual">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="primitives:XAxisVisual">
+					<Canvas x:Name="PART_DrawingSurface" DataContext="{x:Null}">
+						<Canvas.Resources>
+							<DataTemplate x:Key="AxisVisualTitleTemplateVertical">
+								<TextBlock Text="{Binding}">
+									<TextBlock.RenderTransform>
+										<RotateTransform Angle="-90" />
+									</TextBlock.RenderTransform>
+								</TextBlock>
+							</DataTemplate>
+							<DataTemplate x:Key="AxisVisualTitleTemplateVerticalFarEdge">
+								<TextBlock Text="{Binding}">
+									<TextBlock.RenderTransform>
+										<RotateTransform Angle="90" />
+									</TextBlock.RenderTransform>
+								</TextBlock>
+							</DataTemplate>
+							<DataTemplate x:Key="AxisVisualTitleTemplateHorizontal">
+								<TextBlock Text="{Binding}" />
+							</DataTemplate>
+						</Canvas.Resources>
+					</Canvas>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style TargetType="primitives:YAxisVisual">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="primitives:YAxisVisual">
+					<Canvas x:Name="PART_DrawingSurface" DataContext="{x:Null}">
+						<Canvas.Resources>
+							<DataTemplate x:Key="AxisVisualTitleTemplateVertical">
+								<TextBlock Text="{Binding}">
+									<TextBlock.RenderTransform>
+										<RotateTransform Angle="-90" />
+									</TextBlock.RenderTransform>
+								</TextBlock>
+							</DataTemplate>
+							<DataTemplate x:Key="AxisVisualTitleTemplateVerticalFarEdge">
+								<TextBlock Text="{Binding}">
+									<TextBlock.RenderTransform>
+										<RotateTransform Angle="90" />
+									</TextBlock.RenderTransform>
+								</TextBlock>
+							</DataTemplate>
+							<DataTemplate x:Key="AxisVisualTitleTemplateHorizontal">
+								<TextBlock Text="{Binding}" />
+							</DataTemplate>
+						</Canvas.Resources>
+					</Canvas>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- GridVisual -->
+	<Style TargetType="primitives:GridVisual">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="primitives:GridVisual">
+					<Canvas x:Name="PART_GridDrawingSurface" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- XYAxisBase -->
+	<Style TargetType="primitives:XYAxisBase">
+		<Setter Property="TickMajorStyle">
+			<Setter.Value>
+				<Style TargetType="Shape">
+					<Setter Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartAxisTickMajorForegroundNormalBrushKey}}" />
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="TickMinorStyle">
+			<Setter.Value>
+				<Style TargetType="Shape">
+					<Setter Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartAxisTickMinorForegroundNormalBrushKey}}" />
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="primitives:XYAxisBase">
+					<Grid x:Name="PART_LogicalGrid" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- XYChart -->
+	<Style TargetType="charts:XYChart">
+		<Setter Property="AutomationProperties.Name" Value="XYChart"/>
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartBorderNormalBrushKey}}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="GridStripeAlternatingBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartGridStripeAlternateBackgroundNormalBrushKey}}"/>
+		<Setter Property="GridStripeBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartGridStripeBackgroundNormalBrushKey}}"/>
+		<Setter Property="GridLineMajorBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartGridLineMajorForegroundNormalBrushKey}}"/>
+		<Setter Property="GridLineMinorBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartGridLineMinorForegroundNormalBrushKey}}"/>
+		<Setter Property="Padding" Value="3" />
+
+		<Setter Property="AxisBaselineStyle">
+			<Setter.Value>
+				<Style TargetType="Shape">
+					<Setter Property="Stroke" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartAxisBaselineForegroundNormalBrushKey}}" />
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="SeriesStyleSelector">
+			<Setter.Value>
+				<palettes:SeriesPaletteStyleSelector />
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="charts:XYChart">
+					<Border BorderThickness="0" Padding="{TemplateBinding Padding}">
+						<primitives:ChartPanel x:Name="PART_ChartPanel"/>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

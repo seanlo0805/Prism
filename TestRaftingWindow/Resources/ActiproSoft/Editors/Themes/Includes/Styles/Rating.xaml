@@ -1,0 +1,160 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls.Editors;assembly=ActiproSoftware.Editors.Wpf">
+	
+	<!-- Rating -->
+	<Style x:Key="{x:Type controls:Rating}" TargetType="{x:Type controls:Rating}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type controls:Rating}">
+					<Border Background="{TemplateBinding Background}" 
+							BorderThickness="{TemplateBinding BorderThickness}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							Padding="{TemplateBinding Padding}">
+						<ItemsPresenter />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<Trigger Property="Orientation" Value="Horizontal">
+				<Setter Property="ItemsPanel">
+					<Setter.Value>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- Star Glyph -->
+	<Geometry x:Key="StarGlyphGeometry">M 0.5,5 L 4,4.5 L 6.5,0.5 L 9,4.5 L 12.5,5 L 9.5,8.5 L 10.5,12.5 L 6.5,10.5 L 2.5,12.5 L 3.5,8.5 Z</Geometry>
+
+	<!-- RatingItem -->
+	<Style x:Key="{x:Type controls:RatingItem}" TargetType="{x:Type controls:RatingItem}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type controls:RatingItem}">
+					<Border Background="{TemplateBinding Background}" 
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="{TemplateBinding Padding}">
+						<StackPanel Orientation="{TemplateBinding Orientation}">
+							<Grid>
+								<ContentPresenter x:Name="PART_BackgroundGlyphContentPresenter" Content="{x:Null}" />
+								<ContentPresenter x:Name="PART_ForegroundGlyphContentPresenter" Content="{x:Null}" />
+							</Grid>
+							<ContentPresenter />
+						</StackPanel>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="HoverGlyphTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<Path StrokeLineJoin="Round" StrokeThickness="0.85" Data="{StaticResource StarGlyphGeometry}">
+						<Path.Stroke>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#ffb840" Offset="0"/>
+								<GradientStop Color="#f5b753" Offset="0.5"/>
+								<GradientStop Color="#b77138" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Stroke>
+						<Path.Fill>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#fffae4" Offset="0"/>
+								<GradientStop Color="#fff2c0" Offset="0.5"/>
+								<GradientStop Color="#ffe166" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Fill>
+					</Path>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="NormalGlyphTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<Path StrokeLineJoin="Round" StrokeThickness="0.85" Fill="Transparent" Data="{StaticResource StarGlyphGeometry}">
+						<Path.Stroke>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#c3d0db" Offset="0"/>
+								<GradientStop Color="#b9c5cf" Offset="0.5"/>
+								<GradientStop Color="#b5bfc7" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Stroke>
+					</Path>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="SelectedAlternateBackgroundGlyphTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<Path StrokeLineJoin="Round" StrokeThickness="0.85" Fill="White" Data="{StaticResource StarGlyphGeometry}">
+						<Path.Stroke>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#80abbcca" Offset="0"/>
+								<GradientStop Color="#80a1b0bd" Offset="0.5"/>
+								<GradientStop Color="#8097a3ad" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Stroke>
+					</Path>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="SelectedAlternateForegroundGlyphTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<Path StrokeLineJoin="Round" StrokeThickness="0.85" Data="{StaticResource StarGlyphGeometry}">
+						<Path.Stroke>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#a6c2da" Offset="0"/>
+								<GradientStop Color="#8da7bd" Offset="0.5"/>
+								<GradientStop Color="#5c7487" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Stroke>
+						<Path.Fill>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#ffffff" Offset="0.4"/>
+								<GradientStop Color="#e6ecf2" Offset="0.6"/>
+								<GradientStop Color="#cbd7e0" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Fill>
+					</Path>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="SelectedGlyphTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<Path StrokeLineJoin="Round" StrokeThickness="0.85" Data="{StaticResource StarGlyphGeometry}">
+						<Path.Stroke>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#deb671" Offset="0"/>
+								<GradientStop Color="#ddb068" Offset="0.5"/>
+								<GradientStop Color="#a67a57" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Stroke>
+						<Path.Fill>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#ffffff" Offset="0"/>
+								<GradientStop Color="#fffae4" Offset="0.5"/>
+								<GradientStop Color="#f5db70" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Fill>
+					</Path>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

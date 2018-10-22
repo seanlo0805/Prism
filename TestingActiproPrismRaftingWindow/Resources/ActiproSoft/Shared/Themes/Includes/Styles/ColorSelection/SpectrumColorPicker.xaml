@@ -1,0 +1,121 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:colorSelection="clr-namespace:ActiproSoftware.Windows.Controls.ColorSelection;assembly=ActiproSoftware.Shared.Wpf"
+    >
+
+	<!-- colorSelection:SpectrumColorPicker -->
+	<Style x:Key="{x:Type colorSelection:SpectrumColorPicker}" TargetType="{x:Type colorSelection:SpectrumColorPicker}">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="Height" Value="270" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="Width" Value="270" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type colorSelection:SpectrumColorPicker}">
+					<ControlTemplate.Resources>
+						<DrawingBrush x:Key="CheckerBackgroundBrush" Viewport="0,0,10,10" TileMode="Tile" ViewportUnits="Absolute">
+							<DrawingBrush.Drawing>
+								<DrawingGroup>
+									<GeometryDrawing Brush="White">
+										<GeometryDrawing.Geometry>
+											<RectangleGeometry Rect="0,0 100,100" />
+										</GeometryDrawing.Geometry>
+									</GeometryDrawing>
+									<GeometryDrawing Brush="LightGray">
+										<GeometryDrawing.Geometry>
+											<GeometryGroup>
+												<RectangleGeometry Rect="0,0 50,50" />
+												<RectangleGeometry Rect="50,50 50,50" />
+											</GeometryGroup>
+										</GeometryDrawing.Geometry>
+									</GeometryDrawing>
+								</DrawingGroup>
+							</DrawingBrush.Drawing>
+						</DrawingBrush>
+					</ControlTemplate.Resources>
+					
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,0,0">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="1" />
+								<RowDefinition x:Name="swatchRow" Height="20" />
+								<RowDefinition x:Name="borderRow" Height="1" />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="1" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="1" />
+								<ColumnDefinition Width="20" />
+								<ColumnDefinition Width="1" />
+								<ColumnDefinition Width="20" />
+								<ColumnDefinition Width="1" />
+							</Grid.ColumnDefinitions>
+
+							<colorSelection:SpectrumSlice x:Name="PART_Slice" Grid.ColumnSpan="5" />
+							
+							<Rectangle Grid.Column="5" Grid.RowSpan="4" Width="1" Fill="{TemplateBinding BorderBrush}" />
+							
+							<colorSelection:SpectrumSlider x:Name="PART_Slider" Grid.Column="6" />
+							
+							<Rectangle Grid.Column="7" Grid.RowSpan="2" Width="1" Fill="{TemplateBinding BorderBrush}" />
+							
+							<Rectangle Grid.Row="1" Grid.ColumnSpan="7" Height="1" Fill="{TemplateBinding BorderBrush}" />
+							
+							<Rectangle Grid.Row="2" Grid.ColumnSpan="5" Fill="{StaticResource CheckerBackgroundBrush}" />
+							
+							<Button x:Name="InitialColorSwatch" Grid.Row="2" IsTabStop="False" Focusable="False" Command="{x:Static colorSelection:SpectrumColorPicker.SetColor}" 
+								CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InitialColor}"
+								Background="{TemplateBinding InitialColorBrush}">
+								<Button.Template>
+									<ControlTemplate TargetType="Button">
+										<Border Background="{TemplateBinding Background}">
+											<Border BorderBrush="#40FFFFFF" BorderThickness="1">
+												<ContentPresenter />
+											</Border>
+										</Border>
+									</ControlTemplate>
+								</Button.Template>
+							</Button>
+							
+							<Rectangle Grid.Row="2" Grid.Column="1" Width="1" Fill="{TemplateBinding BorderBrush}" />
+
+							<Border x:Name="MarkedColorSwatch" Grid.Row="2" Grid.Column="2"
+									Background="{Binding ElementName=PART_Slice, Path=MarkedColorBrush}">
+								<Border BorderBrush="#40FFFFFF" BorderThickness="1" />
+							</Border>
+
+							<Rectangle Grid.Row="2" Grid.Column="3" Width="1" Fill="{TemplateBinding BorderBrush}" />
+							
+							<Border Grid.Row="2" Grid.Column="4" Background="{TemplateBinding SelectedColorBrush}">
+								<Border BorderBrush="#40FFFFFF" BorderThickness="1" />
+							</Border>
+							
+							<Rectangle Grid.Row="3" Grid.ColumnSpan="6" Height="1" Fill="{TemplateBinding BorderBrush}" />
+						</Grid>
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsInitialColorVisible" Value="False">
+							<Setter TargetName="InitialColorSwatch" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="MarkedColorSwatch" Property="Grid.Column" Value="0" />
+							<Setter TargetName="MarkedColorSwatch" Property="Grid.ColumnSpan" Value="3" />
+						</Trigger>
+						<Trigger Property="IsColorSwatchRowVisible" Value="False">
+							<Setter TargetName="swatchRow" Property="Height" Value="0" />
+							<Setter TargetName="borderRow" Property="Height" Value="0" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Opacity" Value="{Binding DisabledOpacity, RelativeSource={RelativeSource Self}}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

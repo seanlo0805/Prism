@@ -1,0 +1,178 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:windows="clr-namespace:ActiproSoftware.Windows;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:compatibility="clr-namespace:ActiproSoftware.Compatibility;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:controls="clr-namespace:ActiproSoftware.Windows.Controls;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf"
+		>
+
+	<!-- 
+	
+		DOCUMENTVIEWER
+	
+	-->
+
+	<!-- themes:SharedResourceKeys.DocumentViewerStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.DocumentViewerStyleKey}" TargetType="{x:Type DocumentViewer}">
+		<Style.Resources>
+			<Style TargetType="ToolBar" />
+		</Style.Resources>
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DocumentViewerBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.DocumentViewerForegroundNormalBrushKey}}" />
+	</Style>
+
+	<!--
+	
+	LABEL
+	
+	-->
+
+	<!-- themes:SharedResourceKeys.LabelStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.LabelStyleKey}" TargetType="{x:Type Label}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="5" />
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="VerticalContentAlignment" Value="Top" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Label}">
+					<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
+							BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!--
+	
+	SEPARATOR
+	
+	-->
+
+	<!-- themes:SharedResourceKeys.SeparatorStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.SeparatorStyleKey}" TargetType="{x:Type Separator}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.SeparatorBackgroundNormalBrushKey}}" />
+
+		<Setter Property="Margin" Value="0,2,0,2" />
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Separator}">
+					<StackPanel>
+						<Rectangle Height="1" Fill="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+						<Rectangle Height="1" x:Name="innerBorder" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.SeparatorHighlightNormalBrushKey}}"
+								   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+					</StackPanel>
+
+					<ControlTemplate.Triggers>
+						<Trigger SourceName="innerBorder" Property="Fill" Value="Transparent">
+							<Setter TargetName="innerBorder" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!--
+	
+	THUMB
+	
+	-->
+
+	<!-- themes:SharedResourceKeys.ThumbStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.ThumbStyleKey}" TargetType="{x:Type Thumb}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ThumbBackgroundNormalBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Thumb}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid>
+							<Border BorderThickness="0,0,1,1" Background="{DynamicResource {x:Static themes:AssetResourceKeys.ThumbBorderLightNormalBrushKey}}"
+									BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ThumbBorderDarkDarkNormalBrushKey}}" />
+							<Border BorderThickness="0,0,1,1" Margin="1"
+									Background="{DynamicResource {x:Static themes:AssetResourceKeys.ThumbBorderLightLightNormalBrushKey}}"
+									BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ThumbBorderDarkNormalBrushKey}}" />
+							<Border Margin="2" Background="{TemplateBinding Background}" />
+						</Grid>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!--
+	
+	TOOLTIP
+	
+	-->
+
+	<!-- themes:SharedResourceKeys.ToolTipStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.ToolTipStyleKey}" TargetType="{x:Type ToolTip}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolTipBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolTipBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolTipBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolTipForegroundNormalBrushKey}}" />
+
+		<Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
+		<Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" />
+		<Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
+		<Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+
+		<Setter Property="Padding" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolTipPaddingNormalThicknessKey}}" />
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+
+		<Setter Property="HasDropShadow" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
+		<Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolTipBorderNormalCornerRadiusKey}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ToolTip}">
+					<controls:DropShadowChrome x:Name="shadow" Color="Transparent" SnapsToDevicePixels="true"
+							CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}">
+						<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
+								BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}">
+							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+									VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+						</Border>
+					</controls:DropShadowChrome>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="HasDropShadow" Value="true">
+							<Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
+							<Setter TargetName="shadow" Property="Color" Value="#71000000" />
+						</Trigger>
+						<DataTrigger Binding="{Binding Source={x:Static windows:SecurityHelper.IsFullTrust}, Mode=OneTime}" Value="False">
+							<Setter Property="themes:ThemeProperties.CornerRadius" Value="0" />
+						</DataTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

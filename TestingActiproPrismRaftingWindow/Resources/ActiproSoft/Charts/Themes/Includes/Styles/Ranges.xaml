@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:charts="clr-namespace:ActiproSoftware.Windows.Controls.Charts;assembly=ActiproSoftware.Charts.Wpf"
+					xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+					>
+
+	<!-- XYRange -->
+	<Style TargetType="charts:XYRange">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartRangeBackgroundNormalBrushKey}}" />
+	</Style>
+
+</ResourceDictionary>

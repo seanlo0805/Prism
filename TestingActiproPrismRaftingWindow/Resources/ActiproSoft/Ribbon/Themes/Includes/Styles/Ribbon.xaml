@@ -1,0 +1,604 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:media="clr-namespace:System.Windows.Media;assembly=PresentationCore"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonInput="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Input;assembly=ActiproSoftware.Ribbon.Wpf"
+	xmlns:ribbonThemes="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Themes;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+
+	<!-- Geometries -->
+	<Geometry x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=MenuScrollViewerLeftArrow}">M 3,0 L 0,2.5 L 3,5 Z</Geometry>
+	<Geometry x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=MenuScrollViewerRightArrow}">M 0,0 L 3,2.5 L 0,5 Z</Geometry>
+
+	<!-- ribbonControls:ContextualTabGroup -->
+	<Style x:Key="{x:Type ribbonControls:ContextualTabGroup}" TargetType="{x:Type ribbonControls:ContextualTabGroup}">
+        <Setter Property="AreEffectsEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContextualTabGroupAreEffectsEnabledBooleanKey}}" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="Padding" Value="7,0,7,0" />
+        <Setter Property="UseColors" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContextualTabGroupUseColorsBooleanKey}}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ribbonControls:ContextualTabGroup}">
+					<Grid>
+						<Grid Width="{TemplateBinding MaxTitleAreaWidth}" HorizontalAlignment="Left">
+							<Border x:Name="UpperBorder" Background="#ffffff" SnapsToDevicePixels="True">
+								<Border.OpacityMask>
+									<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+										<GradientStop Color="#80000000" Offset="0.8" />
+										<GradientStop Color="#68000000" Offset="1" />
+									</LinearGradientBrush>								
+								</Border.OpacityMask>
+								<Border Margin="1,0,1,0" BorderThickness="1,0,1,0" BorderBrush="{TemplateBinding OuterGlowBrush}" SnapsToDevicePixels="True">
+									<Rectangle Fill="{TemplateBinding OuterGlowBrush}" Opacity="0.2" />
+								</Border>
+							</Border>
+						
+							<Rectangle x:Name="UpperBackground" Margin="2,0,2,0" SnapsToDevicePixels="True">
+								<Rectangle.Fill>
+									<SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Color}" />
+								</Rectangle.Fill>
+								<Rectangle.OpacityMask>
+									<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+										<GradientStop Color="#ff000000" Offset="0.15" />
+										<GradientStop Color="#60000000" Offset="0.151" />
+										<GradientStop Color="#20000000" Offset="1" />
+									</LinearGradientBrush>								
+								</Rectangle.OpacityMask>
+							</Rectangle>
+													
+							<!-- Multiple iterations of blur shader effects are required to achive outer glow similar to what a single bitmap effect used to provide -->
+							<ribbonControlsPrimitives:ZeroWidthLabel x:Name="PART_LabelGlow3" Margin="{TemplateBinding Padding}"
+																	 TextElement.FontWeight="{TemplateBinding FontWeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  
+																	 Foreground="{TemplateBinding OuterGlowBrush}" Label="{TemplateBinding Label}" HorizontalContentAlignment="Center" SnapsToDevicePixels="True" />
+							<ribbonControlsPrimitives:ZeroWidthLabel x:Name="PART_LabelGlow2" Margin="{TemplateBinding Padding}"
+																	 TextElement.FontWeight="{TemplateBinding FontWeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  
+																	 Foreground="{TemplateBinding OuterGlowBrush}" Label="{TemplateBinding Label}" HorizontalContentAlignment="Center" SnapsToDevicePixels="True" />
+							<ribbonControlsPrimitives:ZeroWidthLabel x:Name="PART_LabelGlow1" Margin="{TemplateBinding Padding}"
+																	 TextElement.FontWeight="{TemplateBinding FontWeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  
+																	 Foreground="{TemplateBinding OuterGlowBrush}" Label="{TemplateBinding Label}" HorizontalContentAlignment="Center" SnapsToDevicePixels="True" />
+							
+							<ribbonControlsPrimitives:ZeroWidthLabel x:Name="PART_Label" Margin="{TemplateBinding Padding}"
+																	 TextElement.FontWeight="{TemplateBinding FontWeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  
+																	 Foreground="{TemplateBinding Foreground}" Label="{TemplateBinding Label}" HorizontalContentAlignment="Center" SnapsToDevicePixels="True" />
+						</Grid>
+						
+						<Border x:Name="LowerBorder" Height="20" Background="#ffffff" VerticalAlignment="Bottom" SnapsToDevicePixels="True">
+							<Border.RenderTransform>
+								<TranslateTransform Y="20" />
+							</Border.RenderTransform>
+							<Border.OpacityMask>
+								<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+									<GradientStop Color="#68000000" Offset="0" />
+									<GradientStop Color="#30000000" Offset="0.5" />
+									<GradientStop Color="#00000000" Offset="1" />
+								</LinearGradientBrush>								
+							</Border.OpacityMask>
+							<Border Margin="1,0,1,0" BorderThickness="1,0,1,0" BorderBrush="{TemplateBinding OuterGlowBrush}" SnapsToDevicePixels="True">
+								<Rectangle Fill="{TemplateBinding OuterGlowBrush}" Opacity="0.2" />
+							</Border>
+						</Border>
+						
+						<Rectangle x:Name="LowerBackground" Height="20" Margin="2,0,2,0" VerticalAlignment="Bottom" SnapsToDevicePixels="True">
+							<Rectangle.RenderTransform>
+								<TranslateTransform Y="20" />
+							</Rectangle.RenderTransform>
+							<Rectangle.Fill>
+								<SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Color}" />
+							</Rectangle.Fill>
+							<Rectangle.OpacityMask>
+								<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+									<GradientStop Color="#20000000" Offset="0" />
+									<GradientStop Color="#00000000" Offset="0.75" />
+								</LinearGradientBrush>								
+							</Rectangle.OpacityMask>
+						</Rectangle>
+					</Grid>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="OuterGlowBrush" Value="{x:Null}">
+							<Setter TargetName="PART_LabelGlow1" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_LabelGlow2" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_LabelGlow3" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="AreEffectsEnabled" Value="False">
+							<Setter TargetName="UpperBorder" Property="Visibility" Value="Hidden" />
+							<Setter TargetName="UpperBackground" Property="OpacityMask">
+								<Setter.Value>
+									<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+										<GradientStop Color="#ff000000" Offset="0.15" />
+										<GradientStop Color="#20000000" Offset="0.151" />
+									</LinearGradientBrush>								
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="LowerBorder" Property="Visibility" Value="Hidden" />
+							<Setter TargetName="LowerBackground" Property="Height" Value="{x:Static ribbonUI:RibbonMeasurements.ContextualTabGroupLowerBackgroundHeight}" />
+							<Setter TargetName="LowerBackground" Property="RenderTransform">
+								<Setter.Value>
+									<TranslateTransform Y="{x:Static ribbonUI:RibbonMeasurements.ContextualTabGroupLowerBackgroundHeight}" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="LowerBackground" Property="OpacityMask">
+								<Setter.Value>
+									<SolidColorBrush Color="#20000000" />
+								</Setter.Value>
+							</Setter>
+					        <Setter Property="FontWeight" Value="Normal" />
+							<Setter TargetName="PART_LabelGlow1" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_LabelGlow2" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_LabelGlow3" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_Label" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarForegroundActiveBrushKey}}" />
+						</Trigger>
+						<Trigger Property="UseColors" Value="False">
+							<Setter TargetName="PART_Label" Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarForegroundInactiveBrushKey}}" />
+							<Setter TargetName="UpperBackground" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActivePressedBrushKey}}" />
+							<Setter TargetName="UpperBackground" Property="Opacity" Value="0.8" />
+							<Setter TargetName="UpperBackground" Property="OpacityMask" Value="{x:Null}" />
+							<Setter TargetName="LowerBackground" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActivePressedBrushKey}}" />
+							<Setter TargetName="LowerBackground" Property="Opacity" Value="0.8" />
+							<Setter TargetName="LowerBackground" Property="OpacityMask" Value="{x:Null}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- ScrollLeftButton -->
+	<Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=ScrollLeftButton}" TargetType="{x:Type Button}">
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="Visibility" Value="Collapsed" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border x:Name="RibbonGroupScrollButtonBorder" Margin="{TemplateBinding Margin}" 
+						Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}"
+						BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBorderNormalBrushKey}}" 
+						BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3,0,0,3" SnapsToDevicePixels="True">
+						<Path Margin="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+								Fill="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemPopupGlyphBackgroundNormalBrushKey}}" 
+								Data="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=MenuScrollViewerLeftArrow}}"/>
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="RibbonGroupScrollButtonBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+		
+	<!-- ScrollRightButton -->
+	<Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=ScrollRightButton}" TargetType="{x:Type Button}">
+		<Setter Property="HorizontalAlignment" Value="Right" />		
+		<Setter Property="Visibility" Value="Collapsed" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border x:Name="RibbonGroupScrollButtonBorder" Margin="{TemplateBinding Margin}" 
+						Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}"
+						BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBorderNormalBrushKey}}" 
+						BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0,3,3,0" SnapsToDevicePixels="True">
+						<Path Margin="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+								Fill="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemPopupGlyphBackgroundNormalBrushKey}}" 
+								Data="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=MenuScrollViewerRightArrow}}"/>
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="RibbonGroupScrollButtonBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonLargeBackgroundHoverBrushKey}}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- ribbonControlsPrimitives:ScrollableHorizontalSelector -->
+	<Style x:Key="{x:Type ribbonControlsPrimitives:ScrollableHorizontalSelector}" TargetType="{x:Type ribbonControlsPrimitives:ScrollableHorizontalSelector}">
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ribbonControlsPrimitives:ScrollableHorizontalSelector">					
+					<ControlTemplate.Resources>
+						<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+					</ControlTemplate.Resources>
+					
+					<Grid ClipToBounds="True">
+						<StackPanel Orientation="Horizontal">
+							<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+								<ItemsPresenter.RenderTransform>
+									<TranslateTransform X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ScrollOffset}" />
+								</ItemsPresenter.RenderTransform>
+							</ItemsPresenter>
+						</StackPanel>
+						
+						<Button AutomationProperties.Name="TabScrollLeft" 
+							Margin="0,1,0,1" BorderThickness="1" Command="{x:Static ScrollBar.PageLeftCommand}" 
+							Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CanScrollLeft, Converter={StaticResource BooleanToVisibilityConverter}}" 
+							Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=ScrollLeftButton}}"/>
+						<Button AutomationProperties.Name="TabScrollRight" 
+							Margin="0,1,0,1" BorderThickness="1" Command="{x:Static ScrollBar.PageRightCommand}" 
+							Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CanScrollRight, Converter={StaticResource BooleanToVisibilityConverter}}" 
+							Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=ScrollRightButton}}"/>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ribbon:Ribbon -->
+	<Style x:Key="{x:Type ribbon:Ribbon}" TargetType="{x:Type ribbon:Ribbon}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonBackgroundNormalBrushKey}}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBorderNormalThicknessKey}}" />
+		<Setter Property="ribbonUI:PopupControlService.IsPopupOpen" Value="{Binding Path=IsMinimizedPopupOpen, RelativeSource={RelativeSource Self}, Mode=TwoWay}"/>
+		<Setter Property="themes:WindowChrome.ElementKind" Value="NonClientArea" />
+		<Setter Property="UseLayoutRounding" Value="False" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ribbon:Ribbon}">
+					<ControlTemplate.Resources>
+						<ribbonUI:ModifyColorConverter x:Key="ModifyColorConverter" />
+					</ControlTemplate.Resources>
+					
+					<AdornerDecorator SnapsToDevicePixels="True" themes:WindowChrome.ElementKind="NonClientArea">
+						<Grid SnapsToDevicePixels="True" themes:WindowChrome.ElementKind="NonClientArea">
+							<Grid.RowDefinitions>
+								<RowDefinition x:Name="titleBarGridRow" Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+								
+							<StackPanel x:Name="PART_TitleBar" SnapsToDevicePixels="True" themes:WindowChrome.ElementKind="TitleBar">
+								<Grid x:Name="TitleBar" Height="{x:Static ribbonUI:RibbonMeasurements.WindowCaptionHeight}" Background="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarBackgroundInactiveBrushKey}}" SnapsToDevicePixels="True" />
+								<Rectangle x:Name="TitleBarInnerBorder" Height="3" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarInnerBorderInactiveBrushKey}}" SnapsToDevicePixels="True" />
+							</StackPanel>
+							
+							<Rectangle x:Name="ribbonBackground" Grid.Row="1" Fill="{TemplateBinding Background}" SnapsToDevicePixels="True" />
+								
+							<Canvas Grid.RowSpan="3" themes:WindowChrome.ElementKind="NonClientArea">
+								<ribbonControlsPrimitives:QuickAccessToolBar x:Name="PART_QATAbove" Margin="2,0,0,0"
+									HorizontalAlignment="Left" VerticalAlignment="Top" IsBelowRibbon="False"
+									IsApplicationButtonVisible="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsRibbonWindowIconVisible}"
+									IsCustomizeButtonVisible="{TemplateBinding IsQuickAccessToolBarCustomizeButtonVisible}"
+									ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=QuickAccessToolBarItems}"
+									UseScenicLayout="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=UseScenicLayout}" />
+
+								<ItemsControl x:Name="PART_ContextualTabGroupContainer" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="False" IsTabStop="False"
+									Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ContextualTabGroupContainerHeight}" 
+									ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ContextualTabGroups}"
+									Canvas.Left="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ContextualTabGroupContainerOffset.X}"
+									Canvas.Top="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ContextualTabGroupContainerOffset.Y}">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<StackPanel Orientation="Horizontal"/>
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>											
+								</ItemsControl>
+							</Canvas>
+							
+							<Grid x:Name="TabOuterContainer" Grid.Row="1" SnapsToDevicePixels="True">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="*" />
+								</Grid.RowDefinitions>
+
+								<Popup x:Name="PART_MinimizedPopup" Grid.Row="1" AllowsTransparency="True" Width="{Binding ElementName=TabOuterContainer, Path=ActualWidth}"  
+									IsOpen="{Binding Path=IsMinimizedPopupOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+									<Grid x:Name="MinimizedPopupSpacer" Margin="0,10,0,10">
+										<shared:DropShadowChrome x:Name="MinimizedPopupDropShadow" Color="Transparent" SnapsToDevicePixels="True">
+											<Border x:Name="MinimizedPopupTabContentOuter" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" 
+													SnapsToDevicePixels="True"
+												Background="#FEFEFE">
+												<Border x:Name="MinimizedPopupTabContentInner" BorderThickness="1" 
+														SnapsToDevicePixels="True">
+													<Border.Background>
+														<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+															<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=60}" Offset="0" />
+															<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=20}" Offset="0.04" />
+															<GradientStop Color="{x:Static media:Colors.Transparent}" Offset="0.92" />
+															<GradientStop Color="#30808080" Offset="1" />
+														</LinearGradientBrush>
+													</Border.Background>
+													<Border.BorderBrush>
+														<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+															<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=60}" Offset="0" />
+															<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=20}" Offset="0.04" />
+															<GradientStop Color="{x:Static media:Colors.Transparent}" Offset="0.92" />
+														</LinearGradientBrush>
+													</Border.BorderBrush>
+													<ribbonControlsPrimitives:GroupPresenter x:Name="MinimizedPopupGroupContainer" Margin="0,0,1,0" Focusable="True" />
+												</Border>
+											</Border>
+										</shared:DropShadowChrome>
+										<Canvas>
+											<Rectangle x:Name="PART_MinimizedPopupTabLine" Height="100" IsHitTestVisible="False"
+													   Fill="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}">
+												<Rectangle.OpacityMask>
+													<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+														<LinearGradientBrush.GradientStops>
+															<GradientStop Offset="0.02" Color="#ff000000" />
+															<GradientStop Offset="0.021" Color="#00000000" />
+														</LinearGradientBrush.GradientStops>
+													</LinearGradientBrush>
+												</Rectangle.OpacityMask>
+											</Rectangle>
+										</Canvas>
+									</Grid>
+								</Popup>
+									
+								<Grid x:Name="TabContentContainer" Grid.Row="1" SnapsToDevicePixels="True">
+									<Border x:Name="TabContentOuter" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" 
+											CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True"
+										Background="#FEFEFE">
+										<Border x:Name="TabContentInner" BorderThickness="1" 
+												CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True">
+											<Border.Background>
+												<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+													<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=60}" Offset="0" />
+													<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=20}" Offset="0.04" />
+													<GradientStop Color="{x:Static media:Colors.Transparent}" Offset="0.92" />
+													<GradientStop Color="#30808080" Offset="1" />
+												</LinearGradientBrush>
+											</Border.Background>
+											<Border.BorderBrush>
+												<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+													<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=60}" Offset="0" />
+													<GradientStop Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor, Converter={StaticResource ModifyColorConverter}, ConverterParameter=20}" Offset="0.04" />
+													<GradientStop Color="{x:Static media:Colors.Transparent}" Offset="0.92" />
+												</LinearGradientBrush>
+											</Border.BorderBrush>
+											
+											<ribbonControlsPrimitives:GroupPresenter x:Name="GroupContainer" Margin="0,0,1,0"
+												ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedTab.Items}" />
+										</Border>
+									</Border>
+									
+									<Rectangle x:Name="aboveRibbonShadow" Grid.Row="1" Height="1" SnapsToDevicePixels="True" VerticalAlignment="Top" Visibility="Collapsed" Opacity="0.5">
+										<Rectangle.Fill>
+											<SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor}" />
+										</Rectangle.Fill>
+									</Rectangle>
+									<Rectangle x:Name="belowRibbonShadow" Grid.Row="1" Height="1" SnapsToDevicePixels="True" VerticalAlignment="Bottom" Visibility="Collapsed" Opacity="0.5">
+										<Rectangle.Fill>
+											<SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedContextualTabGroupColor}" />
+										</Rectangle.Fill>
+									</Rectangle>
+								</Grid>
+									
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto" />
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+										
+									<shared:ZeroSizeContentControl x:Name="applicationButtonContainer" HasHeight="False">
+										<ribbonControlsPrimitives:ApplicationButton x:Name="PART_ApplicationButton" 
+											Margin="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonMarginNormalThicknessKey}}"
+											UseScenicLayout="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=UseScenicLayout}"
+											IsPopupOpen="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsApplicationMenuOpen, Mode=TwoWay}" 
+											KeyTipAccessText="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ApplicationMenu.KeyTipAccessText}" 
+											Label="{TemplateBinding ApplicationButtonLabel}" 
+											ImageSourceSmall="{TemplateBinding ApplicationButtonImageSource}"
+											ScreenTipDescription="{TemplateBinding ApplicationButtonScreenTipDescription}"
+											ScreenTipFooter="{TemplateBinding ApplicationButtonScreenTipFooter}"
+											ScreenTipHelpUri="{TemplateBinding ApplicationButtonScreenTipHelpUri}"
+											ScreenTipHeader="{TemplateBinding ApplicationButtonScreenTipHeader}"
+											ScreenTipImageSource="{TemplateBinding ApplicationButtonScreenTipImageSource}"
+											/>
+									</shared:ZeroSizeContentControl>
+										
+									<ribbonControlsPrimitives:TabStrip x:Name="PART_TabStrip" Grid.Column="1" Margin="2,0,2,0" SelectedIndex="0">
+										<ribbonControlsPrimitives:TabStrip.RenderTransform>
+											<TranslateTransform Y="1" />
+										</ribbonControlsPrimitives:TabStrip.RenderTransform>
+									</ribbonControlsPrimitives:TabStrip>
+										
+									<ItemsControl x:Name="PART_TabPanelItemsControl" Grid.Column="2" Margin="0,0,0,1" Focusable="False" SnapsToDevicePixels="True"
+										ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TabPanelItems}">
+										<ItemsControl.ItemsPanel>
+											<ItemsPanelTemplate>
+												<StackPanel Orientation="Horizontal"/>
+											</ItemsPanelTemplate>
+										</ItemsControl.ItemsPanel>											
+									</ItemsControl>	
+								</Grid>
+									
+							</Grid>
+
+							<ribbonControlsPrimitives:QuickAccessToolBar x:Name="PART_QATBelow" Panel.ZIndex="-1" Grid.Row="2"
+								IsBelowRibbon="True"
+								IsCustomizeButtonVisible="{TemplateBinding IsQuickAccessToolBarCustomizeButtonVisible}"
+								SnapsToDevicePixels="True" Visibility="Collapsed"
+								UseScenicLayout="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=UseScenicLayout}" 
+								themes:ThemeProperties.CornerRadius="2"
+								/>
+							
+							<ContentPresenter Grid.Row="3" />
+						</Grid>							
+					</AdornerDecorator>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="BorderThickness" Value="0,0,0,1">
+							<Setter TargetName="PART_TabStrip" Property="RenderTransform" Value="{x:Null}" />
+						</Trigger>
+						<Trigger Property="IsRibbonWindowIconVisible" Value="True">
+							<Setter TargetName="PART_QATAbove" Property="Margin" Value="22,0,0,0" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="UseScenicLayout" Value="False" />
+								<Condition Property="IsApplicationButtonVisible" Value="True" />
+								<Condition Property="IsTitleBarAreaVisible" Value="True" />
+								<Condition Property="IsCollapsed" Value="False" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="PART_QATAbove" Property="Margin" Value="35,0,0,0" />
+						</MultiTrigger>
+						
+						<Trigger Property="IsApplicationButtonVisible" Value="False">
+							<Setter TargetName="applicationButtonContainer" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="UseScenicLayout" Value="False">
+							<Setter TargetName="PART_QATBelow" Property="IsApplicationButtonVisible" Value="{Binding IsApplicationButtonVisible, RelativeSource={RelativeSource TemplatedParent}}" />
+							<Setter TargetName="PART_QATAbove" Property="IsApplicationButtonVisible" Value="{Binding IsApplicationButtonVisible, RelativeSource={RelativeSource TemplatedParent}}" />
+						</Trigger>
+						<Trigger SourceName="PART_ApplicationButton" Property="UseScenicLayout" Value="False">
+							<Setter TargetName="PART_ApplicationButton" Property="Margin" Value="0" />
+						</Trigger>
+						<Trigger Property="IsTitleBarAreaVisible" Value="False">
+							<Setter TargetName="titleBarGridRow" Property="Height" Value="0" />
+						</Trigger>
+						<Trigger Property="SelectedContextualTabGroupColor" Value="Transparent">
+							<Setter TargetName="aboveRibbonShadow" Property="Fill" Value="Transparent" />
+							<Setter TargetName="belowRibbonShadow" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=BorderBrush}" />
+							<Setter TargetName="TabContentOuter" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}" />
+							<Setter TargetName="TabContentInner" Property="BorderBrush" Value="Transparent" />
+							<Setter TargetName="TabContentInner" Property="BorderThickness" Value="1" />
+							<Setter TargetName="MinimizedPopupTabContentOuter" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}" />
+							<Setter TargetName="MinimizedPopupTabContentInner" Property="BorderBrush" Value="Transparent" />
+							<Setter TargetName="MinimizedPopupTabContentInner" Property="BorderThickness" Value="1" />
+						</Trigger>
+						<Trigger Property="QuickAccessToolBarLocation" Value="Below">
+							<Setter TargetName="PART_QATAbove" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_QATAbove" Property="ItemsSource" Value="{x:Null}" />
+							<Setter TargetName="PART_QATBelow" Property="Visibility" Value="Visible" />
+							<Setter TargetName="PART_QATBelow" Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=QuickAccessToolBarItems}" />
+						</Trigger>
+						<Trigger Property="QuickAccessToolBarLocation" Value="None">
+							<Setter TargetName="PART_QATAbove" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_QATAbove" Property="ItemsSource" Value="{x:Null}" />
+							<Setter TargetName="PART_QATBelow" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_QATBelow" Property="ItemsSource" Value="{x:Null}" />
+						</Trigger>
+						<Trigger SourceName="PART_TabStrip" Property="IsMinContentWidth" Value="True">
+							<Setter TargetName="PART_ContextualTabGroupContainer" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsCollapsed" Value="True">
+							<Setter TargetName="PART_TitleBar" Property="Visibility" Value="Collapsed" />							
+							<Setter TargetName="TabOuterContainer" Property="Visibility" Value="Collapsed" />							
+							<Setter TargetName="PART_QATAbove" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_QATBelow" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="applicationButtonContainer" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_ContextualTabGroupContainer" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						
+						<Trigger Property="IsMinimized" Value="True">
+							<Setter TargetName="TabContentContainer" Property="Visibility" Value="Collapsed" />							
+							<Setter TargetName="GroupContainer" Property="ItemsSource" Value="{x:Null}" />
+							<Setter TargetName="MinimizedPopupGroupContainer" Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedTab.Items}" />
+						</Trigger>
+						<Trigger SourceName="PART_MinimizedPopup" Property="HasDropShadow" Value="True">
+							<Setter TargetName="MinimizedPopupSpacer" Property="Margin" Value="0,10,-5,10" />
+							<Setter TargetName="MinimizedPopupDropShadow" Property="Margin" Value="0,0,5,5" />
+							<Setter TargetName="MinimizedPopupDropShadow" Property="Color" Value="#40000000" />
+							<Setter TargetName="MinimizedPopupTabContentOuter" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.CornerRadius)}" />
+							<Setter TargetName="MinimizedPopupTabContentInner" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.CornerRadius)}" />
+						</Trigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding ElementName=PART_MinimizedPopup, Path=HasDropShadow}" Value="True"/>
+								<Condition Binding="{Binding Source={x:Static SystemParameters.MenuDropAlignment}}" Value="True"/>
+							</MultiDataTrigger.Conditions>
+							<MultiDataTrigger.Setters>
+								<Setter TargetName="PART_MinimizedPopup" Property="HorizontalOffset" Value="5" />
+							</MultiDataTrigger.Setters>
+						</MultiDataTrigger>			
+						<Trigger SourceName="PART_MinimizedPopup" Property="IsOpen" Value="True">
+							<Setter TargetName="PART_MinimizedPopup" Property="PopupAnimation" Value="Fade" />
+						</Trigger>
+						
+						<Trigger Property="IsHostedInRibbonWindow" Value="True">
+							<Setter TargetName="PART_TitleBar" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsWindowActive" Value="True">
+							<Setter TargetName="PART_QATAbove" Property="Tag" Value="WA" />
+							<Setter TargetName="TitleBar" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarBackgroundActiveBrushKey}}" />
+							<Setter TargetName="TitleBarInnerBorder" Property="Fill" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarInnerBorderActiveBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsGlassExtensionEnabled" Value="True">
+							<Setter TargetName="aboveRibbonShadow" Property="Visibility" Value="Visible" />
+							<Setter TargetName="belowRibbonShadow" Property="Visibility" Value="Visible" />
+							<Setter TargetName="TabContentOuter" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}" />
+							<Setter TargetName="TabContentInner" Property="Background" Value="Transparent" />
+							<Setter TargetName="TabContentInner" Property="BorderBrush" Value="Transparent" />
+							<Setter TargetName="TabContentInner" Property="BorderThickness" Value="0" />
+							<Setter TargetName="MinimizedPopupTabContentOuter" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}" />
+							<Setter TargetName="MinimizedPopupTabContentInner" Property="Background" Value="Transparent" />
+							<Setter TargetName="MinimizedPopupTabContentInner" Property="BorderBrush" Value="Transparent" />
+							<Setter TargetName="MinimizedPopupTabContentInner" Property="BorderThickness" Value="0" />
+							<Setter TargetName="PART_QATBelow" Property="BorderThickness" Value="0,1,0,1" />
+							<Setter TargetName="PART_QATBelow" Property="themes:ThemeProperties.CornerRadius" Value="0" />
+						</Trigger>
+						<Trigger Property="IsGlassActive" Value="True">
+							<Setter Property="BorderThickness" Value="0,1,0,1" />
+							<Setter TargetName="PART_QATAbove" Property="Tag" Value="GN" />
+							<Setter TargetName="PART_ContextualTabGroupContainer" Property="Foreground" Value="Black" />							
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsHostedInRibbonWindow" Value="True" />
+								<Condition Property="IsGlassExtensionEnabled" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="ribbonBackground" Property="Fill" Value="{x:Null}" />							
+							<Setter TargetName="TabContentContainer" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background}" />							
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsGlassActive" Value="False" />
+								<Condition Property="IsGlassExtensionEnabled" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="PART_QATBelow" Property="BorderThickness" Value="1" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsGlassActive" Value="True" />
+								<Condition Property="IsGlassExtensionEnabled" Value="True" />
+								<Condition Property="UseScenicLayout" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter TargetName="PART_ApplicationButton" Property="Margin" Value="0,1,1,0" />
+						</MultiTrigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsGlassActive}" Value="True" />
+								<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsRibbonWindowMaximized}" Value="True" />
+								<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Major, Mode=OneTime}" Value="6" />
+								<Condition Binding="{Binding Source={x:Static system:Environment.OSVersion}, Path=Version.Minor, Mode=OneTime}" Value="0" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="PART_QATAbove" Property="Tag" Value="GM" />
+							<Setter TargetName="PART_ContextualTabGroupContainer" Property="Foreground" Value="White" />
+						</MultiDataTrigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsGlassActive}" Value="True" />
+								<Condition Binding="{Binding Source={x:Static system:Environment.Version}, Path=Major, Mode=OneTime}" Value="4" />
+								<Condition Binding="{Binding Source={x:Static system:Environment.Version}, Path=Minor, Mode=OneTime}" Value="0" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="PART_ContextualTabGroupContainer" Property="Foreground" Value="White" />
+						</MultiDataTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+		
+</ResourceDictionary>

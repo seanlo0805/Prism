@@ -1,0 +1,717 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared" 
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:productsNavigation="clr-namespace:ActiproSoftware.Products.Navigation;assembly=ActiproSoftware.Navigation.Wpf"
+		xmlns:navigation="clr-namespace:ActiproSoftware.Windows.Controls.Navigation;assembly=ActiproSoftware.Navigation.Wpf"
+		xmlns:navigationPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Navigation.Primitives;assembly=ActiproSoftware.Navigation.Wpf"
+		>
+
+	<!-- Converters -->
+	<shared:StringFormatConverter x:Key="StringFormatConverter" />
+
+	<!-- NavigationBarToggleMinimizationButtonTemplate -->
+	<Style x:Key="NavigationBarToggleMinimizationButtonStyle" TargetType="Button">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Command" Value="{x:Static navigation:NavigationBarCommands.ToggleMinimization}" />
+        <Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundNormalBrushKey}}" />
+		<Setter Property="Height" Value="18" />
+		<Setter Property="Width" Value="18" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+							 CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}">
+						<Border x:Name="innerBorder" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}">
+							<ContentPresenter />
+						</Border>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundPressedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundHoverBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigationPrimitives:NavigationBarMinimizedPopupToggleButton -->
+	<Style x:Key="{x:Type navigationPrimitives:NavigationBarMinimizedPopupToggleButton}" TargetType="navigationPrimitives:NavigationBarMinimizedPopupToggleButton">
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundNormalBrushKey}}" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="Padding" Value="2" />
+		<Setter Property="IsEnabled" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=IsPopupEnabled}" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=Title, Converter={StaticResource StringFormatConverter}, ConverterParameter={productsNavigation:SRExtension UINavigationBarToggleMinimizedPopupButtonExpandToolTip}}" />
+		<Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=Title, Converter={StaticResource StringFormatConverter}, ConverterParameter={productsNavigation:SRExtension UINavigationBarToggleMinimizedPopupButtonExpandToolTip}}" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="navigationPrimitives:NavigationBarMinimizedPopupToggleButton">
+					<Border Background="Transparent" Padding="1">
+						<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
+								BorderBrush="{TemplateBinding BorderBrush}">
+							<Border x:Name="innerBorder" BorderBrush="Transparent" BorderThickness="1" Padding="{TemplateBinding Padding}">
+								<ContentPresenter x:Name="content" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+									<ContentPresenter.LayoutTransform>
+										<RotateTransform Angle="270" />
+									</ContentPresenter.LayoutTransform>
+								</ContentPresenter>
+							</Border>
+						</Border>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsChecked" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationBarPopupButtonBackgroundOpenedBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderSelectedNormalBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderSelectedNormalBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationBarPopupButtonBackgroundHoverBrushKey}}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderHoverBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderInnerBorderHoverBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+						<DataTrigger
+								Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=MinimizesLeft}"
+								Value="False">
+							<Setter TargetName="content" Property="LayoutTransform">
+								<Setter.Value>
+									<RotateTransform Angle="90" />
+								</Setter.Value>
+							</Setter>
+						</DataTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigationPrimitives:NavigationBarSplitter -->
+	<Style x:Key="{x:Type navigationPrimitives:NavigationBarSplitter}" TargetType="{x:Type navigationPrimitives:NavigationBarSplitter}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationBarSplitterBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderSelectedNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Cursor" Value="SizeNS" />
+		<Setter Property="Height" Value="7" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="navigationPrimitives:NavigationBarSplitter">
+					<Border Background="Transparent" Padding="0,1,0,1">
+						<Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}">
+						</Border>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- navigationPrimitives:NavigationBarHeader -->
+	<Style x:Key="{x:Type navigationPrimitives:NavigationBarHeader}" TargetType="{x:Type navigationPrimitives:NavigationBarHeader}">
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundNormalBrushKey}}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="navigationPrimitives:NavigationBarHeader">
+					<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
+							BorderBrush="{TemplateBinding BorderBrush}">
+						<DockPanel LastChildFill="True">
+							<Button x:Name="toggleMinimizationButton" Margin="3" DockPanel.Dock="Right" VerticalAlignment="Center"
+									ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=Title, Converter={StaticResource StringFormatConverter}, ConverterParameter={productsNavigation:SRExtension UINavigationBarToggleMinimizationButtonMinimizeToolTip}}"
+									AutomationProperties.Name="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=Title, Converter={StaticResource StringFormatConverter}, ConverterParameter={productsNavigation:SRExtension UINavigationBarToggleMinimizationButtonMinimizeToolTip}}"
+									Style="{StaticResource NavigationBarToggleMinimizationButtonStyle}">
+								<Path HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"
+										Stroke="{Binding ElementName=toggleMinimizationButton, Path=Foreground}"
+										StrokeThickness="2" SnapsToDevicePixels="false" Data="M 1,1.5  L 4.5,5  L 8,1.5">
+									<Path.LayoutTransform>
+										<RotateTransform Angle="90" />
+									</Path.LayoutTransform>
+								</Path>
+							</Button>
+							<shared:PixelSnapper>
+								<ContentPresenter x:Name="content" VerticalAlignment="Center" />
+							</shared:PixelSnapper>
+						</DockPanel>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<DataTrigger
+								Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=IsMinimized}"
+								Value="True">
+							<Setter TargetName="toggleMinimizationButton" Property="ToolTip"
+									Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=Title, Converter={StaticResource StringFormatConverter}, ConverterParameter={productsNavigation:SRExtension UINavigationBarToggleMinimizationButtonExpandToolTip}}" />
+							<Setter TargetName="content" Property="Width" Value="0" />
+							<Setter TargetName="content" Property="Visibility" Value="Hidden" />
+						</DataTrigger>
+						<DataTrigger
+								Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=IsMinimizable}"
+								Value="False">
+							<Setter TargetName="toggleMinimizationButton" Property="Visibility" Value="Collapsed" />
+						</DataTrigger>
+						<DataTrigger
+								Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=MinimizesLeft}"
+								Value="False">
+							<Setter TargetName="toggleMinimizationButton" Property="DockPanel.Dock" Value="Left" />
+						</DataTrigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition
+										Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=MinimizesLeft}"
+										Value="True" />
+								<Condition
+										Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=IsMinimized}"
+										Value="True" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="toggleMinimizationButton" Property="LayoutTransform">
+								<Setter.Value>
+									<ScaleTransform ScaleX="-1" />
+								</Setter.Value>
+							</Setter>
+						</MultiDataTrigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition
+										Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=MinimizesLeft}"
+										Value="False" />
+								<Condition
+										Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=IsMinimized}"
+										Value="False" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="toggleMinimizationButton" Property="LayoutTransform">
+								<Setter.Value>
+									<ScaleTransform ScaleX="-1" />
+								</Setter.Value>
+							</Setter>
+						</MultiDataTrigger>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition
+										Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=MinimizesLeft}"
+										Value="False" />
+								<Condition
+										Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type navigation:NavigationBar}}, Path=IsMinimized}"
+										Value="True" />
+							</MultiDataTrigger.Conditions>
+							<Setter TargetName="toggleMinimizationButton" Property="LayoutTransform" Value="{x:Null}" />
+						</MultiDataTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- NavigationPaneHeaderTemplate -->
+	<DataTemplate x:Key="NavigationPaneHeaderTemplate" DataType="{x:Type navigation:NavigationPane}">
+		<TextBlock Margin="7,3,7,3" FontWeight="Bold" Text="{Binding}" TextTrimming="CharacterEllipsis" />
+	</DataTemplate>
+
+	<!-- NavigationPaneButtonStyle -->
+	<Style x:Key="NavigationPaneButtonStyle" TargetType="Button">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<ContentPresenter />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- NavigationPaneLargeButtonTemplate -->
+	<ControlTemplate x:Key="NavigationPaneLargeButtonTemplate" TargetType="{x:Type navigation:NavigationPane}">
+		<Border Background="Transparent" Padding="1">
+			<Button x:Name="Button" Background="{TemplateBinding HeaderBackgroundNormal}" BorderBrush="{TemplateBinding HeaderOuterBorderNormal}"
+					BorderThickness="{TemplateBinding BorderThickness}" Command="{x:Static navigation:NavigationBarCommands.SelectPane}"
+					CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource NavigationPaneButtonStyle}"
+					IsTabStop="False" ToolTip="{TemplateBinding ToolTip}">
+				<Grid>
+					<Rectangle x:Name="InnerBorder" Stroke="{TemplateBinding HeaderInnerBorderNormal}" StrokeThickness="1" />
+
+					<Grid Margin="{TemplateBinding Padding}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Decorator Width="32" Height="32">
+							<shared:DynamicImage x:Name="Image" MaxWidth="32" MaxHeight="32" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"
+									StretchDirection="DownOnly" Source="{TemplateBinding ImageSourceLarge}" />
+						</Decorator>
+						<TextBlock x:Name="Label" Grid.Column="1" Margin="2" FontWeight="Bold" Foreground="{TemplateBinding HeaderForegroundNormal}"
+								Text="{TemplateBinding Title}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+					</Grid>
+				</Grid>
+			</Button>
+		</Border>
+			
+		<ControlTemplate.Triggers>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="VariantSize" Value="Medium" />
+					<Condition Property="ToolTip" Value="{x:Null}" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="Button" Property="ToolTip" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+			</MultiTrigger>
+			<Trigger Property="VariantSize" Value="Medium">
+				<Setter TargetName="Label" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="ImageSourceLarge" Value="{x:Null}">
+				<Setter TargetName="Image" Property="Source" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ImageSourceSmall}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOverPane" Value="True" />
+					<Condition Property="IsExpanded" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="Button" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHover}" />
+				<Setter TargetName="Button" Property="BorderBrush"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderHover}" />
+				<Setter TargetName="InnerBorder" Property="Fill"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightHover}" />
+				<Setter TargetName="InnerBorder" Property="Stroke"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderHover}" />
+				<Setter TargetName="Label" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderForegroundSelected}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOverPane" Value="False" />
+					<Condition Property="IsExpanded" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="Button" Property="Background"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundSelected}" />
+				<Setter TargetName="Button" Property="BorderBrush"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderSelected}" />
+				<Setter TargetName="InnerBorder" Property="Fill"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightSelected}" />
+				<Setter TargetName="InnerBorder" Property="Stroke"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderSelected}" />
+				<Setter TargetName="Label" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderForegroundSelected}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOverPane" Value="True" />
+					<Condition Property="IsExpanded" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="Button" Property="Background"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHoverSelected}" />
+				<Setter TargetName="Button" Property="BorderBrush"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="Fill"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="Stroke"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderHoverSelected}" />
+				<Setter TargetName="Label" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderForegroundSelected}" />
+			</MultiTrigger>
+			<Trigger SourceName="Button" Property="IsPressed" Value="True">
+				<Setter TargetName="Button" Property="Background"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHoverSelected}" />
+				<Setter TargetName="Button" Property="BorderBrush"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="Fill"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="Stroke"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderHoverSelected}" />
+				<Setter TargetName="Label" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderForegroundSelected}" />
+			</Trigger>
+			<Trigger Property="IsExpanded" Value="True">
+				<Setter TargetName="Label" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderForegroundSelected}" />
+			</Trigger>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter TargetName="Image" Property="Opacity" Value="0.4" />
+				<Setter TargetName="Label" Property="Foreground"
+						Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderForegroundDisabled}" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- NavigationPaneSmallButtonTemplate -->
+	<ControlTemplate x:Key="NavigationPaneSmallButtonTemplate" TargetType="{x:Type navigation:NavigationPane}">
+		<Border Background="Transparent" Padding="0,1,0,1">
+			<Button x:Name="Button" Background="{TemplateBinding HeaderBackgroundNormal}" BorderBrush="{TemplateBinding HeaderOuterBorderNormal}"
+					BorderThickness="{TemplateBinding BorderThickness}" Command="{x:Static navigation:NavigationBarCommands.SelectPane}"
+					CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource NavigationPaneButtonStyle}"
+					ToolTip="{TemplateBinding ToolTip}" IsTabStop="False">
+				<Grid>
+					<Border x:Name="InnerBorder" BorderBrush="{TemplateBinding HeaderInnerBorderNormal}" BorderThickness="1" />
+				
+					<Decorator Width="16" Height="16" Margin="{TemplateBinding Padding}">
+						<shared:DynamicImage x:Name="Image" MaxWidth="16" MaxHeight="16" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"
+							   StretchDirection="DownOnly" Source="{TemplateBinding ImageSourceSmall}" />
+					</Decorator>
+				</Grid>
+			</Button>
+		</Border>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="ToolTip" Value="{x:Null}">
+				<Setter TargetName="Button" Property="ToolTip" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+			</Trigger>
+			<Trigger Property="ImageSourceSmall" Value="{x:Null}">
+				<Setter TargetName="Image" Property="Source" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ImageSourceLarge}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOverPane" Value="True" />
+					<Condition Property="IsExpanded" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="Button" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHover}" />
+				<Setter TargetName="Button" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderHover}" />
+				<Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightHover}" />
+				<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderHover}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOverPane" Value="False" />
+					<Condition Property="IsExpanded" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="Button" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundSelected}" />
+				<Setter TargetName="Button" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderSelected}" />
+				<Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightSelected}" />
+				<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderSelected}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOverPane" Value="True" />
+					<Condition Property="IsExpanded" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="Button" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHoverSelected}" />
+				<Setter TargetName="Button" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderHoverSelected}" />
+			</MultiTrigger>
+			<Trigger SourceName="Button" Property="IsPressed" Value="True">
+				<Setter TargetName="Button" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHoverSelected}" />
+				<Setter TargetName="Button" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderOuterBorderHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderBackgroundHighlightHoverSelected}" />
+				<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderInnerBorderHoverSelected}" />
+			</Trigger>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter TargetName="Image" Property="Opacity" Value="0.4" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- NavigationPane -->
+	<Style x:Key="{x:Type navigation:NavigationPane}" TargetType="{x:Type navigation:NavigationPane}">
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="HeaderBackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBackgroundHoverBrushKey}}" />
+		<Setter Property="HeaderBackgroundHoverSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBackgroundSelectedHoverBrushKey}}" />
+		<Setter Property="HeaderBackgroundNormal" Value="Transparent" />
+		<Setter Property="HeaderBackgroundSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBackgroundSelectedNormalBrushKey}}" />
+		<Setter Property="HeaderBackgroundHighlightHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderHighlightHoverBrushKey}}" />
+		<Setter Property="HeaderBackgroundHighlightHoverSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderHighlightSelectedHoverBrushKey}}" />
+		<Setter Property="HeaderBackgroundHighlightSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderHighlightSelectedNormalBrushKey}}" />
+		<Setter Property="HeaderForegroundDisabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+		<Setter Property="HeaderForegroundNormal" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundNormalBrushKey}}" />
+		<Setter Property="HeaderForegroundSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundHoverBrushKey}}" />
+		<Setter Property="HeaderInnerBorderHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderInnerBorderHoverBrushKey}}" />
+		<Setter Property="HeaderInnerBorderHoverSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderInnerBorderSelectedHoverBrushKey}}" />
+		<Setter Property="HeaderInnerBorderNormal" Value="Transparent" />
+		<Setter Property="HeaderInnerBorderSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderInnerBorderSelectedNormalBrushKey}}" />
+		<Setter Property="HeaderOuterBorderHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderHoverBrushKey}}" />
+		<Setter Property="HeaderOuterBorderHoverSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderSelectedHoverBrushKey}}" />
+		<Setter Property="HeaderOuterBorderNormal" Value="{Binding RelativeSource={RelativeSource Self}, Path=BorderBrush}" />
+		<Setter Property="HeaderOuterBorderSelected" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderSelectedNormalBrushKey}}" />
+		<Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Self}, Path=Title}" />
+		<Setter Property="HeaderTemplate" Value="{StaticResource NavigationPaneHeaderTemplate}" />
+		<Setter Property="Padding" Value="0,-2,0,-2" />
+
+		<Style.Triggers>
+			<Trigger Property="VariantSize" Value="Large">
+				<Setter Property="Template" Value="{StaticResource NavigationPaneLargeButtonTemplate}" />
+			</Trigger>
+			<Trigger Property="VariantSize" Value="Medium">
+				<Setter Property="Template" Value="{StaticResource NavigationPaneLargeButtonTemplate}" />
+			</Trigger>
+			<Trigger Property="VariantSize" Value="Small">
+				<Setter Property="Template" Value="{StaticResource NavigationPaneSmallButtonTemplate}" />
+				<Setter Property="Padding" Value="3" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- navigationPrimitives:NavigationBarCustomizeButton -->
+	<Style x:Key="{x:Type navigationPrimitives:NavigationBarCustomizeButton}" TargetType="{x:Type navigationPrimitives:NavigationBarCustomizeButton}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="MinHeight" Value="26" />
+		<Setter Property="MinWidth" Value="16" />
+		<Setter Property="ToolTip" Value="{productsNavigation:SRExtension UINavigationBarCustomizeButtonToolTip}" />
+		<Setter Property="AutomationProperties.Name" Value="{productsNavigation:SRExtension UINavigationBarCustomizeButtonToolTip}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type navigationPrimitives:NavigationBarCustomizeButton}">
+					<Border Background="Transparent" Padding="0,1,1,1">
+						<Border x:Name="OuterBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}">
+							<Border x:Name="InnerBorder"
+									BorderBrush="Transparent"
+									BorderThickness="1">
+								<Canvas Width="5" Height="4" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True">
+									<Path Data="M 0,1 L 2.5,4 L 5,1 Z" Fill="#FFFFFF" Stroke="#FFFFFF" StrokeThickness="0.5" SnapsToDevicePixels="True" />
+									<Path Data="M 0,0 L 2.5,3 L 5,0 Z" Fill="{TemplateBinding Foreground}" />
+								</Canvas>
+							</Border>
+						</Border>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderHoverBrushKey}}" />
+							<Setter TargetName="InnerBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderInnerBorderHoverBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPopupOpen" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBackgroundSelectedHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderBorderSelectedHoverBrushKey}}" />
+							<Setter TargetName="InnerBorder" Property="BorderBrush"
+									Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderInnerBorderSelectedHoverBrushKey}}" />
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.NavigationPaneHeaderForegroundHoverBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- NavigationBarExpandedTemplate -->
+	<ControlTemplate x:Key="NavigationBarExpandedTemplate" TargetType="{x:Type navigation:NavigationBar}">
+		<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+				Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+			<!-- 9/7/2011 - Switched to Grid so ItemsPresenter can be Hidden instead of Collapsed (393-15F9DEA2-88D0) -->
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<navigationPrimitives:NavigationBarHeader x:Name="header"
+						FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderFontSize}"
+						Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Header}"
+						ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.HeaderTemplate}"
+						ContentTemplateSelector="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.HeaderTemplateSelector}"
+						AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Title}" />
+
+				<shared:AutomationContentControl Grid.Row="1">
+					<Border Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Background}">
+						<ContentPresenter x:Name="PART_ContentArea"
+								Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Content}"
+								ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.ContentTemplate}"
+								ContentTemplateSelector="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.ContentTemplateSelector}" />
+					</Border>
+				</shared:AutomationContentControl>
+
+				<navigationPrimitives:NavigationBarSplitter x:Name="PART_Splitter" Grid.Row="2" />
+				<ItemsPresenter x:Name="Presenter" Grid.Row="3" />
+			</Grid>
+		</Border>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="ArePanesVisible" Value="False">
+				<Setter TargetName="PART_Splitter" Property="Visibility" Value="Collapsed" />
+				<!-- 9/7/2011 - Updated to hide Presenter, instead of collapse it so the item containers are still generated (393-15F9DEA2-88D0) -->
+				<Setter TargetName="Presenter" Property="Visibility" Value="Hidden" />
+				<Setter TargetName="Presenter" Property="Grid.Row" Value="1" />
+			</Trigger>
+			<Trigger Property="IsHeaderContentVisible" Value="False">
+				<Setter TargetName="header" Property="Content" Value="{x:Null}" />
+				<Setter TargetName="header" Property="ContentTemplate" Value="{x:Null}" />
+				<Setter TargetName="header" Property="ContentTemplateSelector" Value="{x:Null}" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- NavigationBarExpandedNoHeaderContentTemplate -->
+	<ControlTemplate x:Key="NavigationBarExpandedNoHeaderContentTemplate" TargetType="{x:Type navigation:NavigationBar}">
+		<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+				Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+			<!-- 9/7/2011 - Switched to Grid so ItemsPresenter can be Hidden instead of Collapsed (393-15F9DEA2-88D0) -->
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<shared:AutomationContentControl>
+					<Border Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Background}">
+						<ContentPresenter x:Name="PART_ContentArea"
+								Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Content}"
+								ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.ContentTemplate}"
+								ContentTemplateSelector="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.ContentTemplateSelector}" />
+					</Border>
+				</shared:AutomationContentControl>
+
+				<navigationPrimitives:NavigationBarSplitter x:Name="PART_Splitter" Grid.Row="1" />
+				<ItemsPresenter x:Name="Presenter" Grid.Row="2" />
+
+				<navigationPrimitives:NavigationBarHeader x:Name="header" Grid.RowSpan="3" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0"
+						AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Title}" />
+			</Grid>
+		</Border>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="ArePanesVisible" Value="False">
+				<Setter TargetName="PART_Splitter" Property="Visibility" Value="Collapsed" />
+				<!-- 9/7/2011 - Updated to hide Presenter, instead of collapse it so the item containers are still generated (393-15F9DEA2-88D0) -->
+				<Setter TargetName="Presenter" Property="Visibility" Value="Hidden" />
+				<Setter TargetName="Presenter" Property="Grid.Row" Value="0" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- NavigationBarMinimizedTemplate -->
+	<ControlTemplate x:Key="NavigationBarMinimizedTemplate" TargetType="{x:Type navigation:NavigationBar}">
+		<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+				Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" MinHeight="16" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<navigationPrimitives:NavigationBarHeader x:Name="header"
+						FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderFontSize}"
+						Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Header}"
+						ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.HeaderTemplate}"
+						ContentTemplateSelector="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.HeaderTemplateSelector}"
+						AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Title}" />
+
+				<navigationPrimitives:NavigationBarMinimizedPopupToggleButton x:Name="PART_ContentArea" Grid.Row="1"
+						FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderFontSize}"
+						IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupOpen, Mode=TwoWay}">
+					<TextBlock Text="{TemplateBinding MinimizedTitle}" TextTrimming="CharacterEllipsis" />
+				</navigationPrimitives:NavigationBarMinimizedPopupToggleButton>
+
+				<Popup x:Name="PART_Popup" Grid.Row="1" Grid.RowSpan="2" AllowsTransparency="True" StaysOpen="False" MinWidth="16" MinHeight="16"
+						IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupOpen, Mode=TwoWay}" PopupAnimation="Fade"
+						Placement="Right" PlacementTarget="{Binding ElementName=PART_ContentArea}">
+					<AdornerDecorator SnapsToDevicePixels="True">
+						<shared:DropShadowChrome x:Name="DropShadow" Color="Transparent">
+							<Border x:Name="PopupOuterBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1"
+									Background="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceMediumBackgroundNormalBrushKey}}" SnapsToDevicePixels="True">
+								<Border Background="{TemplateBinding Background}">
+									<Border Margin="3" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" SnapsToDevicePixels="True"
+											Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Background}">
+										<shared:ResizableContentControl x:Name="resizer" ResizeMode="{TemplateBinding PopupResizeMode}" MinHeight="40"
+												MaxHeight="{TemplateBinding MaxPopupHeight}" MinWidth="30"
+												Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentWidth, Mode=TwoWay}"
+												Padding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.PopupPadding}">
+											<ContentPresenter x:Name="presenter"
+													Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.Content}"
+													ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.ContentTemplate}"
+													ContentTemplateSelector="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPane.ContentTemplateSelector}" />
+										</shared:ResizableContentControl>
+									</Border>
+								</Border>
+							</Border>
+						</shared:DropShadowChrome>
+					</AdornerDecorator>
+				</Popup>
+
+				<navigationPrimitives:NavigationBarSplitter x:Name="PART_Splitter" Grid.Row="2" />
+				<ItemsPresenter x:Name="Presenter" Grid.Row="3" />
+			</Grid>
+		</Border>
+
+		<ControlTemplate.Triggers>
+			<Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+				<Setter TargetName="DropShadow" Property="Margin" Value="0,0,5,5" />
+				<Setter TargetName="DropShadow" Property="Color" Value="#40000000" />
+			</Trigger>
+			<Trigger Property="ArePanesVisible" Value="False">
+				<Setter TargetName="PART_Splitter" Property="Visibility" Value="Collapsed" />
+				<!-- 9/7/2011 - Updated to hide Presenter, instead of collapse it so the item containers are still generated (393-15F9DEA2-88D0) -->
+				<Setter TargetName="Presenter" Property="Visibility" Value="Hidden" />
+				<Setter TargetName="Presenter" Property="Grid.Row" Value="1" />
+			</Trigger>
+			<Trigger Property="MinimizesLeft" Value="False">
+				<Setter TargetName="PART_Popup" Property="Placement" Value="Left" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="MinimizesLeft" Value="False" />
+					<Condition Property="FlowDirection" Value="LeftToRight" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="resizer" Property="FlowDirection" Value="RightToLeft" />
+				<Setter TargetName="presenter" Property="FlowDirection" Value="LeftToRight" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="MinimizesLeft" Value="False" />
+					<Condition Property="FlowDirection" Value="RightToLeft" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="resizer" Property="FlowDirection" Value="LeftToRight" />
+				<Setter TargetName="presenter" Property="FlowDirection" Value="RightToLeft" />
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- navigation:NavigationBar -->
+	<Style x:Key="{x:Type navigation:NavigationBar}" TargetType="{x:Type navigation:NavigationBar}">
+		<Setter Property="AutomationProperties.Name" Value="{Binding RelativeSource={RelativeSource Self}, Path=Title}" />
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WorkspaceMediumBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="MinWidth" Value="34" />
+
+		<Style.Triggers>
+			<!-- 5/6/2011 - Updated to use IsHeaderVisible which is used to support the Office 2010 look (154-14A42858-1694) -->
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMinimized" Value="False" />
+					<Condition Property="IsHeaderVisible" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Template" Value="{StaticResource NavigationBarExpandedTemplate}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMinimized" Value="False" />
+					<Condition Property="IsHeaderVisible" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Template" Value="{StaticResource NavigationBarExpandedNoHeaderContentTemplate}" />
+			</MultiTrigger>
+
+			<Trigger Property="IsMinimized" Value="True">
+				<Setter Property="Template" Value="{StaticResource NavigationBarMinimizedTemplate}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:editors="clr-namespace:ActiproSoftware.Windows.Controls.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+	
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/ActiproSoftware.Shared.Wpf;component/Themes/Includes/Styles/Native/ComboBox.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+	<!-- editors:CountryComboBox -->
+	<Style x:Key="{x:Type editors:CountryComboBox}" TargetType="{x:Type editors:CountryComboBox}"
+			BasedOn="{StaticResource {x:Static themes:SharedResourceKeys.ComboBoxStyleKey}}">
+		<Setter Property="SelectedValuePath" Value="Alpha2Code" />
+		<Setter Property="ItemsSource" Value="{x:Static editors:Country.Countries}" />
+		<Setter Property="ItemContainerStyle" Value="{StaticResource {x:Static themes:SharedResourceKeys.ComboBoxItemStyleKey}}" />
+		<Setter Property="TextSearch.TextPath" Value="Name" />
+		<Setter Property="ItemTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<ContentPresenter Content="{Binding Name}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

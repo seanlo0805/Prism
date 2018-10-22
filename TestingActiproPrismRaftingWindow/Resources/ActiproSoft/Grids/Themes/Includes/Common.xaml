@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:gridsThemes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Grids.Wpf"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<ResourceDictionary.MergedDictionaries>
+		<gridsThemes:GridsThemeCatalogRegistrar />
+
+		<ResourceDictionary Source="/ActiproSoftware.Grids.Wpf;component/Themes/Includes/Styles/Grids.xaml" />
+		
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

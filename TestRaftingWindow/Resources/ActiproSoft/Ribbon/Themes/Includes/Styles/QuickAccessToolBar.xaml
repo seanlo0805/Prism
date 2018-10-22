@@ -1,0 +1,365 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+	xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+	xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+	xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+	xmlns:ribbonInput="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Input;assembly=ActiproSoftware.Ribbon.Wpf"
+	xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+	>
+	
+	<!-- QATOverflowItemsControlStyle -->
+	<Style x:Key="QATOverflowItemsControlStyle" TargetType="{x:Type ItemsControl}">
+		<Setter Property="Focusable" Value="True" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ItemsControl}">
+					<Border Background="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBackgroundNormalBrushKey}}" CornerRadius="1" SnapsToDevicePixels="True"
+						BorderThickness="1" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBorderNormalBrushKey}}">
+						<Border CornerRadius="1" SnapsToDevicePixels="True"
+							BorderThickness="1" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupInnerBorderNormalBrushKey}}">
+							<Grid Margin="1" ClipToBounds="True">
+								<StackPanel Height="{x:Static ribbonUI:RibbonMeasurements.RibbonControlSmallHeight}" Orientation="Horizontal">
+									<ItemsPresenter />
+								
+									<ribbonControlsPrimitives:QuickAccessToolBarCustomizeButton x:Name="CustomizeButton" />
+								</StackPanel>
+							</Grid>
+						</Border>
+					</Border>
+							
+					<ControlTemplate.Triggers>
+						<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ribbonControlsPrimitives:QuickAccessToolBar}}, Path=IsCustomizeButtonVisible}" Value="False">
+							<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+						</DataTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- QATAboveTemplate -->
+	<ControlTemplate x:Key="QATAboveTemplate" TargetType="ribbonControlsPrimitives:QuickAccessToolBar">
+		<StackPanel Height="{x:Static ribbonUI:RibbonMeasurements.RibbonControlSmallHeight}" Orientation="Horizontal">
+			<Grid x:Name="LeftPane" Width="12" Height="{x:Static ribbonUI:RibbonMeasurements.RibbonControlSmallHeight}">
+				<Path x:Name="LeftPaneHighlight1" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayHighlightInactiveBrushKey}}" HorizontalAlignment="Left" VerticalAlignment="Top"
+					StrokeThickness="1" Data="M 0.5,0.5 C 7,4 12,10 12,21.5 L 15,21.5">
+					<Path.RenderTransform>
+						<TranslateTransform X="0" Y="1" />
+					</Path.RenderTransform>
+				</Path>
+				<Path x:Name="LeftPaneBackground" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" HorizontalAlignment="Left" VerticalAlignment="Top"
+					StrokeThickness="1" Data="M 15,0.5 L 0.5,0.5 C 7,4 12,10 12,21.5 L 15,21.5" />
+				<Path x:Name="LeftPaneHighlight2" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayHighlightInactiveBrushKey}}" Margin="0,-1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" StrokeThickness="1" 
+					Data="M 0.5,0.5 L 15,0.5" />
+			</Grid>
+			<Border x:Name="CenterPane" Margin="0,-1,0,-1" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayHighlightInactiveBrushKey}}" BorderThickness="0,1,0,1">
+				<Border Background="{TemplateBinding Background}" 
+					BorderBrush="{TemplateBinding BorderBrush}" 
+					BorderThickness="0,1,0,1" Height="{x:Static ribbonUI:RibbonMeasurements.RibbonControlSmallHeight}" SnapsToDevicePixels="True">
+					<ItemsControl x:Name="PART_VisibleItemsControl" Margin="0,-1,0,-1" Focusable="False"
+						ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.VisibleItems)}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+					</ItemsControl>
+				</Border>
+			</Border>
+			<Grid x:Name="RightPane" Width="11" Height="{x:Static ribbonUI:RibbonMeasurements.RibbonControlSmallHeight}">
+				<Path x:Name="RightPaneHighlight1" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayHighlightInactiveBrushKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"							
+					StrokeThickness="1" Data="M 0,0.5 A 10.5,10.5 0 1 1 0,21.5">
+					<Path.RenderTransform>
+						<TranslateTransform X="0" Y="-1" />
+					</Path.RenderTransform>
+				</Path>
+				<Path x:Name="RightPaneHighlight2" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayHighlightInactiveBrushKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"							
+					StrokeThickness="1" Data="M 0,0.5 A 10.5,10.5 0 1 1 0,21.5 L -1,21.5">
+					<Path.RenderTransform>
+						<TranslateTransform X="1" Y="1" />
+					</Path.RenderTransform>
+				</Path>
+				<Path Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" HorizontalAlignment="Right" VerticalAlignment="Top"							
+					StrokeThickness="1" Data="M 0,0.5 A 10.5,10.5 0 1 1 0,21.5" />
+			</Grid>
+			
+			<ribbonControlsPrimitives:QuickAccessToolBarCustomizeButton x:Name="CustomizeButton" />
+			<ribbonControlsPrimitives:QuickAccessToolBarOverflowButton x:Name="OverflowButton" Visibility="Collapsed">						
+				<ItemsControl x:Name="PART_OverflowItemsControl" Style="{StaticResource QATOverflowItemsControlStyle}"
+					ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.OverflowedItems)}" />
+			</ribbonControlsPrimitives:QuickAccessToolBarOverflowButton>
+		</StackPanel>
+		
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsApplicationButtonVisible" Value="False">
+				<Setter TargetName="LeftPane" Property="Width" Value="11" />								
+				<Setter TargetName="LeftPaneBackground" Property="Data" Value="M 10.5,0.5 A 10.5,10.5 0 1 0 10.5,21.5" />				
+				<Setter TargetName="LeftPaneHighlight1" Property="Data" Value="M 10.5,0.5 A 10.5,10.5 0 1 0 10.5,21.5" />				
+				<Setter TargetName="LeftPaneHighlight2" Property="Data" Value="M 10.5,0.5 A 10.5,10.5 0 1 0 10.5,21.5" />				
+				<Setter TargetName="LeftPaneHighlight2" Property="Panel.ZIndex" Value="-1" />				
+			</Trigger>
+			<Trigger Property="HasItems" Value="False">
+				<Setter TargetName="LeftPane" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="CenterPane" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="RightPane" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="CustomizeButton" Property="Margin" Value="10,0,0,0" />
+			</Trigger>
+			<Trigger Property="IsCustomizeButtonVisible" Value="False">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="IsOverflowed" Value="True">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="OverflowButton" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<Trigger Property="Background" Value="Transparent">
+				<!-- Occurs when glass is enabled and on a non-maximized window -->
+				<Setter TargetName="LeftPaneHighlight1" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="LeftPaneHighlight2" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="CenterPane" Property="BorderBrush" Value="Transparent" />
+				<Setter TargetName="RightPaneHighlight1" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="RightPaneHighlight2" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="Tag" Value="GM">
+				<!-- Occurs when glass is enabled and on a maximized window (check for GM in Tag since we can't detect #40FFFFFF) -->
+				<Setter TargetName="LeftPaneHighlight1" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="LeftPaneHighlight2" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="CenterPane" Property="BorderBrush" Value="Transparent" />
+				<Setter TargetName="RightPaneHighlight1" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="RightPaneHighlight2" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>			
+
+	<!-- QATAboveScenicTemplate -->
+	<ControlTemplate x:Key="QATAboveScenicTemplate" TargetType="ribbonControlsPrimitives:QuickAccessToolBar">
+		<StackPanel Height="{x:Static ribbonUI:RibbonMeasurements.RibbonControlSmallHeight}" Orientation="Horizontal">
+			
+			<ribbonControls:Separator x:Name="beforeSeparator" Context="QuickAccessToolBarItem" />			
+
+			<ItemsControl x:Name="PART_VisibleItemsControl" Focusable="False"
+				ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.VisibleItems)}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+			</ItemsControl>
+			
+			<ribbonControls:Separator x:Name="afterSeparator" Context="QuickAccessToolBarItem" Visibility="Collapsed" />			
+			
+			<ribbonControlsPrimitives:QuickAccessToolBarCustomizeButton x:Name="CustomizeButton" />
+			
+			<ribbonControlsPrimitives:QuickAccessToolBarOverflowButton x:Name="OverflowButton" Visibility="Collapsed">						
+				<ItemsControl x:Name="PART_OverflowItemsControl" Style="{StaticResource QATOverflowItemsControlStyle}"
+					ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.OverflowedItems)}" />
+			</ribbonControlsPrimitives:QuickAccessToolBarOverflowButton>
+			
+		</StackPanel>
+		
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsApplicationButtonVisible" Value="False">
+				<Setter TargetName="beforeSeparator" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="IsCustomizeButtonVisible" Value="False">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="IsCustomizeButtonVisible" Value="True">
+				<Setter TargetName="afterSeparator" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<Trigger Property="IsOverflowed" Value="True">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="OverflowButton" Property="Visibility" Value="Visible" />
+				<Setter TargetName="afterSeparator" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<Trigger Property="HasItems" Value="False">
+				<Setter TargetName="beforeSeparator" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="afterSeparator" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>			
+
+	<!-- QATBelowTemplate -->
+	<ControlTemplate x:Key="QATBelowTemplate" TargetType="ribbonControlsPrimitives:QuickAccessToolBar">
+		<Grid MinHeight="27" Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonToolBarTrayBackgroundNormalBrushKey}}" SnapsToDevicePixels="True">
+			<Border x:Name="innerBorder" Margin="1,2,0,0" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonToolBarTrayInnerBorderNormalBrushKey}}" BorderThickness="{TemplateBinding BorderThickness}" 
+					CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True" />
+			<Border x:Name="outerBorder" Margin="0,1,1,1" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonToolBarTrayBorderNormalBrushKey}}" BorderThickness="{TemplateBinding BorderThickness}" 
+					CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True">
+				<StackPanel Margin="1,1,0,0" Orientation="Horizontal">
+					<ItemsControl x:Name="PART_VisibleItemsControl" Focusable="False"
+						ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.VisibleItems)}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+					</ItemsControl>
+					
+					<ribbonControlsPrimitives:QuickAccessToolBarCustomizeButton x:Name="CustomizeButton" />
+					<ribbonControlsPrimitives:QuickAccessToolBarOverflowButton x:Name="OverflowButton" Visibility="Collapsed">						
+						<ItemsControl x:Name="PART_OverflowItemsControl" Style="{StaticResource QATOverflowItemsControlStyle}"
+							ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.OverflowedItems)}" />
+					</ribbonControlsPrimitives:QuickAccessToolBarOverflowButton>
+				</StackPanel>
+			</Border>
+		</Grid>
+		
+		<ControlTemplate.Triggers>
+			<Trigger Property="themes:ThemeProperties.CornerRadius" Value="0">
+				<Setter TargetName="innerBorder" Property="Margin" Value="1" />
+				<Setter TargetName="outerBorder" Property="Margin" Value="0" />
+			</Trigger>
+			<Trigger Property="IsCustomizeButtonVisible" Value="False">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="IsOverflowed" Value="True">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="OverflowButton" Property="Visibility" Value="Visible" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- QATBelowScenicTemplate -->
+	<ControlTemplate x:Key="QATBelowScenicTemplate" TargetType="ribbonControlsPrimitives:QuickAccessToolBar">
+		<Grid MinHeight="27" Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonToolBarTrayBackgroundNormalBrushKey}}" SnapsToDevicePixels="True">
+			<Border x:Name="innerBorder" Margin="1,2,0,0" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonToolBarTrayInnerBorderNormalBrushKey}}" BorderThickness="{TemplateBinding BorderThickness}"
+					CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True" />
+			<Border x:Name="outerBorder" Margin="0,1,1,1" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonToolBarTrayBorderNormalBrushKey}}" BorderThickness="{TemplateBinding BorderThickness}"
+					CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" SnapsToDevicePixels="True">
+				<StackPanel Margin="1,1,0,0" Orientation="Horizontal">
+					<ItemsControl x:Name="PART_VisibleItemsControl" Focusable="False"
+						ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.VisibleItems)}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+					</ItemsControl>
+					
+					<ribbonControlsPrimitives:QuickAccessToolBarCustomizeButton x:Name="CustomizeButton" Margin="2,0,0,0" />
+					<ribbonControlsPrimitives:QuickAccessToolBarOverflowButton x:Name="OverflowButton" Margin="2,0,0,0" Visibility="Collapsed">						
+						<ItemsControl x:Name="PART_OverflowItemsControl" Style="{StaticResource QATOverflowItemsControlStyle}"
+							ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ribbonControlsPrimitives:IOverflowableItemsControl.OverflowedItems)}" />
+					</ribbonControlsPrimitives:QuickAccessToolBarOverflowButton>
+				</StackPanel>
+			</Border>
+		</Grid>
+		
+		<ControlTemplate.Triggers>
+			<Trigger Property="themes:ThemeProperties.CornerRadius" Value="0">
+				<Setter TargetName="innerBorder" Property="Margin" Value="1" />
+				<Setter TargetName="outerBorder" Property="Margin" Value="0" />
+			</Trigger>
+			<Trigger Property="IsCustomizeButtonVisible" Value="False">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="IsOverflowed" Value="True">
+				<Setter TargetName="CustomizeButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="OverflowButton" Property="Visibility" Value="Visible" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<!-- ribbonControlsPrimitives:QuickAccessToolBar -->
+	<Style x:Key="{x:Type ribbonControlsPrimitives:QuickAccessToolBar}" TargetType="{x:Type ribbonControlsPrimitives:QuickAccessToolBar}">
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Template" Value="{StaticResource QATBelowScenicTemplate}" />
+		
+		<Style.Triggers>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsBelowRibbon" Value="True" />
+					<Condition Property="UseScenicLayout" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Template" Value="{StaticResource QATBelowTemplate}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsBelowRibbon" Value="False" />
+					<Condition Property="UseScenicLayout" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Template" Value="{StaticResource QATAboveTemplate}" />
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayBackgroundInactiveBrushKey}}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayBorderInactiveBrushKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsBelowRibbon" Value="False" />
+					<Condition Property="UseScenicLayout" Value="False" />
+					<Condition Property="Tag" Value="WA" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayBackgroundActiveBrushKey}}" />
+				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarToolBarTrayBorderActiveBrushKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsBelowRibbon" Value="False" />
+					<Condition Property="UseScenicLayout" Value="False" />
+					<Condition Property="Tag" Value="GN" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Background" Value="#40FFFFFF" />
+				<Setter Property="BorderBrush" Value="#E0878F9B" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsBelowRibbon" Value="False" />
+					<Condition Property="UseScenicLayout" Value="False" />
+					<Condition Property="Tag" Value="GM" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Background" Value="#60FFFFFF" />
+				<Setter Property="BorderBrush" Value="#60FFFFFF" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsBelowRibbon" Value="False" />
+					<Condition Property="UseScenicLayout" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Template" Value="{StaticResource QATAboveScenicTemplate}" />
+			</MultiTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- QuickAccessToolBarCustomizationItemTemplate -->
+	<DataTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=QuickAccessToolBarCustomizationItemTemplate}">
+		<Grid MinHeight="18" SnapsToDevicePixels="True">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="18" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="18" />
+			</Grid.ColumnDefinitions>
+			<Image DockPanel.Dock="Left" Margin="1" Source="{Binding ImageSource}" Width="16" Height="16" SnapsToDevicePixels="True" />
+			<TextBlock Grid.Column="1" Margin="7,1,7,1" Text="{Binding Label}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+			<Image x:Name="controlTypeImage" Grid.Column="2" DockPanel.Dock="Right" Margin="1" Width="16" Height="16" SnapsToDevicePixels="True" />
+		</Grid>
+		
+		<DataTemplate.Triggers>
+			<DataTrigger Binding="{Binding ControlType}" Value="ComboBox">
+				<Setter TargetName="controlTypeImage" Property="Source" Value="pack://application:,,,/ActiproSoftware.Ribbon.Wpf;component/Products/Ribbon/ControlTypes/ComboBox.png" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding ControlType}" Value="Group">
+				<Setter TargetName="controlTypeImage" Property="Source" Value="pack://application:,,,/ActiproSoftware.Ribbon.Wpf;component/Products/Ribbon/ControlTypes/Group.png" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding ControlType}" Value="PopupButton">
+				<Setter TargetName="controlTypeImage" Property="Source" Value="pack://application:,,,/ActiproSoftware.Ribbon.Wpf;component/Products/Ribbon/ControlTypes/PopupButton.png" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding ControlType}" Value="SplitButton">
+				<Setter TargetName="controlTypeImage" Property="Source" Value="pack://application:,,,/ActiproSoftware.Ribbon.Wpf;component/Products/Ribbon/ControlTypes/SplitButton.png" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding ControlType}" Value="TextBox">
+				<Setter TargetName="controlTypeImage" Property="Source" Value="pack://application:,,,/ActiproSoftware.Ribbon.Wpf;component/Products/Ribbon/ControlTypes/TextBox.png" />
+			</DataTrigger>
+		</DataTemplate.Triggers>
+	</DataTemplate>
+
+</ResourceDictionary>

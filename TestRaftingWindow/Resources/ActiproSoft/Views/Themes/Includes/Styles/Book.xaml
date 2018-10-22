@@ -1,0 +1,78 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:systemComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
+		xmlns:views="clr-namespace:ActiproSoftware.Windows.Controls.Views;assembly=ActiproSoftware.Views.Wpf">
+
+	<!-- Converters -->
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+	<!-- views:Book -->
+	<Style x:Key="{x:Type views:Book}" TargetType="views:Book">
+		<Setter Property="IsTabStop" Value="True" />
+
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<views:BookPanel />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="views:Book">
+					<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
+							BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}"
+							Padding="{TemplateBinding Padding}">
+						<Grid>
+							<ItemsPresenter />
+							<Canvas x:Name="PART_OverlayCanvas" />
+						</Grid>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- views:BookPage -->
+	<Style x:Key="{x:Type views:BookPage}" TargetType="views:BookPage">
+		<Setter Property="Background" Value="White" />
+
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Stretch" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="views:BookPage">
+					<Grid>
+						<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+								Padding="{TemplateBinding Padding}">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="*" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+								<ContentPresenter Grid.Row="0" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" />
+								<ContentPresenter Grid.Row="1" />
+								<ContentPresenter Grid.Row="2" Content="{TemplateBinding Footer}" ContentTemplate="{TemplateBinding FooterTemplate}" ContentTemplateSelector="{TemplateBinding FooterTemplateSelector}" />
+							</Grid>
+						</Border>
+						<Rectangle x:Name="PART_BindingShadow" IsHitTestVisible="False"
+								Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsBindingShadowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+						<Path x:Name="PART_FlippingShadow" IsHitTestVisible="False" />
+					</Grid>
+					<ControlTemplate.Triggers>
+						<!-- 10/11/2010 - Added workaround for Visual Studio designer z-order issue -->
+						<Trigger Property="systemComponentModel:DesignerProperties.IsInDesignMode" Value="True">
+							<Setter TargetName="PART_BindingShadow" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="PART_FlippingShadow" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

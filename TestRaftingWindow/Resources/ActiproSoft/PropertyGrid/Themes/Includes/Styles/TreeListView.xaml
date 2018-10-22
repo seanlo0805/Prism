@@ -1,0 +1,348 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+		xmlns:propgrid="clr-namespace:ActiproSoftware.Windows.Controls.PropertyGrid;assembly=ActiproSoftware.PropertyGrid.Wpf"
+		xmlns:propgridPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.PropertyGrid.Primitives;assembly=ActiproSoftware.PropertyGrid.Wpf"
+		>
+
+	<!-- Converters -->
+	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<shared:MultiplicationConverter x:Key="MultiplicationConverter" />
+
+	<!-- propgrid:TreeListViewColumnHeader -->
+	<Style x:Key="{x:Type propgrid:TreeListViewColumnHeader}" TargetType="{x:Type propgrid:TreeListViewColumnHeader}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="0,1" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+
+		<Setter Property="themes:ThemeProperties.IsGlassEnabled"
+				Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListIsGlassEnabledBooleanKey}}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type propgrid:TreeListViewColumnHeader}">
+					<Grid SnapsToDevicePixels="true">
+						<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBackgroundDisabledBrushKey}}"
+								BackgroundFocused="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBackgroundSelectedNormalBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBackgroundHoverBrushKey}}"
+								BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBackgroundPressedBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBorderDisabledBrushKey}}"
+								BorderBrushFocused="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBorderSelectedNormalBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBorderHoverBrushKey}}"
+								BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderBorderPressedBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}" IsAnimationEnabled="False"
+								BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ListColumnHeaderElementChromeBorderStyleKey}}"
+								SnapsToDevicePixels="true">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition MaxHeight="7" />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+								<Rectangle x:Name="highlight"
+										Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.IsGlassEnabled), Converter={StaticResource BooleanToVisibilityConverter}}" />
+								<Border Grid.RowSpan="2" Padding="{TemplateBinding Padding}">
+									<ContentPresenter x:Name="headerContent" Margin="0,0,0,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True"
+											SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+								</Border>
+							</Grid>
+						</shared:ElementChrome>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="highlight" Property="Fill" Value="#75FFFFFF" />
+						</Trigger>
+						<Trigger Property="IsMouseOverSplitter" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="highlight" Property="Fill" Value="#75FFFFFF" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+							<Setter TargetName="highlight" Property="Fill" Value="#75FFFFFF" />
+							<Setter TargetName="headerContent" Property="Margin" Value="1,1,0,0" />
+						</Trigger>
+						<Trigger Property="Height" Value="Auto">
+							<Setter Property="MinHeight" Value="20" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+							<Setter TargetName="highlight" Property="Fill" Value="{x:Null}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- propgridPrimitives:TreeListViewCell -->
+	<Style x:Key="{x:Type propgridPrimitives:TreeListViewCell}" TargetType="{x:Type propgridPrimitives:TreeListViewCell}">
+		<Setter Property="Background" Value="Transparent" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type propgridPrimitives:TreeListViewCell}">
+					<StackPanel Orientation="Horizontal" Background="{TemplateBinding Background}"
+							Margin="{TemplateBinding Padding}">
+						<propgridPrimitives:TreeListViewToggleButton IndentationIncrement="{TemplateBinding IndentationIncrement}"
+								Visibility="{TemplateBinding IsExpanderVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+					</StackPanel>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- TreeListViewSplitterPreviewStyleKey -->
+	<Style x:Key="TreeListViewSplitterPreviewStyleKey">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Fill="#80000000" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- propgridPrimitives:TreeListViewSplitter -->
+	<Style x:Key="{x:Type propgridPrimitives:TreeListViewSplitter}" TargetType="{x:Type propgridPrimitives:TreeListViewSplitter}">
+		<Setter Property="Background" Value="Transparent" />
+
+		<Setter Property="Width" Value="8" />
+		<Setter Property="HorizontalAlignment" Value="Right" />
+		<Setter Property="Margin" Value="0,0,-3,0" />
+		<Setter Property="Panel.ZIndex" Value="2" />
+
+		<Setter Property="PreviewStyle" Value="{StaticResource TreeListViewSplitterPreviewStyleKey}" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type propgridPrimitives:TreeListViewSplitter}">
+					<Border Background="Transparent" SnapsToDevicePixels="true">
+						<Rectangle x:Name="indicator" HorizontalAlignment="Center" Width="1" Fill="{TemplateBinding Background}"
+								SnapsToDevicePixels="true" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="ResizeBehavior" Value="PreviousAndCurrent">
+				<Setter Property="HorizontalAlignment" Value="Left" />
+				<Setter Property="Margin" Value="-3,0,0,0" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- propgrid:TreeListViewItem -->
+	<Style x:Key="{x:Type propgrid:TreeListViewItem}" TargetType="{x:Type propgrid:TreeListViewItem}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsGlassEnabled" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListIsGlassEnabledBooleanKey}}" />
+
+		<Setter Property="HorizontalContentAlignment"
+				Value="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+		<Setter Property="VerticalContentAlignment"
+				Value="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+
+		<Setter Property="Margin" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemMarginNormalThicknessKey}}" />
+		<Setter Property="Padding" Value="1,0" />
+
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+		<!-- Default the indentation width to "(TreeViewItem.Depth - 1) * TreeView.IndentationIncrement" -->
+		<Setter Property="IndentationWidth">
+			<Setter.Value>
+				<MultiBinding Converter="{StaticResource MultiplicationConverter}">
+					<Binding Path="IndentationIncrement" RelativeSource="{RelativeSource Mode=Self}" />
+					<Binding Path="Depth" RelativeSource="{RelativeSource Mode=Self}" />
+				</MultiBinding>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type propgrid:TreeListViewItem}">
+					<StackPanel>
+						<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+								BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBackgroundDisabledBrushKey}}"
+								BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBackgroundHoverBrushKey}}"
+								BackgroundFocused="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBackgroundSelectedFocusedBrushKey}}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderDisabledBrushKey}}"
+								BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderHoverBrushKey}}"
+								BorderBrushFocused="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderSelectedFocusedBrushKey}}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemInnerBorderNormalBrushKey}}"
+								InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemInnerBorderDisabledBrushKey}}"
+								InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemInnerBorderHoverBrushKey}}"
+								InnerBorderBrushFocused="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemInnerBorderSelectedFocusedBrushKey}}"
+								InnerBorderThickness="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemInnerBorderNormalThicknessKey}}"
+								Padding="{TemplateBinding Padding}" CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}" IsAnimationEnabled="False"
+								SnapsToDevicePixels="true">
+							<Grid x:Name="PART_Header" Background="Transparent">
+								<Grid.RowDefinitions>
+									<RowDefinition MaxHeight="11" />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+								<Rectangle x:Name="highlight"
+										Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ThemeProperties.IsGlassEnabled), Converter={StaticResource BooleanToVisibilityConverter}}" />
+								<!-- 3/27/2012 - Changed two TemplateBindings to Bindings below due to issue with using control in WinForms application (1FF-17044B1E-0302) -->
+								<propgridPrimitives:TreeListViewRowPresenter Grid.RowSpan="2"
+										Columns="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Columns}"
+										Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
+										IndentationIncrement="{TemplateBinding IndentationIncrement}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+							</Grid>
+						</shared:ElementChrome>
+						<shared:AnimatedExpanderDecorator x:Name="expander" IsExpanded="{TemplateBinding IsExpanded}"
+								CollapseDuration="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ExpanderThemeProperties.CollapseDuration)}"
+								ExpandDuration="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(themes:ExpanderThemeProperties.ExpandDuration)}">
+							<ItemsPresenter  />
+						</shared:AnimatedExpanderDecorator>
+					</StackPanel>
+
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition SourceName="PART_Header" Property="IsMouseOver" Value="true" />
+								<Condition Property="IsSelected" Value="false" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemForegroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="highlight" Property="Fill" Value="#75FFFFFF" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition SourceName="PART_Header" Property="IsMouseOver" Value="true" />
+								<Condition Property="IsSelected" Value="true" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemForegroundSelectedHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBackgroundSelectedHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderSelectedHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushHover" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemInnerBorderSelectedHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+							<Setter TargetName="highlight" Property="Fill" Value="#75FFFFFF" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition SourceName="PART_Header" Property="IsMouseOver" Value="false" />
+								<Condition Property="IsSelected" Value="true" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemForegroundSelectedFocusedBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Focused" />
+							<Setter TargetName="highlight" Property="Fill" Value="#40FFFFFF" />
+						</MultiTrigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition SourceName="PART_Header" Property="IsMouseOver" Value="false" />
+								<Condition Property="IsSelected" Value="true" />
+								<Condition Property="IsSelectionActive" Value="false" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemForegroundSelectedNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BackgroundFocused" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBackgroundSelectedNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="BorderBrushFocused" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderSelectedNormalBrushKey}}" />
+							<Setter TargetName="chrome" Property="InnerBorderBrushFocused" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemInnerBorderSelectedNormalBrushKey}}" />
+						</MultiTrigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+							<Setter TargetName="highlight" Property="Fill" Value="{x:Null}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="true">
+				<Setter Property="ItemsPanel">
+					<Setter.Value>
+						<ItemsPanelTemplate>
+							<VirtualizingStackPanel />
+						</ItemsPanelTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- propgrid:TreeListView -->
+	<Style x:Key="{x:Type propgrid:TreeListView}" TargetType="{x:Type propgrid:TreeListView}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ListBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.PanningMode" Value="Both" />
+		<Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+
+		<Setter Property="IndentationIncrement" Value="19.0" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type propgrid:TreeListView}">
+					<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+							BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListBackgroundDisabledBrushKey}}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ListBorderDisabledBrushKey}}"
+							BorderThickness="{TemplateBinding BorderThickness}" IsAnimationEnabled="False"
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ListElementChromeBorderStyleKey}}" SnapsToDevicePixels="true">
+						<ScrollViewer x:Name="scrollViewer" Padding="{TemplateBinding Padding}" Focusable="false" CanContentScroll="false">
+							<DockPanel>
+								<propgridPrimitives:TreeListViewHeaderRowPresenter x:Name="treeListViewHeaderRowPresenter" DockPanel.Dock="Top"
+										Columns="{TemplateBinding Columns}" />
+								<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+							</DockPanel>
+						</ScrollViewer>
+					</shared:ElementChrome>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsHeaderVisible" Value="false">
+							<Setter TargetName="treeListViewHeaderRowPresenter" Property="Visibility" Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+						<Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="true">
+							<Setter TargetName="scrollViewer" Property="CanContentScroll" Value="true" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+
+		<Style.Triggers>
+			<Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="true">
+				<Setter Property="ItemsPanel">
+					<Setter.Value>
+						<ItemsPanelTemplate>
+							<VirtualizingStackPanel />
+						</ItemsPanelTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

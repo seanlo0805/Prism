@@ -1,0 +1,606 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+	xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+    >
+
+	<!-- DialogLauncherButtonStyle -->
+	<Style x:Key="DialogLauncherButtonStyle" TargetType="{x:Type Button}">
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="MinHeight" Value="{x:Static ribbonUI:RibbonMeasurements.GroupDialogLauncherButtonHeight}"/>
+		<Setter Property="SnapsToDevicePixels" Value="True"/>
+		<Setter Property="Width" Value="{x:Static ribbonUI:RibbonMeasurements.GroupDialogLauncherButtonWidth}"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border x:Name="OuterBorder" Background="Transparent" BorderBrush="Transparent" BorderThickness="1" CornerRadius="0,0,2,0" SnapsToDevicePixels="True">
+						<Border x:Name="InnerBorder" BorderBrush="Transparent" BorderThickness="1" CornerRadius="0,0,2,0" SnapsToDevicePixels="True">
+							<Canvas x:Name="MaximizeGlyph" Margin="1,0,0,0" Width="8" Height="8" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+								<Path StrokeThickness="1" StrokeStartLineCap="Square" StrokeEndLineCap="Square" SnapsToDevicePixels="True" 
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupPopupGlyphBackgroundNormalBrushKey}}" 
+									Data="M 0.5,5.5 L 0.5,0.5 L 5.5,0.5" />
+								<Path StrokeThickness="1" StrokeStartLineCap="Square" StrokeEndLineCap="Square" SnapsToDevicePixels="True"
+									Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupPopupGlyphBackgroundNormalBrushKey}}" 
+									Fill="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupPopupGlyphBackgroundNormalBrushKey}}" 
+									Data="M 3.5,3.5 L 5,5 L 3.5,6.5 L 6.5,6.5 L 6.5,3.5 L 5,5" />
+							</Canvas>
+						</Border>
+					</Border>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsKeyboardFocused" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundPressedBrushKey}}" />
+							<Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderPressedBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- GroupExpandedTemplate -->
+	<ControlTemplate x:Key="GroupExpandedTemplate" TargetType="{x:Type ribbonControls:Group}">
+		<ControlTemplate.Resources>
+			<shared:CoalesceConverter x:Key="CoalesceConverter" />
+		</ControlTemplate.Resources>
+	
+		<!-- Expanded Variant (duplicated in collapsed popup below) -->
+		<Grid SnapsToDevicePixels="True">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="4" />
+				<RowDefinition Height="Auto" MinHeight="{x:Static ribbonUI:RibbonMeasurements.GroupLabelHeight}" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Border x:Name="backgroundHover" Grid.RowSpan="3"
+					BorderThickness="{TemplateBinding BorderThickness}" 
+					BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBorderHoverBrushKey}}" 
+					Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBackgroundHoverBrushKey}}" 
+					Opacity="0" SnapsToDevicePixels="True" />
+			
+			<ItemsControl Margin="3,2,3,1" MinHeight="{x:Static ribbonUI:RibbonMeasurements.RibbonControlLargeHeight}" 
+				HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+				ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Items}" 
+				ItemTemplate="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ItemTemplate}" 
+				ItemTemplateSelector="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ItemTemplateSelector}" 
+				Focusable="False" SnapsToDevicePixels="True">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>											
+			</ItemsControl>
+				
+			<Grid Grid.Row="2" SnapsToDevicePixels="True">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"	/>
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<shared:PixelSnapper x:Name="labelPixelSnapper" HorizontalRoundMode="None" VerticalRoundMode="None">
+					<ribbonControlsPrimitives:ZeroWidthLabel x:Name="label" Margin="2,-1,2,1" ClipToBounds="True" Focusable="False" 
+						VerticalAlignment="Center" HorizontalContentAlignment="Center"  
+						Label="{TemplateBinding Label}" 
+						Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupForegroundNormalBrushKey}}" />
+				</shared:PixelSnapper>
+					
+				<Button x:Name="PART_DialogLauncherButton" Grid.Column="1" Margin="0,0,1,1"
+					Command="{TemplateBinding Command}" 
+					CommandParameter="{TemplateBinding CommandParameter}" 
+					CommandTarget="{TemplateBinding CommandTarget}" 
+					ribbonUI:KeyTipService.KeyTipAccessText="{TemplateBinding DialogLauncherKeyTipAccessText}"
+					ribbonUI:ScreenTipService.ScreenTipDescription="{TemplateBinding ScreenTipDescription}" 
+					ribbonUI:ScreenTipService.ScreenTipFooter="{TemplateBinding ScreenTipFooter}" 
+					ribbonUI:ScreenTipService.ScreenTipHelpUri="{TemplateBinding ScreenTipHelpUri}" 
+					ribbonUI:ScreenTipService.ScreenTipImageSource="{TemplateBinding ScreenTipImageSource}" 
+					Style="{StaticResource DialogLauncherButtonStyle}" SnapsToDevicePixels="True">
+					<ribbonUI:ScreenTipService.ScreenTipHeader>
+						<MultiBinding Converter="{StaticResource CoalesceConverter}">
+							<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ScreenTipHeader" />
+							<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Label" />
+						</MultiBinding>
+					</ribbonUI:ScreenTipService.ScreenTipHeader>
+				</Button>
+			</Grid>
+			
+			<Rectangle Grid.RowSpan="3" Grid.Column="1" Width="3"
+					   Margin="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupSeparatorMarginNormalThicknessKey}}" 
+					   Fill="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupSeparatorBackgroundNormalBrushKey}}" 
+					   OpacityMask="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupSeparatorOpacityMaskNormalBrushKey}}" 
+					   />
+		</Grid>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsLabelCollapsible" Value="False">
+				<Setter TargetName="labelPixelSnapper" Property="HorizontalRoundMode" Value="Ceiling" />
+				<Setter TargetName="label" Property="MinWidth" Value="{Binding ElementName=label, Path=IdealWidth}" />
+			</Trigger>
+			<Trigger Property="Command" Value="{x:Null}">
+				<Setter TargetName="PART_DialogLauncherButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOver" Value="True" />
+					<Condition Property="themes:ThemeProperties.IsAnimationEnabled" Value="True" />
+				</MultiTrigger.Conditions>
+				<MultiTrigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.5" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.EnterActions>
+				<MultiTrigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.ExitActions>
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOver" Value="True" />
+					<Condition Property="themes:ThemeProperties.IsAnimationEnabled" Value="False" />
+				</MultiTrigger.Conditions>
+				<MultiTrigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.EnterActions>
+				<MultiTrigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.ExitActions>
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<!-- GroupCollapsedTemplate -->
+	<ControlTemplate x:Key="GroupCollapsedTemplate" TargetType="{x:Type ribbonControls:Group}">
+		<ControlTemplate.Resources>
+			<shared:CoalesceConverter x:Key="CoalesceConverter" />
+		</ControlTemplate.Resources>
+	
+		<Grid Background="Transparent" SnapsToDevicePixels="True">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			
+			<Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" MinWidth="30" MinHeight="16"
+					StaysOpen="True" VerticalOffset="-2"
+					IsOpen="{Binding Path=IsPopupOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+				<AdornerDecorator SnapsToDevicePixels="True">
+					<shared:DropShadowChrome x:Name="dropShadow" Color="Transparent">
+	
+						<Border Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}"
+								BorderThickness="1" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBorderNormalBrushKey}}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}">
+							<!-- Expanded Variant (mostly duplicated in expanded template above) -->
+							<Grid x:Name="expandedVariantGrid" SnapsToDevicePixels="True">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*" />
+									<RowDefinition Height="4" />
+									<RowDefinition Height="Auto" MinHeight="{x:Static ribbonUI:RibbonMeasurements.GroupLabelHeight}" />
+								</Grid.RowDefinitions>
+
+								<Border x:Name="backgroundHover" Grid.RowSpan="3"
+										BorderThickness="{TemplateBinding BorderThickness}" 
+										BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBorderHoverBrushKey}}" 
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBackgroundHoverBrushKey}}" 
+										Opacity="0" SnapsToDevicePixels="True" />
+			
+								<ItemsControl Margin="3,2,3,1" MinHeight="{x:Static ribbonUI:RibbonMeasurements.RibbonControlLargeHeight}" 
+									HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+									ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Items}" 
+									ItemTemplate="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ItemTemplate}" 
+									ItemTemplateSelector="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ItemTemplateSelector}" 
+									Focusable="True" IsTabStop="False" SnapsToDevicePixels="True" FocusVisualStyle="{x:Null}">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<StackPanel Orientation="Horizontal"/>
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>											
+								</ItemsControl>
+				
+								<Grid Grid.Row="2" SnapsToDevicePixels="True">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*"	/>
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+
+									<shared:PixelSnapper x:Name="labelPixelSnapper" HorizontalRoundMode="None" VerticalRoundMode="None">
+										<ribbonControlsPrimitives:ZeroWidthLabel x:Name="label" Margin="2,-1,2,1" ClipToBounds="True" Focusable="False" 
+											VerticalAlignment="Center" HorizontalContentAlignment="Center"  
+											Label="{TemplateBinding Label}" MinWidth="{Binding RelativeSource={RelativeSource Self}, Path=IdealWidth}"
+											Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupForegroundNormalBrushKey}}" />
+									</shared:PixelSnapper>
+					
+									<Button x:Name="PART_DialogLauncherButton" Grid.Column="1" Margin="0,0,1,1"
+										Command="{TemplateBinding Command}" 
+										CommandParameter="{TemplateBinding CommandParameter}" 
+										CommandTarget="{TemplateBinding CommandTarget}" 
+										ribbonUI:KeyTipService.KeyTipAccessText="{TemplateBinding DialogLauncherKeyTipAccessText}"
+										ribbonUI:ScreenTipService.ScreenTipDescription="{TemplateBinding ScreenTipDescription}" 
+										ribbonUI:ScreenTipService.ScreenTipFooter="{TemplateBinding ScreenTipFooter}" 
+										ribbonUI:ScreenTipService.ScreenTipHelpUri="{TemplateBinding ScreenTipHelpUri}" 
+										ribbonUI:ScreenTipService.ScreenTipImageSource="{TemplateBinding ScreenTipImageSource}" 
+										Style="{StaticResource DialogLauncherButtonStyle}" SnapsToDevicePixels="True">
+										<ribbonUI:ScreenTipService.ScreenTipHeader>
+											<MultiBinding Converter="{StaticResource CoalesceConverter}">
+												<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ScreenTipHeader" />
+												<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Label" />
+											</MultiBinding>
+										</ribbonUI:ScreenTipService.ScreenTipHeader>
+									</Button>
+								</Grid>
+							</Grid>						
+						</Border>
+						
+					</shared:DropShadowChrome>
+				</AdornerDecorator>
+			</Popup>
+			
+			<Grid x:Name="collapsedButton">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="{x:Static ribbonUI:RibbonMeasurements.ButtonBaseLargeIconHeightGridLength}" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="{x:Static ribbonUI:RibbonMeasurements.GroupLabelHeightGridLength}" />
+				</Grid.RowDefinitions>
+					
+				<Border Margin="3,5,3,0" Width="30" Height="30" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarEditBorderNormalBrushKey}}" BorderThickness="1" 
+						CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderNormalCornerRadiusKey}}" 
+						HorizontalAlignment="Center" VerticalAlignment="Top" SnapsToDevicePixels="True">
+					<Image x:Name="image" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" 
+						Source="{TemplateBinding ImageSourceSmall}" SnapsToDevicePixels="True" />
+				</Border>
+				
+				<shared:PixelSnapper Grid.Row="1" Margin="3,2,3,0" HorizontalRoundMode="CeilingToEven">
+					<ribbonControlsPrimitives:TwoLineLabel Label="{TemplateBinding Label}" 
+						HorizontalAlignment="Center" VerticalAlignment="Top" SnapsToDevicePixels="False" />
+				</shared:PixelSnapper>
+			</Grid>
+			
+			<Border x:Name="qatButtonOuterBrush" Visibility="Collapsed" ribbonUI:ScreenTipService.ScreenTipHeader="{TemplateBinding Label}" 
+					CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalCornerRadiusKey}}">
+				<Border x:Name="qatButtonInnerBrush" Margin="1">
+					<Image x:Name="image2" Margin="1" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" 
+						Source="{TemplateBinding ImageSourceSmall}" SnapsToDevicePixels="True" />
+				</Border>
+			</Border>
+
+			<Rectangle x:Name="separator" Grid.RowSpan="3" Grid.Column="1" Width="3"
+					   Margin="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupSeparatorMarginNormalThicknessKey}}" 
+					   Fill="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupSeparatorBackgroundNormalBrushKey}}" 
+					   OpacityMask="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupSeparatorOpacityMaskNormalBrushKey}}" 
+					   />
+		</Grid>
+
+		<ControlTemplate.Triggers>
+			<Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+				<Setter TargetName="dropShadow" Property="Margin" Value="0,0,5,5" />
+				<Setter TargetName="dropShadow" Property="Color" Value="#40000000" />
+				<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemBorderNormalCornerRadiusKey}}" />
+			</Trigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding ElementName=PART_Popup, Path=HasDropShadow}" Value="True"/>
+					<Condition Binding="{Binding Source={x:Static SystemParameters.MenuDropAlignment}}" Value="True"/>
+				</MultiDataTrigger.Conditions>
+				<MultiDataTrigger.Setters>
+					<Setter TargetName="PART_Popup" Property="HorizontalOffset" Value="5" />
+				</MultiDataTrigger.Setters>
+			</MultiDataTrigger>			
+			<Trigger SourceName="PART_Popup" Property="IsOpen" Value="True">
+				<Setter TargetName="PART_Popup" Property="PopupAnimation" Value="Fade" />
+			</Trigger>
+			
+			<Trigger Property="Context" Value="QuickAccessToolBarItem">
+				<Setter TargetName="collapsedButton" Property="Visibility" Value="Collapsed" />
+				<Setter TargetName="qatButtonOuterBrush" Property="Visibility" Value="Visible" />				
+				<Setter TargetName="separator" Property="Visibility" Value="Collapsed" />				
+			</Trigger>
+			<Trigger Property="Command" Value="{x:Null}">
+				<Setter TargetName="PART_DialogLauncherButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="ImageSourceSmall" Value="{x:Null}">
+				<Setter TargetName="image" Property="Source" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ImageSourceLarge}"/>
+				<Setter TargetName="image2" Property="Source" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ImageSourceLarge}"/>
+			</Trigger>
+
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOver" Value="True" />
+					<Condition Property="IsPopupOpen" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="collapsedButton" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBackgroundHoverBrushKey}}" />
+				<Setter TargetName="qatButtonOuterBrush" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundHoverBrushKey}}" />
+				<Setter TargetName="qatButtonOuterBrush" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderHoverBrushKey}}"/>
+				<Setter TargetName="qatButtonInnerBrush" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderHoverBrushKey}}"/>
+			</MultiTrigger>
+			<Trigger Property="IsPopupOpen" Value="True">
+				<Setter TargetName="collapsedButton" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBackgroundPressedBrushKey}}" />
+				<Setter TargetName="qatButtonOuterBrush" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBackgroundOpenedBrushKey}}" />
+				<Setter TargetName="qatButtonOuterBrush" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderOpenedBrushKey}}"/>
+				<Setter TargetName="qatButtonInnerBrush" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonInnerBorderOpenedBrushKey}}"/>
+			</Trigger>
+			
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition SourceName="expandedVariantGrid" Property="IsMouseOver" Value="True" />
+					<Condition Property="themes:ThemeProperties.IsAnimationEnabled" Value="True" />
+				</MultiTrigger.Conditions>
+				<MultiTrigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.5" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.EnterActions>
+				<MultiTrigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.ExitActions>
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition SourceName="expandedVariantGrid" Property="IsMouseOver" Value="True" />
+					<Condition Property="themes:ThemeProperties.IsAnimationEnabled" Value="False" />
+				</MultiTrigger.Conditions>
+				<MultiTrigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.EnterActions>
+				<MultiTrigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.ExitActions>
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- QuickAccessToolBarGroupCollapsedTemplate -->
+	<ControlTemplate x:Key="QuickAccessToolBarGroupCollapsedTemplate" TargetType="{x:Type ribbonControls:Group}">
+		<ControlTemplate.Resources>
+			<shared:CoalesceConverter x:Key="CoalesceConverter" />
+		</ControlTemplate.Resources>
+	
+		<Grid Background="Transparent" SnapsToDevicePixels="True">
+			<Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" MinWidth="30" MinHeight="16"
+					StaysOpen="True" VerticalOffset="-2"
+					IsOpen="{Binding Path=IsPopupOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+				<AdornerDecorator SnapsToDevicePixels="True">
+					<shared:DropShadowChrome x:Name="dropShadow" Color="Transparent">
+	
+						<Border Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBackgroundNormalBrushKey}}"
+								BorderThickness="1" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonTabControlBorderNormalBrushKey}}"
+								CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}">
+							<!-- Expanded Variant (mostly duplicated in expanded template above) -->
+							<Grid x:Name="expandedVariantGrid" SnapsToDevicePixels="True">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*" />
+									<RowDefinition Height="4" />
+									<RowDefinition Height="Auto" MinHeight="{x:Static ribbonUI:RibbonMeasurements.GroupLabelHeight}" />
+								</Grid.RowDefinitions>
+
+								<Border x:Name="backgroundHover" Grid.RowSpan="3"
+										BorderThickness="{TemplateBinding BorderThickness}" 
+										BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBorderHoverBrushKey}}" 
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupBackgroundHoverBrushKey}}" 
+										Opacity="0" SnapsToDevicePixels="True" />
+			
+								<ItemsControl Margin="3,2,3,1" MinHeight="{x:Static ribbonUI:RibbonMeasurements.RibbonControlLargeHeight}" 
+									HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+									ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Items}" 
+									ItemTemplate="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ItemTemplate}" 
+									ItemTemplateSelector="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ItemTemplateSelector}" 
+									Focusable="True" IsTabStop="False" SnapsToDevicePixels="True" FocusVisualStyle="{x:Null}">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<StackPanel Orientation="Horizontal"/>
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>											
+								</ItemsControl>
+				
+								<Grid Grid.Row="2" SnapsToDevicePixels="True">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*"	/>
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+
+									<shared:PixelSnapper x:Name="labelPixelSnapper" HorizontalRoundMode="None" VerticalRoundMode="None">
+										<ribbonControlsPrimitives:ZeroWidthLabel x:Name="label" Margin="2,-1,2,1" ClipToBounds="True" Focusable="False" 
+											VerticalAlignment="Center" HorizontalContentAlignment="Center"  
+											Label="{TemplateBinding Label}" MinWidth="{Binding RelativeSource={RelativeSource Self}, Path=IdealWidth}"
+											Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.RibbonGroupForegroundNormalBrushKey}}" />
+									</shared:PixelSnapper>
+					
+									<Button x:Name="PART_DialogLauncherButton" Grid.Column="1" Margin="0,0,1,1"
+										Command="{TemplateBinding Command}" 
+										CommandParameter="{TemplateBinding CommandParameter}" 
+										CommandTarget="{TemplateBinding CommandTarget}" 
+										ribbonUI:KeyTipService.KeyTipAccessText="{TemplateBinding DialogLauncherKeyTipAccessText}"
+										ribbonUI:ScreenTipService.ScreenTipDescription="{TemplateBinding ScreenTipDescription}" 
+										ribbonUI:ScreenTipService.ScreenTipFooter="{TemplateBinding ScreenTipFooter}" 
+										ribbonUI:ScreenTipService.ScreenTipHelpUri="{TemplateBinding ScreenTipHelpUri}" 
+										ribbonUI:ScreenTipService.ScreenTipImageSource="{TemplateBinding ScreenTipImageSource}" 
+										Style="{StaticResource DialogLauncherButtonStyle}" SnapsToDevicePixels="True">
+										<ribbonUI:ScreenTipService.ScreenTipHeader>
+											<MultiBinding Converter="{StaticResource CoalesceConverter}">
+												<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ScreenTipHeader" />
+												<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Label" />
+											</MultiBinding>
+										</ribbonUI:ScreenTipService.ScreenTipHeader>
+									</Button>
+								</Grid>
+							</Grid>						
+						</Border>
+						
+					</shared:DropShadowChrome>
+				</AdornerDecorator>
+			</Popup>
+			
+			<Border x:Name="qatButtonOuterBrush" ribbonUI:ScreenTipService.ScreenTipHeader="{TemplateBinding Label}" 
+					CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonBorderNormalCornerRadiusKey}}">
+				<Image x:Name="image2" Margin="1" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" 
+					Source="{TemplateBinding ImageSourceSmall}" SnapsToDevicePixels="True" />
+			</Border>
+		</Grid>
+
+		<ControlTemplate.Triggers>
+			<Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+				<Setter TargetName="dropShadow" Property="Margin" Value="0,0,5,5" />
+				<Setter TargetName="dropShadow" Property="Color" Value="#40000000" />
+				<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.MenuItemBorderNormalCornerRadiusKey}}" />
+			</Trigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding ElementName=PART_Popup, Path=HasDropShadow}" Value="True"/>
+					<Condition Binding="{Binding Source={x:Static SystemParameters.MenuDropAlignment}}" Value="True"/>
+				</MultiDataTrigger.Conditions>
+				<MultiDataTrigger.Setters>
+					<Setter TargetName="PART_Popup" Property="HorizontalOffset" Value="5" />
+				</MultiDataTrigger.Setters>
+			</MultiDataTrigger>			
+			<Trigger SourceName="PART_Popup" Property="IsOpen" Value="True">
+				<Setter TargetName="PART_Popup" Property="PopupAnimation" Value="Fade" />
+			</Trigger>
+			
+			<Trigger Property="Command" Value="{x:Null}">
+				<Setter TargetName="PART_DialogLauncherButton" Property="Visibility" Value="Collapsed" />
+			</Trigger>
+			<Trigger Property="ImageSourceSmall" Value="{x:Null}">
+				<Setter TargetName="image2" Property="Source" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ImageSourceLarge}"/>
+			</Trigger>
+
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsMouseOver" Value="True" />
+					<Condition Property="IsPopupOpen" Value="False" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="qatButtonOuterBrush" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActiveHoverBrushKey}}" />
+				<Setter TargetName="qatButtonOuterBrush" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderActiveHoverBrushKey}}"/>
+			</MultiTrigger>
+			<Trigger Property="IsPopupOpen" Value="True">
+				<Setter TargetName="qatButtonOuterBrush" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBackgroundActivePressedBrushKey}}" />
+				<Setter TargetName="qatButtonOuterBrush" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonBorderActivePressedBrushKey}}"/>
+			</Trigger>
+			
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition SourceName="expandedVariantGrid" Property="IsMouseOver" Value="True" />
+					<Condition Property="themes:ThemeProperties.IsAnimationEnabled" Value="True" />
+				</MultiTrigger.Conditions>
+				<MultiTrigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.5" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.EnterActions>
+				<MultiTrigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.ExitActions>
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition SourceName="expandedVariantGrid" Property="IsMouseOver" Value="True" />
+					<Condition Property="themes:ThemeProperties.IsAnimationEnabled" Value="False" />
+				</MultiTrigger.Conditions>
+				<MultiTrigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.EnterActions>
+				<MultiTrigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="backgroundHover" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</MultiTrigger.ExitActions>
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- ribbonControls:Group -->
+	<Style x:Key="{x:Type ribbonControls:Group}" TargetType="{x:Type ribbonControls:Group}">
+		<Setter Property="BorderThickness" Value="0,0,0,1" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ToolBarButtonForegroundNormalBrushKey}}" />
+		<Setter Property="Margin" Value="0" />
+		<Setter Property="MinHeight" Value="{x:Static ribbonUI:RibbonMeasurements.GroupHeight}" />
+		<Setter Property="MinWidth" Value="{x:Static ribbonUI:RibbonMeasurements.GroupMinWidth}" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="Template" Value="{StaticResource GroupExpandedTemplate}" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="0"/>
+		
+		<Style.Triggers>
+			<Trigger Property="VariantSize" Value="Collapsed">
+				<Setter Property="MinWidth" Value="0" />
+				<Setter Property="Template" Value="{StaticResource GroupCollapsedTemplate}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="VariantSize" Value="Collapsed" />
+					<Condition Property="Context" Value="QuickAccessToolBarItem" />
+				</MultiTrigger.Conditions>
+				<Setter Property="MinHeight" Value="{DynamicResource {x:Static themes:AssetResourceKeys.QuickAccessToolBarButtonMinHeightNormalDoubleKey}}" />
+				<Setter Property="MinWidth" Value="{DynamicResource {x:Static themes:AssetResourceKeys.QuickAccessToolBarButtonMinWidthNormalDoubleKey}}" />
+			</MultiTrigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="VariantSize" Value="Collapsed" />
+					<Condition Property="Context" Value="QuickAccessToolBarItem" />
+					<Condition Property="themes:ThemeProperties.UseAlternateStyle" Value="True" />
+				</MultiTrigger.Conditions>
+				<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.WindowTitleBarButtonForegroundActiveNormalBrushKey}}"/>
+				<Setter Property="ribbonUI:RibbonControlService.UseMonochromeImage" Value="True" />
+				<Setter Property="Template" Value="{StaticResource QuickAccessToolBarGroupCollapsedTemplate}" />
+			</MultiTrigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

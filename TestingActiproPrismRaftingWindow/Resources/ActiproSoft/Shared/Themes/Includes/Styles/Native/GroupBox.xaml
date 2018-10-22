@@ -1,0 +1,68 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Primitives;assembly=ActiproSoftware.Shared.Wpf"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Shared.Wpf">
+
+	<!-- Converters -->
+	<BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
+
+	<!-- themes:SharedResourceKeys.GroupBoxStyleKey -->
+	<Style x:Key="{x:Static themes:SharedResourceKeys.GroupBoxStyleKey}" TargetType="{x:Type GroupBox}">
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.GroupBoxBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.GroupBoxBorderNormalThicknessKey}}" />
+		<Setter Property="Margin" Value="1" />
+		<Setter Property="Padding" Value="1" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type GroupBox}">
+					<Grid SnapsToDevicePixels="true">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="6" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="6" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition x:Name="topGridRow" Height="Auto" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="6" />
+						</Grid.RowDefinitions>
+						<Border CornerRadius="4" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="4" IsHitTestVisible="False"
+								BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Transparent" Background="{TemplateBinding Background}" />
+						<Border x:Name="Header" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
+							<ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+									TextElement.Foreground="{DynamicResource {x:Static themes:AssetResourceKeys.GroupBoxForegroundNormalBrushKey}}" />
+						</Border>
+						<ContentPresenter Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="{TemplateBinding Padding}"
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+						<Border x:Name="outerBorder" CornerRadius="4" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.GroupBoxHighlightNormalBrushKey}}" BorderThickness="0" IsHitTestVisible="False">
+							<Border.OpacityMask>
+								<MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
+									<Binding ElementName="Header" Path="ActualWidth" />
+									<Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth" />
+									<Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight" />
+								</MultiBinding>
+							</Border.OpacityMask>
+							<controlsPrimitives:ElementChrome x:Name="chrome" CornerRadius="3" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4"
+									BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.GroupBoxHighlightNormalBrushKey}}"
+									InnerBorderThickness="{TemplateBinding BorderThickness}"
+									BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.GroupBoxElementChromeBorderStyleKey}}" />
+						</Border>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger SourceName="chrome" Property="BorderStyle" Value="Default">
+							<Setter TargetName="outerBorder" Property="BorderThickness"
+									Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}" />
+						</Trigger>
+						<Trigger Property="Header" Value="{x:Null}">
+							<Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="topGridRow" Property="Height" Value="6" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

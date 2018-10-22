@@ -1,0 +1,362 @@
+<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+	xmlns:productsRibbon="clr-namespace:ActiproSoftware.Products.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbon="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControls="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonControlsPrimitives="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.Controls.Primitives;assembly=ActiproSoftware.Ribbon.Wpf"
+    xmlns:ribbonUI="clr-namespace:ActiproSoftware.Windows.Controls.Ribbon.UI;assembly=ActiproSoftware.Ribbon.Wpf"
+	>
+	
+	<!-- OrbApplicationButtonTemplate -->
+	<ControlTemplate x:Key="OrbApplicationButtonTemplate" TargetType="ribbonControlsPrimitives:ApplicationButton">
+		<ControlTemplate.Resources>
+						
+			<ribbonControlsPrimitives:KeyTipToAccessTextConverter x:Key="KeyTipToAccessTextConverter" />
+						
+		</ControlTemplate.Resources>
+				
+		<Grid Margin="0,0,0,9" Width="{x:Static ribbonUI:RibbonMeasurements.ApplicationButtonWidth}" Height="{x:Static ribbonUI:RibbonMeasurements.ApplicationButtonHeight}" Background="Transparent">
+
+			<Popup x:Name="PART_Popup" AllowsTransparency="True" MinWidth="16" MinHeight="16" StaysOpen="True"
+					IsOpen="{Binding Path=IsPopupOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+					CustomPopupPlacementCallback="{TemplateBinding CustomPopupPlacementCallback}" 
+					HorizontalOffset="{TemplateBinding PopupHorizontalOffset}"
+					Placement="{TemplateBinding PopupPlacement}"
+					PlacementRectangle="{TemplateBinding PopupPlacementRectangle}"
+					PlacementTarget="{TemplateBinding PopupPlacementTarget}"
+					VerticalOffset="{TemplateBinding PopupVerticalOffset}"
+					>
+				<AdornerDecorator SnapsToDevicePixels="True">
+					<shared:DropShadowChrome x:Name="DropShadow" Color="Transparent">
+						<Border x:Name="PopupOuterBorder" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBorderNormalBrushKey}}" BorderThickness="1" 
+							Background="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBackgroundNormalBrushKey}}" SnapsToDevicePixels="True">
+							<Border x:Name="PopupInnerBorder" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupInnerBorderNormalBrushKey}}" BorderThickness="1" SnapsToDevicePixels="True">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="*" />
+										<RowDefinition Height="Auto" />
+									</Grid.RowDefinitions>
+									
+									<ribbonControlsPrimitives:PopupScrollViewer CanContentScroll="True"
+										Style="{DynamicResource {x:Static themes:SharedResourceKeys.MenuEmbeddedScrollViewerStyleKey}}">
+										<ribbonControlsPrimitives:PopupContentPresenter Content="{TemplateBinding PopupContent}" 
+											ContentTemplate="{TemplateBinding PopupContentTemplate}" ContentTemplateSelector="{TemplateBinding PopupContentTemplateSelector}" />
+									</ribbonControlsPrimitives:PopupScrollViewer>
+									
+									<Border x:Name="ResizeGripContainer" Grid.Row="1" BorderThickness="0,1,0,0" CornerRadius="0,0,2,2" Visibility="Collapsed"
+										BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.PopupGripperBorderNormalBrushKey}}" SnapsToDevicePixels="True"
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.PopupGripperBackgroundNormalBrushKey}}">
+										<Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=BothResizeGripperStyle}}" />
+									</Border>
+								</Grid>
+							</Border>
+						</Border>
+					</shared:DropShadowChrome>
+				</AdornerDecorator>
+			</Popup>
+											
+			<Ellipse Margin="4" Fill="#80000000">
+				<Ellipse.RenderTransform>
+					<TransformGroup>
+						<TranslateTransform X="0.5" Y="0.5"/>
+					</TransformGroup>
+				</Ellipse.RenderTransform>
+			</Ellipse>						
+								
+			<Grid>
+				<Grid.Clip>
+					<EllipseGeometry RadiusX="18" RadiusY="18" Center="22,22" />
+				</Grid.Clip>	
+
+				<Ellipse x:Name="ApplicationButtonOuterNormalBackground" Margin="4" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundBackgroundNormalBrushKey}}" />
+				<Ellipse x:Name="ApplicationButtonInnerNormalBackground" Margin="5" RenderTransformOrigin="0.5,0.5" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundHighlightNormalBrushKey}}">
+					<Ellipse.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform ScaleX="3" ScaleY="1"/>
+							<TranslateTransform X="0" Y="16"/>
+						</TransformGroup>
+					</Ellipse.RenderTransform>
+				</Ellipse>			
+				<Ellipse x:Name="ApplicationButtonOuterNormalBorder" Margin="4" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundBorderNormalBrushKey}}" />
+				<Ellipse x:Name="ApplicationButtonInnerNormalBorder" Margin="5" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundInnerBorderNormalBrushKey}}" />			
+				
+				<Ellipse x:Name="ApplicationButtonOuterHoverBackground" Margin="4" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundBackgroundHoverBrushKey}}" Opacity="0" />
+				<Ellipse x:Name="ApplicationButtonInnerHoverBackground" Margin="5" RenderTransformOrigin="0.5,0.5" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundHighlightHoverBrushKey}}" Opacity="0">
+					<Ellipse.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform ScaleX="3" ScaleY="1"/>
+							<TranslateTransform X="0" Y="16"/>
+						</TransformGroup>
+					</Ellipse.RenderTransform>
+				</Ellipse>			
+				<Ellipse x:Name="ApplicationButtonOuterHoverBorder" Margin="4" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundBorderHoverBrushKey}}" Opacity="0" />
+				<Ellipse x:Name="ApplicationButtonInnerHoverBorder" Margin="5" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundInnerBorderHoverBrushKey}}" Opacity="0" />			
+				
+				<Ellipse x:Name="ApplicationButtonOuterPressedBackground" Margin="4" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundBackgroundPressedBrushKey}}" Opacity="0" />
+				<Ellipse x:Name="ApplicationButtonInnerPressedBackground" Margin="5" RenderTransformOrigin="0.5,0.5" Fill="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundHighlightPressedBrushKey}}" Opacity="0">
+					<Ellipse.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform ScaleX="3" ScaleY="1"/>
+							<TranslateTransform X="0" Y="16"/>
+						</TransformGroup>
+					</Ellipse.RenderTransform>
+				</Ellipse>			
+				<Ellipse x:Name="ApplicationButtonOuterPressedBorder" Margin="4" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundBorderPressedBrushKey}}" Opacity="0" />
+				<Ellipse x:Name="ApplicationButtonInnerPressedBorder" Margin="5" Stroke="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonRoundInnerBorderPressedBrushKey}}" Opacity="0" />			
+
+				<Image x:Name="Image" Width="32" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"
+					Source="{TemplateBinding ImageSourceSmall}" SnapsToDevicePixels="True" />
+			</Grid>
+			
+			<AccessText Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=KeyTipAccessText, Converter={StaticResource KeyTipToAccessTextConverter}}" Foreground="Transparent" />
+		</Grid>
+
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsPopupEnabled" Value="False">
+				<Setter TargetName="PART_Popup" Property="IsOpen" Value="False" />
+			</Trigger>
+			<Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+				<Setter TargetName="DropShadow" Property="Margin" Value="0,0,5,5" />
+				<Setter TargetName="DropShadow" Property="Color" Value="#71000000" />
+			</Trigger>
+			<Trigger SourceName="PART_Popup" Property="IsOpen" Value="True">
+				<Setter TargetName="PART_Popup" Property="PopupAnimation" Value="Fade" />
+			</Trigger>
+			<Trigger Property="PopupHasBorder" Value="False">
+				<Setter TargetName="PopupOuterBorder" Property="BorderThickness" Value="0" />
+				<Setter TargetName="PopupOuterBorder" Property="Background" Value="{x:Null}" />
+				<Setter TargetName="PopupInnerBorder" Property="BorderThickness" Value="0" />
+			</Trigger>
+			<Trigger Property="PopupResizeMode" Value="Both">
+				<Setter TargetName="ResizeGripContainer" Property="Visibility" Value="Visible" />
+			</Trigger>
+			<Trigger Property="PopupResizeMode" Value="Vertical">
+				<Setter TargetName="ResizeGripContainer" Property="Visibility" Value="Visible" />
+				<Setter TargetName="PART_ResizeGrip" Property="Style" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=VerticalResizeGripperStyle}}" />
+			</Trigger>
+			
+			<Trigger Property="IsKeyboardFocused" Value="True">
+				<Trigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.EnterActions>
+				<Trigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.ExitActions>
+			</Trigger>
+			<Trigger Property="IsMouseOver" Value="True">
+				<Trigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.EnterActions>
+				<Trigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterHoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerHoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.ExitActions>
+			</Trigger>
+			<Trigger Property="IsPopupOpen" Value="True">
+				<Setter Property="ribbonUI:ScreenTipService.ScreenTipIsEnabled" Value="False" />
+				<Trigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterPressedBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerPressedBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterPressedBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerPressedBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.EnterActions>
+				<Trigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterPressedBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerPressedBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonOuterPressedBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+							<DoubleAnimation Storyboard.TargetName="ApplicationButtonInnerPressedBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.ExitActions>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<!-- ribbonControlsPrimitives:ApplicationButton -->
+	<Style x:Key="{x:Type ribbonControlsPrimitives:ApplicationButton}" TargetType="{x:Type ribbonControlsPrimitives:ApplicationButton}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="1,1,1,0" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonForegroundNormalBrushKey}}" />
+		<Setter Property="Padding" Value="12,2,12,2" />
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ribbonControlsPrimitives:ApplicationButton">
+					<ControlTemplate.Resources>
+						
+						<ribbonControlsPrimitives:KeyTipToAccessTextConverter x:Key="KeyTipToAccessTextConverter" />
+						
+					</ControlTemplate.Resources>
+					
+					<Grid MinHeight="{x:Static ribbonUI:RibbonMeasurements.TabMinHeight}" Background="Transparent" ClipToBounds="True">
+
+						<Popup x:Name="PART_Popup" AllowsTransparency="True" MinWidth="16" MinHeight="16" StaysOpen="True"
+								IsOpen="{Binding Path=IsPopupOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+								CustomPopupPlacementCallback="{TemplateBinding CustomPopupPlacementCallback}" 
+								HorizontalOffset="{TemplateBinding PopupHorizontalOffset}"
+								Placement="{TemplateBinding PopupPlacement}"
+								PlacementRectangle="{TemplateBinding PopupPlacementRectangle}"
+								PlacementTarget="{TemplateBinding PopupPlacementTarget}"
+								VerticalOffset="{TemplateBinding PopupVerticalOffset}"
+								>
+							<AdornerDecorator SnapsToDevicePixels="True">
+								<shared:DropShadowChrome x:Name="DropShadow" Color="Transparent">
+									<Border x:Name="PopupOuterBorder" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBorderNormalBrushKey}}" BorderThickness="1" 
+										Background="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupBackgroundNormalBrushKey}}" SnapsToDevicePixels="True">
+										<Border x:Name="PopupInnerBorder" BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.MenuPopupInnerBorderNormalBrushKey}}" BorderThickness="1" SnapsToDevicePixels="True">
+											<Grid>
+												<Grid.RowDefinitions>
+													<RowDefinition Height="*" />
+													<RowDefinition Height="Auto" />
+												</Grid.RowDefinitions>
+												
+												<ribbonControlsPrimitives:PopupScrollViewer CanContentScroll="True"
+													Style="{DynamicResource {x:Static themes:SharedResourceKeys.MenuEmbeddedScrollViewerStyleKey}}">
+													<ribbonControlsPrimitives:PopupContentPresenter Content="{TemplateBinding PopupContent}" 
+														ContentTemplate="{TemplateBinding PopupContentTemplate}" ContentTemplateSelector="{TemplateBinding PopupContentTemplateSelector}" />
+												</ribbonControlsPrimitives:PopupScrollViewer>
+												
+												<Border x:Name="ResizeGripContainer" Grid.Row="1" BorderThickness="0,1,0,0" CornerRadius="0,0,2,2" Visibility="Collapsed"
+													BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.PopupGripperBorderNormalBrushKey}}" SnapsToDevicePixels="True"
+													Background="{DynamicResource {x:Static themes:AssetResourceKeys.PopupGripperBackgroundNormalBrushKey}}">
+													<Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=BothResizeGripperStyle}}" />
+												</Border>
+											</Grid>
+										</Border>
+									</Border>
+								</shared:DropShadowChrome>
+							</AdornerDecorator>
+						</Popup>
+										
+						<Border x:Name="outerBorder" CornerRadius="3,3,0,0" 
+								Background="{TemplateBinding Background}"
+								BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+							<Border x:Name="innerBorder" CornerRadius="2,2,0,0" Opacity="1" 
+									Background="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonHighlightNormalBrushKey}}"
+									BorderThickness="{TemplateBinding BorderThickness}" 
+									BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonInnerBorderNormalBrushKey}}" />
+						</Border>
+						
+						<AccessText Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=KeyTipAccessText, Converter={StaticResource KeyTipToAccessTextConverter}}" Foreground="Transparent" />
+
+						<shared:PixelSnapper HorizontalRoundMode="CeilingToEven" VerticalRoundMode="CeilingToEven" 
+											 Margin="{TemplateBinding BorderThickness}"
+											 HorizontalAlignment="Center" VerticalAlignment="Center">
+							<Grid Margin="{TemplateBinding Padding}">
+								<StackPanel x:Name="image" Orientation="Horizontal">
+									<Image Width="16" Height="16" Stretch="Uniform" Source="{TemplateBinding ImageSourceSmall}" SnapsToDevicePixels="True" />
+									<Path x:Name="DropDownArrow" Width="7" Height="4" Margin="4,0,0,0" VerticalAlignment="Center" 
+										  Stroke="{TemplateBinding Foreground}" StrokeThickness="1"  Fill="{TemplateBinding Foreground}" 
+										  Data="M 0.5,0.5 L 3.5,3.5 L 6.5,0.5 Z" SnapsToDevicePixels="True" />
+								</StackPanel>
+							
+								<TextBlock x:Name="label" Text="{TemplateBinding Label}"
+										   HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"
+										   Foreground="{TemplateBinding Foreground}" Visibility="Collapsed" />
+							</Grid>
+						</shared:PixelSnapper>
+					</Grid>
+					
+					<ControlTemplate.Triggers>
+						<Trigger Property="themes:ThemeProperties.CornerRadius" Value="0">
+							<Setter TargetName="outerBorder" Property="CornerRadius" Value="0" />
+							<Setter TargetName="innerBorder" Property="CornerRadius" Value="0" />
+						</Trigger>
+						<Trigger Property="IsPopupEnabled" Value="False">
+							<Setter TargetName="PART_Popup" Property="IsOpen" Value="False" />
+						</Trigger>
+						<Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+							<Setter TargetName="DropShadow" Property="Margin" Value="0,0,5,5" />
+							<Setter TargetName="DropShadow" Property="Color" Value="#71000000" />
+						</Trigger>
+						<Trigger SourceName="PART_Popup" Property="IsOpen" Value="True">
+							<Setter TargetName="PART_Popup" Property="PopupAnimation" Value="Fade" />
+						</Trigger>
+						<Trigger Property="PopupHasBorder" Value="False">
+							<Setter TargetName="PopupOuterBorder" Property="BorderThickness" Value="0" />
+							<Setter TargetName="PopupOuterBorder" Property="Background" Value="{x:Null}" />
+							<Setter TargetName="PopupInnerBorder" Property="BorderThickness" Value="0" />
+						</Trigger>
+						<Trigger Property="PopupResizeMode" Value="Both">
+							<Setter TargetName="ResizeGripContainer" Property="Visibility" Value="Visible" />
+						</Trigger>
+						<Trigger Property="PopupResizeMode" Value="Vertical">
+							<Setter TargetName="ResizeGripContainer" Property="Visibility" Value="Visible" />
+							<Setter TargetName="PART_ResizeGrip" Property="Style" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=VerticalResizeGripperStyle}}" />
+						</Trigger>
+
+						<Trigger Property="ImageSourceSmall" Value="{x:Null}">
+							<Setter Property="Padding" Value="18,2,18,2" />
+							<Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+							<Setter TargetName="label" Property="Visibility" Value="Visible" />
+						</Trigger>
+						
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="outerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBackgroundHoverBrushKey}}" />
+							<Setter TargetName="outerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBorderHoverBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonHighlightHoverBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonInnerBorderHoverBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsKeyboardFocused" Value="True">
+							<Setter TargetName="outerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBackgroundFocusedBrushKey}}" />
+							<Setter TargetName="outerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBorderFocusedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonHighlightFocusedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonInnerBorderFocusedBrushKey}}" />
+						</Trigger>
+						<Trigger Property="IsPopupOpen" Value="True">
+							<Setter TargetName="outerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBackgroundPressedBrushKey}}" />
+							<Setter TargetName="outerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonBorderPressedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonHighlightPressedBrushKey}}" />
+							<Setter TargetName="innerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ApplicationButtonInnerBorderPressedBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+		<Style.Triggers>
+			<Trigger Property="UseScenicLayout" Value="False">
+				<Setter Property="Template" Value="{StaticResource OrbApplicationButtonTemplate}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+			
+</ResourceDictionary>

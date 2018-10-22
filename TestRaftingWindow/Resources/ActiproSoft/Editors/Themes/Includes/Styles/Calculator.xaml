@@ -1,0 +1,416 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:editors="clr-namespace:ActiproSoftware.Windows.Controls.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:productsEditors="clr-namespace:ActiproSoftware.Products.Editors;assembly=ActiproSoftware.Editors.Wpf"
+		xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+		xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes">
+
+	<!-- ButtonBaseStyle -->
+	<Style x:Key="ButtonBaseStyle" TargetType="{x:Type ButtonBase}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Margin" Value="2" />
+		<Setter Property="Padding" Value="0" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		
+		<Setter Property="themes:ThemeProperties.CornerRadius" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderNormalCornerRadiusKey}}" />
+		<Setter Property="themes:ThemeProperties.IsAnimationEnabled" Value="False" />
+
+		<Setter Property="Focusable" Value="False" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ButtonBase}">
+					<shared:ElementChrome x:Name="chrome" Background="{TemplateBinding Background}"
+							BackgroundDefaulted="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBackgroundDefaultedBrushKey}}"
+							BackgroundDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBackgroundDisabledBrushKey}}"
+							BackgroundHover="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBackgroundHoverBrushKey}}"
+							BackgroundPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBackgroundPressedBrushKey}}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderBrushDefaulted="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderDefaultedBrushKey}}"
+							BorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderDisabledBrushKey}}"
+							BorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderHoverBrushKey}}"
+							BorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonBorderPressedBrushKey}}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Highlight="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonHighlightNormalBrushKey}}"
+							HighlightDefaulted="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonHighlightDefaultedBrushKey}}"
+							HighlightDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonHighlightDisabledBrushKey}}"
+							HighlightHover="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonHighlightHoverBrushKey}}"
+							HighlightPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonHighlightPressedBrushKey}}"
+							InnerBorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonInnerBorderNormalBrushKey}}"
+							InnerBorderBrushDefaulted="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonInnerBorderDefaultedBrushKey}}"
+							InnerBorderBrushDisabled="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonInnerBorderDisabledBrushKey}}"
+							InnerBorderBrushHover="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonInnerBorderHoverBrushKey}}"
+							InnerBorderBrushPressed="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonInnerBorderPressedBrushKey}}"
+							InnerBorderThickness="1"
+							IsAnimationEnabled="{TemplateBinding themes:ThemeProperties.IsAnimationEnabled}"
+							BorderStyle="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonElementChromeBorderStyleKey}}" 
+							CornerRadius="{TemplateBinding themes:ThemeProperties.CornerRadius}"
+							SnapsToDevicePixels="true">
+						<ContentPresenter Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True"
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+					</shared:ElementChrome>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsKeyboardFocused" Value="true">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonForegroundDefaultedBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Defaulted" />
+						</Trigger>
+						<Trigger Property="Button.IsDefaulted" Value="true">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonForegroundDefaultedBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Defaulted" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonForegroundHoverBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Hover" />
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonForegroundPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="ToggleButton.IsChecked" Value="true">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonForegroundPressedBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Pressed" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+							<Setter TargetName="chrome" Property="State" Value="Disabled" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- CalculatorButtonActions -->
+	<Style x:Key="CalculatorButtonActions" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}" />
+
+	<!-- CalculatorButtonDigits -->
+	<Style x:Key="CalculatorButtonDigits" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonLightBackgroundNormalBrushKey}}" />
+	</Style>
+
+	<!-- CalculatorButtonMemory -->
+	<Style x:Key="CalculatorButtonMemory" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ButtonDarkBackgroundNormalBrushKey}}" />
+	</Style>
+
+	<!-- editors:Calculator -->
+	<Style x:Key="{x:Type editors:Calculator}" TargetType="{x:Type editors:Calculator}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerDarkBackgroundNormalBrushKey}}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" />
+		<Setter Property="BorderThickness" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalThicknessKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundNormalBrushKey}}" />
+
+		<Setter Property="Padding" Value="3" />
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type editors:Calculator}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}"
+							Background="{TemplateBinding Background}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<!-- Row 0 -->
+							<Border Grid.Row="0" Grid.ColumnSpan="5" Margin="2"
+									BorderBrush="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerBorderNormalBrushKey}}" BorderThickness="1" Padding="4"
+									Background="{DynamicResource {x:Static themes:AssetResourceKeys.ContainerLightBackgroundNormalBrushKey}}" 
+									CornerRadius="{DynamicResource {x:Static themes:AssetResourceKeys.ListItemBorderNormalCornerRadiusKey}}">
+								
+								<TextBlock Text="{TemplateBinding DisplayString}" HorizontalAlignment="Right" />
+							</Border>
+
+							<!-- Row 1 -->
+							<Button Command="editors:CalculatorCommands.ClearMemory" Style="{StaticResource CalculatorButtonMemory}" 
+									Grid.Row="1" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonClearMemory}" />
+							<Button Command="editors:CalculatorCommands.RecallMemory" Style="{StaticResource CalculatorButtonMemory}" 
+									Grid.Row="1" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonRecallMemory}" />
+							<Button Command="editors:CalculatorCommands.SetMemory" Style="{StaticResource CalculatorButtonMemory}" 
+									Grid.Row="1" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonSetMemory}" />
+							<Button Command="editors:CalculatorCommands.AddToMemory" Style="{StaticResource CalculatorButtonMemory}" 
+									Grid.Row="1" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonAddToMemory}" />
+							<Button Command="editors:CalculatorCommands.SubtractFromMemory" Style="{StaticResource CalculatorButtonMemory}" 
+									Grid.Row="1" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonSubtractFromMemory}" />
+
+							<!-- Row 2 -->
+							<Button Command="editors:CalculatorCommands.Backspace" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="2" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonBackspace}" />
+							<Button Command="editors:CalculatorCommands.ClearEntry" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="2" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonClearEntry}" />
+							<Button Command="editors:CalculatorCommands.Clear" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="2" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonClear}" />
+							<Button Command="editors:CalculatorCommands.TogglePlusMinus" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="2" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonTogglePlusMinus}" />
+							<Button Command="editors:CalculatorCommands.SquareRoot" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="2" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonSquareRoot}" />
+
+							<!-- Row 3 -->
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="7" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="3" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit7}" />
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="8" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="3" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit8}" />
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="9" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="3" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit9}" />
+							<Button Command="editors:CalculatorCommands.Divide" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="3" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonDivide}" />
+							<Button Command="editors:CalculatorCommands.Percent" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="3" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonPercent}" />
+
+							<!-- Row 4 -->
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="4" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="4" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit4}" />
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="5" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="4" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit5}" />
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="6" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="4" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit6}" />
+							<Button Command="editors:CalculatorCommands.Multiply" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="4" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonMultiply}" />
+							<Button Command="editors:CalculatorCommands.Reciprocal" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="4" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonReciprocal}" />
+
+							<!-- Row 5 -->
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="1" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="5" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit1}" />
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="2" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="5" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit2}" />
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="3" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="5" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit3}" />
+							<Button Command="editors:CalculatorCommands.Subtract" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="5" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonSubtract}" />
+
+							<!-- Row 5/6 -->
+							<Button Command="editors:CalculatorCommands.Calculate" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="5" Grid.Column="4" Grid.RowSpan="2" Content="{productsEditors:SRExtension UICalculatorButtonCalculate}" />
+
+							<!-- Row 6 -->
+							<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="0" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit0}" />
+							<Button Command="editors:CalculatorCommands.Point" Style="{StaticResource CalculatorButtonDigits}" 
+									Grid.Row="6" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonPoint}" />
+							<Button Command="editors:CalculatorCommands.Add" Style="{StaticResource CalculatorButtonActions}" 
+									Grid.Row="6" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonAdd}" />
+						</Grid>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="DisplayMode" Value="Minimal">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type editors:Calculator}">
+							<Border BorderBrush="{TemplateBinding BorderBrush}"
+									Background="{TemplateBinding Background}"
+									BorderThickness="{TemplateBinding BorderThickness}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+									</Grid.RowDefinitions>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition />
+										<ColumnDefinition />
+										<ColumnDefinition />
+										<ColumnDefinition />
+									</Grid.ColumnDefinitions>
+
+									<!-- Row 0 -->
+									<Button Command="editors:CalculatorCommands.Backspace" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="0" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonBackspace}" />
+									<Button Command="editors:CalculatorCommands.Clear" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="0" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonClear}" />
+									<Button Command="editors:CalculatorCommands.TogglePlusMinus" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="0" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonTogglePlusMinus}" />
+									<Button Command="editors:CalculatorCommands.Divide" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="0" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonDivide}" />
+
+									<!-- Row 1 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="7" Style="{StaticResource CalculatorButtonDigits}"
+											Grid.Row="1" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit7}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="8" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="1" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit8}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="9" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="1" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit9}" />
+									<Button Command="editors:CalculatorCommands.Multiply" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="1" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonMultiply}" />
+
+									<!-- Row 2 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="4" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="2" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit4}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="5" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="2" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit5}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="6" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="2" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit6}" />
+									<Button Command="editors:CalculatorCommands.Subtract" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="2" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonSubtract}" />
+
+									<!-- Row 3 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="1" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="3" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit1}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="2" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="3" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit2}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="3" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="3" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit3}" />
+									<Button Command="editors:CalculatorCommands.Add" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="3" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonAdd}" />
+
+									<!-- Row 4 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="0" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="4" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit0}" />
+									<Button Command="editors:CalculatorCommands.Point" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="4" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonPoint}" />
+									<Button Command="editors:CalculatorCommands.Calculate" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Content="{productsEditors:SRExtension UICalculatorButtonCalculate}" />
+								</Grid>
+							</Border>
+
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsEnabled" Value="False">
+									<Setter Property="Foreground"
+											Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="DisplayMode" Value="Basic">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type editors:Calculator}">
+							<Border BorderBrush="{TemplateBinding BorderBrush}"
+									Background="{TemplateBinding Background}"
+									BorderThickness="{TemplateBinding BorderThickness}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+									</Grid.RowDefinitions>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition />
+										<ColumnDefinition />
+										<ColumnDefinition />
+										<ColumnDefinition />
+										<ColumnDefinition />
+									</Grid.ColumnDefinitions>
+
+									<!-- Row 0 -->
+									<Button Command="editors:CalculatorCommands.ClearMemory" Style="{StaticResource CalculatorButtonMemory}" 
+											Grid.Row="0" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonClearMemory}" />
+									<Button Command="editors:CalculatorCommands.RecallMemory" Style="{StaticResource CalculatorButtonMemory}" 
+											Grid.Row="0" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonRecallMemory}" />
+									<Button Command="editors:CalculatorCommands.SetMemory" Style="{StaticResource CalculatorButtonMemory}" 
+											Grid.Row="0" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonSetMemory}" />
+									<Button Command="editors:CalculatorCommands.AddToMemory" Style="{StaticResource CalculatorButtonMemory}" 
+											Grid.Row="0" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonAddToMemory}" />
+									<Button Command="editors:CalculatorCommands.SubtractFromMemory" Style="{StaticResource CalculatorButtonMemory}" 
+											Grid.Row="0" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonSubtractFromMemory}" />
+
+									<!-- Row 1 -->
+									<Button Command="editors:CalculatorCommands.Backspace" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="1" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonBackspace}" />
+									<Button Command="editors:CalculatorCommands.ClearEntry" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="1" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonClearEntry}" />
+									<Button Command="editors:CalculatorCommands.Clear" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="1" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonClear}" />
+									<Button Command="editors:CalculatorCommands.TogglePlusMinus" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="1" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonTogglePlusMinus}" />
+									<Button Command="editors:CalculatorCommands.SquareRoot" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="1" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonSquareRoot}" />
+
+									<!-- Row 2 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="7" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="2" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit7}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="8" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="2" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit8}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="9" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="2" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit9}" />
+									<Button Command="editors:CalculatorCommands.Divide" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="2" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonDivide}" />
+									<Button Command="editors:CalculatorCommands.Percent" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="2" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonPercent}" />
+
+									<!-- Row 3 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="4" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="3" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit4}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="5" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="3" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit5}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="6" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="3" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit6}" />
+									<Button Command="editors:CalculatorCommands.Multiply" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="3" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonMultiply}" />
+									<Button Command="editors:CalculatorCommands.Reciprocal" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="3" Grid.Column="4" Content="{productsEditors:SRExtension UICalculatorButtonReciprocal}" />
+
+									<!-- Row 4 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="1" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="4" Grid.Column="0" Content="{productsEditors:SRExtension UICalculatorButtonDigit1}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="2" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="4" Grid.Column="1" Content="{productsEditors:SRExtension UICalculatorButtonDigit2}" />
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="3" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="4" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit3}" />
+									<Button Command="editors:CalculatorCommands.Subtract" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="4" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonSubtract}" />
+
+									<!-- Row 4/5 -->
+									<Button Command="editors:CalculatorCommands.Calculate" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="4" Grid.Column="4" Grid.RowSpan="2" Content="{productsEditors:SRExtension UICalculatorButtonCalculate}" />
+
+									<!-- Row 5 -->
+									<Button Command="editors:CalculatorCommands.InsertDigit" CommandParameter="0" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="{productsEditors:SRExtension UICalculatorButtonDigit0}" />
+									<Button Command="editors:CalculatorCommands.Point" Style="{StaticResource CalculatorButtonDigits}" 
+											Grid.Row="5" Grid.Column="2" Content="{productsEditors:SRExtension UICalculatorButtonPoint}" />
+									<Button Command="editors:CalculatorCommands.Add" Style="{StaticResource CalculatorButtonActions}" 
+											Grid.Row="5" Grid.Column="3" Content="{productsEditors:SRExtension UICalculatorButtonAdd}" />
+								</Grid>
+							</Border>
+
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsEnabled" Value="False">
+									<Setter Property="Foreground"
+											Value="{DynamicResource {x:Static themes:AssetResourceKeys.ControlForegroundDisabledBrushKey}}" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.PropertyGrid.Wpf">
+
+	<ResourceDictionary.MergedDictionaries>
+
+		<ResourceDictionary Source="Styles/TreeListViewToggleButton.AeroNormalColor.xaml" />
+
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

@@ -1,0 +1,27 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:themes="clr-namespace:ActiproSoftware.Windows.Themes;assembly=ActiproSoftware.Editors.Wpf"
+		>
+
+	<ResourceDictionary.MergedDictionaries>
+		<themes:EditorsThemeCatalogRegistrar />
+
+		<ResourceDictionary Source="Styles/AnalogClock.xaml" />
+		<ResourceDictionary Source="Styles/BrushEditor.xaml" />
+		<ResourceDictionary Source="Styles/BrushPreviewControl.xaml" />
+		<ResourceDictionary Source="Styles/Calculator.xaml" />
+		<ResourceDictionary Source="Styles/CloseButton.xaml" />
+		<ResourceDictionary Source="Styles/CountryComboBox.xaml" />
+		<ResourceDictionary Source="Styles/CurrencyComboBox.xaml" />
+		<ResourceDictionary Source="Styles/DropDownButton.xaml" />
+		<ResourceDictionary Source="Styles/Edit.xaml" />
+		<ResourceDictionary Source="Styles/EnumListBox.xaml" />
+		<ResourceDictionary Source="Styles/InlineComboBox.xaml" />
+		<ResourceDictionary Source="Styles/MonthCalendar.xaml" />
+		<ResourceDictionary Source="Styles/PartEditBox.xaml" />
+		<ResourceDictionary Source="Styles/Rating.xaml" />
+		<ResourceDictionary Source="Styles/Spinner.xaml" />
+
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

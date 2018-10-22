@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:microCharts="clr-namespace:ActiproSoftware.Windows.Controls.MicroCharts;assembly=ActiproSoftware.MicroCharts.Wpf"
+					xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+					>
+
+	<!-- microCharts:MicroXYRange -->
+	<Style x:Key="{x:Type microCharts:MicroXYRange}" TargetType="{x:Type microCharts:MicroXYRange}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static themes:AssetResourceKeys.ChartRangeBackgroundNormalBrushKey}}" />
+	</Style>
+
+</ResourceDictionary>
