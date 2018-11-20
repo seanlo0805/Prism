@@ -3,13 +3,17 @@ using ActiproSoftware.Windows.Controls.Docking.Serialization;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using TestingActiproPrismRaftingWindow.Views.Docking;
 
 namespace TestingActiproPrismRaftingWindow.ViewModels
@@ -18,6 +22,9 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
     {
         private Grid _titleBarGrid;
         private Menu _menu;
+        private ObservableCollection<string> _msgBox;
+        private List<string> _queueMsg = new List<string>();
+        const int _maxMsgLines = 200;
 
         //private DockSiteLayoutSerializer layoutSerializer = new DockSiteLayoutSerializer();
         //private string layoutXmlFile = @".\Actiprosoft.xml";
@@ -43,6 +50,14 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
         {
             get { return _titleBarGrid; }
             set { SetProperty(ref _titleBarGrid, value); }
+        }
+        public ObservableCollection<string> MsgBox
+        {
+            get { return _msgBox ?? (_msgBox = new ObservableCollection<string>()); }
+            set
+            {
+                SetProperty(ref _msgBox, value);
+            }
         }
 
         public MainWindowViewModel()
@@ -101,6 +116,22 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             openViewBItem.Icon = img;
             //openViewBItem.VerticalAlignment = VerticalAlignment.Bottom;
             Menu.Items.Add(openViewBItem);
+        }
+
+        void OnMessage(string msg)
+        {
+            //System.Windows.Application.Current will be null when app was closed
+            System.Windows.Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+            {
+                ////backward
+                MsgBox.Insert(0, msg);
+
+                while (MsgBox.Count > _maxMsgLines)
+                {
+                    int removingIndex = MsgBox.Count - 1;
+                    MsgBox.RemoveAt(removingIndex);
+                }
+            }));
         }
 
         //private void OnLayoutSerializerDockingWindowDeserializing(object sender, DockingWindowDeserializingEventArgs e)
@@ -166,7 +197,7 @@ namespace TestingActiproPrismRaftingWindow.ViewModels
             if (toolwindows == null)
                 throw new ArgumentNullException("toolWindow for ViewB");
 
-            UserControl ctrl = new ViewB();
+            UserControl ctrl = new ViewB(OnMessage);
             ctrl.Width = Double.NaN;
             ctrl.Height = Double.NaN;
             ctrl.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;

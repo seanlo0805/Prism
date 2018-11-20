@@ -45,7 +45,7 @@ namespace TestRaftingWindow.ViewModels
                 toolwindows.Title = "ViewA";
                 //toolwindows.Title = LanguageSupport.GetString("Menu_lite_quick_orders");
                 //Guid newGUID = Guid.NewGuid();
-                UserControl ctrl = new ViewA();
+                UserControl ctrl = new ViewA(toolwindows);
                 //ctrl.SetStyle();
                 //WindowsManager.GetInstance().DictionaryFlashOrderControlToolWindows.Add(newGUID, toolwindows);
                 ctrl.Width = Double.NaN;
@@ -53,6 +53,12 @@ namespace TestRaftingWindow.ViewModels
                 ctrl.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
                 ctrl.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
                 toolwindows.Content = ctrl;
+                toolwindows.Unloaded += (object sender, RoutedEventArgs e) => {
+                    if (sender is ToolWindow win)
+                        //if (win.DockHost == null) // window is leaving
+                        dockMgr.ToolWindows.Remove(win);
+                };
+
                 ctrl.Tag = Guid.NewGuid().ToString();
                 //ctrl.SetParentWindow(toolwindows);
                 dockMgr.ToolWindows.Add(toolwindows);
@@ -64,7 +70,7 @@ namespace TestRaftingWindow.ViewModels
             }
 
         }
-
+        
         private bool CanIOpenViewA()
         {
             return true;

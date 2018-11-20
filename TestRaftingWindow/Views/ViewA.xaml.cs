@@ -12,17 +12,39 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ActiproSoftware.Windows.Controls.Docking;
+using TestRaftingWindow.Interfaces;
 
 namespace TestRaftingWindow.Views
 {
     /// <summary>
     /// Interaction logic for ViewA.xaml
     /// </summary>
-    public partial class ViewA : UserControl
+    public partial class ViewA : UserControl, IToolWindowContentControl
     {
-        public ViewA()
+        private static object _seqLocker = new object();
+        private static int _seq_ = 0;
+
+        private byte[] bigarray = new byte[256 * 1024 * 1024];
+        private string content;
+        Action<string> OnMsg;
+
+        private ToolWindow _parentWindow;
+        public ViewA(ToolWindow parentWindow)
         {
+            _parentWindow = parentWindow;
             InitializeComponent();
+        }
+
+        public ToolWindow ParentWidnow { get  { return _parentWindow; }  set  { _parentWindow = value; } }
+
+        public void OnWindowClose()
+        {
+
+        }
+        ~ViewA()
+        {
+
         }
     }
 }
