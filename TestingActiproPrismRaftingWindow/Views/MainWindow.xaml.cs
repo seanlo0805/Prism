@@ -1,6 +1,7 @@
 ﻿using ActiproSoftware.Windows.Controls.Docking;
 using ActiproSoftware.Windows.Controls.Docking.Serialization;
 using ActiproSoftware.Windows.Serialization;
+using System;
 using System.IO;
 using System.Windows;
 using TestingActiproPrismRaftingWindow.ViewModels;
@@ -72,6 +73,11 @@ namespace TestingActiproPrismRaftingWindow.Views
             }
 
         }
+        private void Button_ClickGC(object sender, RoutedEventArgs e)
+        {
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+        }
+
 
         private void Button_ClickSaveLayout(object sender, RoutedEventArgs e)
         {

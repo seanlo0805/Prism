@@ -18,6 +18,7 @@
                         <Button Content="OpenViewB" HorizontalAlignment="Left" Margin="226,10,0,0" Command="{Binding OpenRaftingWindowB}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
                         <Button Content="SaveLayout" HorizontalAlignment="Left" Margin="76,34,0,0"  VerticalAlignment="Top" Width="75" Click="Button_ClickSaveLayout"/>
                         <Button Content="LoadLayout" HorizontalAlignment="Left" Margin="226,29,0,0"  VerticalAlignment="Top" Width="75" Click="Button_ClickLoadLayout"/>
+                        <Button Content="GC" HorizontalAlignment="Left" Margin="325,29,0,0"  VerticalAlignment="Top" Width="75" Click="Button_ClickGC"/>
 
                         <!--<Button Content="SaveLayout" HorizontalAlignment="Left" Margin="76,176,0,0" Command="{Binding SaveLayoutToXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
                     <Button Content="LoadLayout" HorizontalAlignment="Left" Margin="226,176,0,0" Command="{Binding LoadLayoutFromXml}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>-->
