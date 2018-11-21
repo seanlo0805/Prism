@@ -37,8 +37,8 @@ namespace TestRaftingWindow.Views
             if (ctrl != null)
             {
                 dockSite.ToolWindows.Remove(ctrl.ParentWidnow);
-                //ctrl.ParentWidnow.Destroy(true);
-                //ctrl.ParentWidnow.Content = null;
+                ctrl.ParentWidnow.Destroy(true);
+                ctrl.ParentWidnow.Content = null;
                 ctrl.OnWindowClose();
             }
 
