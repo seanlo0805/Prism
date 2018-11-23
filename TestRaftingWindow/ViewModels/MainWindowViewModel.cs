@@ -25,6 +25,12 @@ namespace TestRaftingWindow.ViewModels
         #endregion
 
         public ICommand OpenRaftingWindowA { get { return new DelegateCommand(OpenViewA, CanIOpenViewA); } }
+        public ICommand OnMainWindowLoaded { get { return new RelayCommand(MainWindowLoaded); } }
+
+        public void MainWindowLoaded(object obj)
+        {
+
+        }
 
 
         public MainWindowViewModel()

@@ -1,0 +1,40 @@
+﻿<Window x:Class="TestTriggers.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:b="clr-namespace:TestTriggers.CommandBehavior"
+        xmlns:vm="clr-namespace:TestTriggers.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestTriggers"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Menu>
+            <MenuItem Header="Symbol Classification">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click" >
+                        <b:TriggerBehavior Command="{Binding Clicked, ElementName=mainModel}"></b:TriggerBehavior>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </MenuItem>
+        </Menu>
+
+
+        <!--<Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="29" Margin="205,144,0,0" VerticalAlignment="Top" Width="95">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click"  SourceObject="{Binding ElementName=button}">
+                    <b:TriggerBehavior Command="{Binding Clicked, ElementName=mainModel}"></b:TriggerBehavior>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>-->
+        
+        
+        <TextBlock Visibility="Hidden">
+            <TextBlock.DataContext>
+                <vm:MainWindowModel x:Name="mainModel"></vm:MainWindowModel>
+            </TextBlock.DataContext>
+        </TextBlock>
+
+    </Grid>
+</Window>

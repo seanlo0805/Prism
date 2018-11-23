@@ -80,6 +80,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPrismAvalonDockWindow",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingActiproPrismCodeBehindApp", "TestingActiproPrismCodeBehindApp\TestingActiproPrismCodeBehindApp.csproj", "{8491347A-A4B8-45FA-9CE6-0298D99FC1F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTriggers", "TestTriggers\TestTriggers.csproj", "{91F23899-0FD7-4295-9C4B-1E11C2C11266}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -194,6 +196,10 @@ Global
 		{8491347A-A4B8-45FA-9CE6-0298D99FC1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8491347A-A4B8-45FA-9CE6-0298D99FC1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8491347A-A4B8-45FA-9CE6-0298D99FC1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91F23899-0FD7-4295-9C4B-1E11C2C11266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91F23899-0FD7-4295-9C4B-1E11C2C11266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91F23899-0FD7-4295-9C4B-1E11C2C11266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91F23899-0FD7-4295-9C4B-1E11C2C11266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,6 +240,7 @@ Global
 		{32E12908-95A7-4C30-88DA-DE3C5E2F6792} = {FB38C5C3-9509-4BDB-9DD7-EBD672AACFD2}
 		{9826C549-9666-4C3C-8B4A-3E3B5D23E343} = {FB38C5C3-9509-4BDB-9DD7-EBD672AACFD2}
 		{8491347A-A4B8-45FA-9CE6-0298D99FC1F2} = {FB38C5C3-9509-4BDB-9DD7-EBD672AACFD2}
+		{91F23899-0FD7-4295-9C4B-1E11C2C11266} = {FB38C5C3-9509-4BDB-9DD7-EBD672AACFD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {81E7B9BB-45B8-4F42-9A45-1240652B0CEA}

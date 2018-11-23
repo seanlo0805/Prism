@@ -7,13 +7,15 @@
         xmlns:local="clr-namespace:TestRaftingWindow.Views"
         xmlns:vm="clr-namespace:TestRaftingWindow.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="OnLoaded">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <docking:DockSite x:Name="dockSite" />
         <Button Content="Button" HorizontalAlignment="Left" Margin="233,120,0,0" Command="{Binding OpenRaftingWindowA}" CommandParameter="{Binding ElementName=dockSite}" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Button2" HorizontalAlignment="Left" Margin="133,120,0,0" VerticalAlignment="Top" Width="75">
+        </Button>
 
     </Grid>
 </Window>

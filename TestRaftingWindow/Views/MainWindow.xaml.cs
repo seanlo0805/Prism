@@ -43,5 +43,20 @@ namespace TestRaftingWindow.Views
             }
 
         }
+        private static EventHandler EventHandler = new EventHandler(OnWindowLoaded); 
+
+        private static void OnWindowLoaded(object sender, EventArgs e)
+        {
+
+        }
+        private void OnWindowLoadedEventTrigger()
+        {
+
+        }
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
